@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.*;
 import java.util.Date;
 
 public class Product {
@@ -77,5 +78,43 @@ public class Product {
         }
     }
 
+    public String getReference() {
+        return reference;
+    }
 
+    public String getTypeReference() {
+        return typeReference;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getVat() {
+        return vat;
+    }
+
+    public int getQuantityInStock() {
+        return quantityInStock;
+    }
+
+    public int getMinimumQuantityInStock() {
+        return minimumQuantityInStock;
+    }
+
+    public boolean isSparkling() {
+        return isSparkling;
+    }
+
+    public Double getAlcoholLevel() {
+        return alcoholLevel;
+    }
+
+    public Date getLaunchingDate() {
+        return launchingDate;
+    }
+
+    public double getPrice() {
+        return price;
+    }
 }
