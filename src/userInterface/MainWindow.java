@@ -2,6 +2,9 @@ package userInterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.nio.file.Path;
 
@@ -83,5 +86,27 @@ public class MainWindow extends JFrame {
 
         // window display
         this.setVisible(true);
+    }
+
+    private class MenuItemListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            Object source = event.getSource();
+            if(source = exitMenuItem) {...}
+                    else if(source = userManuelMenuItem) {...}
+                    else if(source = softwareInfosMenuItem) {...}
+
+                    else if(source = searchProductMenuItem) {...}
+                    else if(source = searchAProductQuantityMenuItem) {...}
+                    else if(source = searchProductSupplementsDueToEventMenuItem) {...}
+                    else if(source = searchAdressMenuItem) {...}
+                    else if(source = searchOutOfStockProductMenuItem) {...}
+
+                    else if(source = newProductMenuItem) {...}
+                    else if(source = deleteProductMenuItem) {...}
+                    else if(source = modifyProductMenuItem) {...}
+                    else if(source = findProductMenuItem) {...}
+        }
     }
 }
