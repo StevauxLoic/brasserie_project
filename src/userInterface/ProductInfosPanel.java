@@ -8,11 +8,11 @@ import java.awt.*;
 public class ProductInfosPanel extends JPanel {
     private Product produit;
 
-    JLabel nameLabel, referenceLabel, productTypeLabel, vatLabel, quantityInStockLabel, minimumQuantityInStockLabel, sparklingLabel, alcoholLevelLabel, priceLabel, launchingDateLabel;
+    JLabel nameLabel, referenceLabel, productTypeLabel, vatLabel, quantityInStockLabel, minimumQuantityInStockLabel, sparklingLabel, alcoholLevelLabel, priceLabel, launchingDateLabel, descriptionLabel;
 
     public ProductInfosPanel(Product produit, String buttonGoal) {
         this.setBounds(10, 80,500,150);
-        this.setLayout(new GridLayout(10,2,5,5));
+        this.setLayout(new GridLayout(11,2,5,5));
 
         nameLabel = new JLabel("nom");
         this.add(nameLabel);
@@ -24,7 +24,7 @@ public class ProductInfosPanel extends JPanel {
 
         productTypeLabel = new JLabel("référeance du type de produit");
         this.add(productTypeLabel);
-        this.add(new JLabel(produit.getTypeReference()));            // ref en int
+        this.add(new JLabel(String.valueOf(produit.getTypeReference())));            // ref en int
 
         vatLabel = new JLabel("TVA");
         this.add(vatLabel);
@@ -54,6 +54,10 @@ public class ProductInfosPanel extends JPanel {
         launchingDateLabel = new JLabel("date de lancement");
         this.add(launchingDateLabel);
         this.add(new JLabel(produit.getLaunchingDate().toString()));
-    }
 
+        descriptionLabel = new JLabel("description");
+        this.add(descriptionLabel);
+        String productDescrpition = produit.getDescription();
+        this.add(new JLabel(productDescrpition != null? productDescrpition : "pas de description" ));
+    }
 }
