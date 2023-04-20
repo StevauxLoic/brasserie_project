@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Product {
     private String reference; // primaryKey
-    private String typeReference; // foreignKey
+    private int typeReference; // foreignKey
     private String name;
     private double vat;
     private int quantityInStock;
@@ -31,6 +31,8 @@ public class Product {
     public Product(String reference, String typeReference, String name, double vat, int quantityInStock, int minimumQuantityInStock, boolean isSparkling, Date launchingDate, double price){
         this(reference, typeReference, name, vat, minimumQuantityInStock, isSparkling, launchingDate, price, null);
     }
+
+
 
     // the paramater here is a pourcentage -> if(32.5%) then parameter = 32.5
     public void setVat(double vat){
@@ -82,7 +84,7 @@ public class Product {
         return reference;
     }
 
-    public String getTypeReference() {
+    public int getTypeReference() {
         return typeReference;
     }
 
