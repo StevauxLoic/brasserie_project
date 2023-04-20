@@ -10,3 +10,4 @@ projet de la brasserie en java
    que 1 vrai numero de tva
  possiblité de faire pour que une ref soit <= a 10 caractère (si possible en utilisant 1 setteur pour toutes les classes genre une class util ? qui serait static)
 6) je me suios arreter a city mais j'ai pas tout fait dedans 
+7) comment stocker les clefs étrangères (String de la ref ou du nom dans l'autre table)
