@@ -93,20 +93,33 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
             Object source = event.getSource();
-            if(source = exitMenuItem) {...}
-                    else if(source = userManuelMenuItem) {...}
-                    else if(source = softwareInfosMenuItem) {...}
+            if(source = exitMenuItem) {
 
-                    else if(source = searchProductMenuItem) {...}
-                    else if(source = searchAProductQuantityMenuItem) {...}
-                    else if(source = searchProductSupplementsDueToEventMenuItem) {...}
-                    else if(source = searchAdressMenuItem) {...}
-                    else if(source = searchOutOfStockProductMenuItem) {...}
+            } else if(source = userManuelMenuItem) {
 
-                    else if(source = newProductMenuItem) {...}
-                    else if(source = deleteProductMenuItem) {...}
-                    else if(source = modifyProductMenuItem) {...}
-                    else if(source = findProductMenuItem) {...}
+            } else if(source = softwareInfosMenuItem) {
+
+            } else if(source = searchProductMenuItem) {
+
+            } else if(source = searchAProductQuantityMenuItem) {
+
+            } else if(source = searchProductSupplementsDueToEventMenuItem) {
+
+            } else if(source = searchAdressMenuItem) {
+
+            } else if(source = searchOutOfStockProductMenuItem) {
+
+            } else if(source = newProductMenuItem) {
+
+            } else if(source = deleteProductMenuItem) {
+
+            } else if(source = modifyProductMenuItem) {
+
+            } else if(source = findProductMenuItem) {
+
+            } else {
+                //ruExcepyion
+            }
         }
     }
 }
