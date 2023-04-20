@@ -17,7 +17,7 @@ public class SoftwareInfosWindow extends JFrame {
 
         infosLabel = new JLabel(
                 "<html><p>" +
-                    "logiciel de managment pour un magasin qui vend de l'alcool réalisé" +
+                    "logiciel de managment pour un magasin qui vend des boissons réalisé" +
                     "</br>pour le cours de programation orientée objet" +
                     "</br> développeurs : Castado C. & Stevaux L." +
                     "</p></html>");
