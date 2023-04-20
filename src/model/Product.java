@@ -11,11 +11,12 @@ public class Product {
     private int quantityInStock;
     private int minimumQuantityInStock;
     private boolean isSparkling;
-    private Double alcoholLevel; // non obligatory
+    private double alcoholLevel; // non obligatory
     private Date launchingDate;
     private double price;
+    private String description;
 
-    public Product(String reference, String typeReference, String name, double vat, int minimumQuantityInStock, boolean isSparkling, Date launchingDate, double price, Double alcoholLevel){
+    public Product(String reference, String typeReference, String name, double vat, int minimumQuantityInStock, boolean isSparkling, Date launchingDate, double price, double alcoholLevel, String description){
         // creation reference
         // type ref le faire peut etre avec 1 enum pour ne pas avoir d'erreur
         this.name = name;
@@ -25,13 +26,13 @@ public class Product {
         setPrice(price);
         // je sais pas comment faire le date
         setAlcoholLevel(alcoholLevel);
+        this.description = description;
     }
 
-    // second constructor to create a soft drink
-    public Product(String reference, String typeReference, String name, double vat, int quantityInStock, int minimumQuantityInStock, boolean isSparkling, Date launchingDate, double price){
-        this(reference, typeReference, name, vat, minimumQuantityInStock, isSparkling, launchingDate, price, null);
+    // second constructor to create an product with no despcription
+    public Product(String reference, String typeReference, String name, double vat, int minimumQuantityInStock, boolean isSparkling, Date launchingDate, double price, double alcoholLevel){
+        this(reference, typeReference, name, vat, minimumQuantityInStock, isSparkling, launchingDate, price,alcoholLevel, null);
     }
-
 
 
     // the paramater here is a pourcentage -> if(32.5%) then parameter = 32.5
@@ -47,9 +48,9 @@ public class Product {
         }
     }
 
-    public void setAlcoholLevel(Double alcoholLevel){
+    public void setAlcoholLevel(double alcoholLevel){
         if(alcoholLevel <= 0){
-            this.alcoholLevel = null;
+            this.alcoholLevel = 0;
         } else {
             if(alcoholLevel > 100){
                 this.alcoholLevel = 100.0; // accepte 100.0 mais pas 100 regarder pour moi le hard coder
@@ -118,5 +119,9 @@ public class Product {
 
     public double getPrice() {
         return price;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
