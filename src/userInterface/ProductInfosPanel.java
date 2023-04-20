@@ -24,7 +24,7 @@ public class ProductInfosPanel extends JPanel {
 
         productTypeLabel = new JLabel("référeance du type de produit");
         this.add(productTypeLabel);
-        this.add(new JLabel(produit.getTypeReference().toString()));            // ref en int
+        this.add(new JLabel(String.valueOf(produit.getTypeReference())));            // ref en int
 
         vatLabel = new JLabel("TVA");
         this.add(vatLabel);
