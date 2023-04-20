@@ -18,8 +18,9 @@ public class Product {
 
     public Product(String reference, String typeReference, String name, double vat, int minimumQuantityInStock, boolean isSparkling, Date launchingDate, double price, double alcoholLevel, String description){
         // creation reference
-        // type ref le faire peut etre avec 1 enum pour ne pas avoir d'erreur
-        this.name = name;
+        // type ref est un auto incrément a voir avec mySQL
+        setReference(reference);
+        setName(name);
         setVat(vat);
         setQuantityInStock();
         setMinimumQuantityInStock(minimumQuantityInStock);
@@ -34,6 +35,21 @@ public class Product {
         this(reference, typeReference, name, vat, minimumQuantityInStock, isSparkling, launchingDate, price,alcoholLevel, null);
     }
 
+    public void setReference(String reference) {
+        if(reference != null){
+            this.reference = reference;
+        } else {
+            this.reference = null;
+        }
+    }
+
+    public void setName(String name) {
+        if(name != null){
+            this.name = name;
+        } else {
+            this.name = null;
+        }
+    }
 
     // the paramater here is a pourcentage -> if(32.5%) then parameter = 32.5
     public void setVat(double vat){

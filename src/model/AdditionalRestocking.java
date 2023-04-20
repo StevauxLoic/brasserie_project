@@ -6,9 +6,25 @@ public class AdditionalRestocking {
     private String eventReference; // primaryKey with productRef & foreignKey
 
     public AdditionalRestocking(int amount, String productReference, String eventReference){
-        this.productReference = productReference;
-        this.eventReference = eventReference;
+        setProductReference(productReference);
+        setEventReference(eventReference);
+        setAmount(amount);
+    }
 
+    public void setProductReference(String productReference) {
+        if(productReference != null){
+            this.eventReference = eventReference;
+        } else {
+            this.eventReference = null;
+        }
+    }
+
+    public void setEventReference(String eventReference){
+        if(eventReference != null){
+            this.eventReference = eventReference;
+        } else {
+            this.eventReference = null;
+        }
     }
 
     public void setAmount(int amount){
