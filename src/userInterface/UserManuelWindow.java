@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class UsingManuelWindow extends JFrame {
+public class UserManuelWindow extends JFrame {
 
     private Container infosSelecterContainer, infosContainer;
     private JLabel infoListLabel,
@@ -16,7 +16,6 @@ public class UsingManuelWindow extends JFrame {
             helpMenuLabe,
             searchMenuLabe,
             productMenuLabe,
-
             searchProductLabel,
             searchProductByQuantityLabel,
             searchProductSupplementDueToEventLabel,
@@ -36,7 +35,7 @@ public class UsingManuelWindow extends JFrame {
             "menu produit/Nouveau produit", "menu produit/Suprimer produit", "menu produit/Modifier produit",
             "menu produit/Trouver produit"};
 
-    public UsingManuelWindow() {
+    public UserManuelWindow() {
         super("information de l'application");
         setBounds(100, 100, 500, 500);
 
@@ -95,7 +94,7 @@ public class UsingManuelWindow extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                UsingManuelWindow.this.dispose();
+                UserManuelWindow.this.dispose();
             }
         });
 
