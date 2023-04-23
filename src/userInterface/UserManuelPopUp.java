@@ -2,10 +2,8 @@ package userInterface;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
-public class UserManuelWindow extends JFrame {
+public class UserManuelPopUp extends PopUp {
 
     private Container infosSelecterContainer, infosContainer;
     private JLabel infoListLabel,
@@ -25,7 +23,9 @@ public class UserManuelWindow extends JFrame {
             deleteProductLabel,
             modifyProductLabel,
             findProductLabel;
+
     private JComboBox infoListComboBox;
+
     private static String[] infosTopics = {"Infos sur l'application", "menus", "menu fichier", "menu aide", "menu recherche",
             "menu recherche", "menu produit", "menu rechercher/Rechercher un produit",
             "menu rechercher/Rechercher la quantité d’un type de produit dans un délai donné",
@@ -35,10 +35,12 @@ public class UserManuelWindow extends JFrame {
             "menu produit/Nouveau produit", "menu produit/Suprimer produit", "menu produit/Modifier produit",
             "menu produit/Trouver produit"};
 
-    public UserManuelWindow() {
+    public UserManuelPopUp() {
         super("information de l'application");
-        setBounds(100, 100, 500, 500);
+     }
 
+    @Override
+    public void fillTheContainer() {
         this.setLayout(new BorderLayout());
 
         infosSelecterContainer = new Container();
@@ -90,14 +92,5 @@ public class UserManuelWindow extends JFrame {
 
         this.add(infosSelecterContainer, BorderLayout.WEST);
         this.add(infosContainer, BorderLayout.CENTER);
-
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                UserManuelWindow.this.dispose();
-            }
-        });
-
-        setVisible(true);
     }
 }

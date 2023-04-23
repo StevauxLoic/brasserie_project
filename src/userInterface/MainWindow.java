@@ -2,9 +2,7 @@ package userInterface;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.io.File;
 import java.nio.file.Path;
 
@@ -23,15 +21,26 @@ public class MainWindow extends JFrame {
             deleteProductMenuItem,
             modifyProductMenuItem,
             findProductMenuItem;
+
     JPanel welcomePanel;
     JLabel welcomeLabel;
 
+    JTabbedPane tabbedPane;
+
     public MainWindow() throws HeadlessException {
+        // window
         super("Application de gestion");
         setSize(500, 500);
         setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
 
+        this.addWindowListener( new WindowAdapter() {
+            public void windowClosing ( WindowEvent closingWindowEvent ) {
+                System.exit(0);
+            }
+        });
+
+        // Menu bar
         menuBar = new JMenuBar();
         this.add(menuBar, BorderLayout.NORTH);
 
@@ -86,8 +95,10 @@ public class MainWindow extends JFrame {
 
         // window display
         this.setVisible(true);
+
     }
 
+    /*
     private class MenuItemListener implements ActionListener{
 
         @Override
@@ -121,5 +132,8 @@ public class MainWindow extends JFrame {
                 //ruExcepyion
             }
         }
+
+
     }
+    */
 }
