@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 public class ExitTheAppPopUp extends PopUp {
 
     JLabel exitQuestion;
+    JPanel textPanel, buttonsPanel;
     JButton cancelButton, exitButton;
 
     public ExitTheAppPopUp() {
@@ -25,9 +26,15 @@ public class ExitTheAppPopUp extends PopUp {
         cancelButton.addActionListener(buttonListener);
         exitButton.addActionListener(buttonListener);
 
-        this.add(exitQuestion, BorderLayout.CENTER);
-        this.add(cancelButton, BorderLayout.WEST);
-        this.add(exitButton, BorderLayout.EAST);
+        textPanel = new JPanel();
+        textPanel.add(exitQuestion);
+
+        buttonsPanel = new JPanel();
+        buttonsPanel.add(cancelButton);
+        buttonsPanel.add(exitButton);
+
+        this.add(textPanel, BorderLayout.CENTER);
+        this.add(buttonsPanel, BorderLayout.SOUTH);
     }
 
     private class ButtonListener implements ActionListener {
