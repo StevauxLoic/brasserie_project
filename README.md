@@ -6,7 +6,6 @@ projet de la brasserie en java
 
 ## liste todo graphiques :
 - recherches
-  - 1 produit
   - 2 qtt vendu d'un type de produit dans un délai donné
   - 3 produits demandant un réassort supp
   - 4 adresse d'une businessEntity
@@ -14,8 +13,6 @@ projet de la brasserie en java
 - Produit
   - 1 nouveau
   - 2 supprimer
-  - 3 modifier
-  - 4 trouver
 
 ##TODO
 - aides/texts dans le manuel d'utilisation

@@ -127,7 +127,7 @@ public class MainWindow extends JFrame {
                 SoftwareInfosPopUp softwareInfosPopUp = new SoftwareInfosPopUp();
             } else {
                 JPanel panelToDisplay = null;
-                if(source == searchProductMenuItem) {
+                if(source == searchProductMenuItem || source == findProductMenuItem) { // les deux mènenet au même endroit (une recherche de produit)
                     panelToDisplay = new ProductSearchPanel();
                 } else if(source == searchProductTypeOnDelayAMenuItem) {
                     panelToDisplay = new ProductTypeSearchOnDelayPanel();
@@ -143,8 +143,6 @@ public class MainWindow extends JFrame {
                     panelToDisplay = new ProductDeletingPanel();
                 } else if(source == modifyProductMenuItem) {
                     panelToDisplay = new ProductModifyingPanel();
-                } else if(source == findProductMenuItem) {
-                    panelToDisplay = new ProductSearchPanel();
                 }
                 MainWindow.this.setPanelToDisplay(panelToDisplay);
             }
