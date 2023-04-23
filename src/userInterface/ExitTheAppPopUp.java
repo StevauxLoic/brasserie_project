@@ -11,11 +11,12 @@ public class ExitTheAppPopUp extends PopUp {
     JButton cancelButton, exitButton;
 
     public ExitTheAppPopUp() {
-        super("Quiter l'application ?", 400, 100);
+        super("Quiter l'application ?", 360, 100);
     }
 
     @Override
-    public void fillTheContainer() {
+    public void fillThePopUpFrame() {
+        this.setLayout(new BorderLayout());
         exitQuestion = new JLabel("Voulez vous quitter l'application ?");
 
         cancelButton = new JButton("Annuler");
@@ -24,9 +25,9 @@ public class ExitTheAppPopUp extends PopUp {
         cancelButton.addActionListener(buttonListener);
         exitButton.addActionListener(buttonListener);
 
-        mainContainer.add(exitQuestion, BorderLayout.CENTER);
-        mainContainer.add(cancelButton, BorderLayout.SOUTH);
-        mainContainer.add(exitButton, BorderLayout.SOUTH);
+        this.add(exitQuestion, BorderLayout.CENTER);
+        this.add(cancelButton, BorderLayout.WEST);
+        this.add(exitButton, BorderLayout.EAST);
     }
 
     private class ButtonListener implements ActionListener {

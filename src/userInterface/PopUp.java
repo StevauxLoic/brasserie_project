@@ -7,7 +7,6 @@ import java.awt.event.WindowEvent;
 
 public abstract class PopUp extends JFrame {
 
-    Container mainContainer;
     int windowHeigt, windowwidht;
 
     public PopUp(String windowName, int windowwidht, int windowHeigt) {
@@ -31,10 +30,7 @@ public abstract class PopUp extends JFrame {
 
 
         // pop-up filling
-        mainContainer = new Container();
-        fillTheContainer();
-
-        this.add(mainContainer);
+        fillThePopUpFrame();
 
         // display the pop-up
         setVisible(true);
@@ -44,5 +40,5 @@ public abstract class PopUp extends JFrame {
         this(windowName, 500, 500);
     }
 
-    public abstract void fillTheContainer();
+    public abstract void fillThePopUpFrame();
 }

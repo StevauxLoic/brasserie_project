@@ -11,13 +11,13 @@ public class SoftwareInfosPopUp extends PopUp {
     }
 
     @Override
-    public void fillTheContainer() {
+    public void fillThePopUpFrame() {
         infosLabel = new JLabel(
                 "<html><p style=\"text-align: center;\">" +
                         "logiciel de managment pour un magasin qui vend des boissons réalisé" +
                         "<br>pour le cours de programation orientée objet" +
                         "<br><br>développeurs : Castado C. & Stevaux L." +
-                        "<p></html>");
+                        "</p></html>");
         this.add(infosLabel);
     }
 }

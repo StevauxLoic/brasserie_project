@@ -46,7 +46,7 @@ public class UserManuelPopUp extends PopUp {
      }
 
     @Override
-    public void fillTheContainer() {
+    public void fillThePopUpFrame() {
         this.setLayout(new BorderLayout());
 
         infosSelecterContainer = new Container();
@@ -118,8 +118,8 @@ public class UserManuelPopUp extends PopUp {
         labelsArray[16] = findProductLabel;
 
         // add the components to the container
-        mainContainer.add(infosSelecterContainer, BorderLayout.WEST);
-        mainContainer.add(infosContainer, BorderLayout.CENTER);
+        this.add(infosSelecterContainer, BorderLayout.WEST);
+        this.add(infosContainer, BorderLayout.CENTER);
     }
 
     private void changeDisplayedLabel (int labelIndex) {
