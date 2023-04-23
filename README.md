@@ -5,7 +5,6 @@ projet de la brasserie en java
 
 
 ## liste todo graphiques :
-- manuel d'utilisation
 - recherches
   - 1
   - 2
@@ -17,3 +16,6 @@ projet de la brasserie en java
   - 2
   - 3
   - 4
+
+##TODO
+- aides/texts dans le manuel d'utilisation
