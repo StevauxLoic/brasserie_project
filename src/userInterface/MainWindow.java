@@ -3,8 +3,6 @@ package userInterface;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.nio.file.Path;
 
 public class MainWindow extends JFrame {
     JMenuBar menuBar;
@@ -13,7 +11,7 @@ public class MainWindow extends JFrame {
             userManuelMenuItem,
             softwareInfosMenuItem,
             searchProductMenuItem,
-            searchAProductQuantityMenuItem,
+            searchProductTypeOnDelayAMenuItem,
             searchProductSupplementsDueToEventMenuItem,
             searchAdressMenuItem,
             searchOutOfStockProductMenuItem,
@@ -24,8 +22,6 @@ public class MainWindow extends JFrame {
 
     JPanel welcomePanel;
     JLabel welcomeLabel;
-
-    JTabbedPane tabbedPane;
 
     public MainWindow() throws HeadlessException {
         // window
@@ -55,29 +51,43 @@ public class MainWindow extends JFrame {
         menuBar.add(productMenu);
 
         // Menu items
+        MenuItemListener menuItemListener = new MenuItemListener();
         exitMenuItem = new JMenuItem("Quitter");
         fileMenu.add(exitMenuItem);
+        exitMenuItem.addActionListener(menuItemListener);
 
         userManuelMenuItem = new JMenuItem("Manuel d'utilisation");
+        userManuelMenuItem.addActionListener(menuItemListener);
         softwareInfosMenuItem = new JMenuItem("Infos sur l'application");
+        softwareInfosMenuItem.addActionListener(menuItemListener);
         helpMenu.add(userManuelMenuItem);
         helpMenu.add(softwareInfosMenuItem);
 
         searchProductMenuItem = new JMenuItem("Un Produit");
-        searchAProductQuantityMenuItem = new JMenuItem("La quantité vendue d’un type de produit dans un délai");
+        searchProductMenuItem.addActionListener(menuItemListener);
+        searchProductTypeOnDelayAMenuItem = new JMenuItem("La quantité vendue d’un type de produit dans un délai");
+        searchProductTypeOnDelayAMenuItem.addActionListener(menuItemListener);
         searchProductSupplementsDueToEventMenuItem = new JMenuItem("Des produits demandant un réassort supplémentaire");
+        searchProductSupplementsDueToEventMenuItem.addActionListener(menuItemListener);
         searchAdressMenuItem = new JMenuItem("Les adresses d’une personne/entreprise");
+        searchAdressMenuItem.addActionListener(menuItemListener);
         searchOutOfStockProductMenuItem = new JMenuItem("Un produit en rupture dans le stock et ses fournisseurs");
+        searchOutOfStockProductMenuItem.addActionListener(menuItemListener);
         searchMenu.add(searchProductMenuItem);
-        searchMenu.add(searchAProductQuantityMenuItem);
+        searchMenu.add(searchProductTypeOnDelayAMenuItem);
         searchMenu.add(searchProductSupplementsDueToEventMenuItem);
         searchMenu.add(searchAdressMenuItem);
         searchMenu.add(searchOutOfStockProductMenuItem);
 
+
         newProductMenuItem = new JMenuItem("Nouveau");
+        newProductMenuItem.addActionListener(menuItemListener);
         deleteProductMenuItem = new JMenuItem("Suprimer");
+        deleteProductMenuItem.addActionListener(menuItemListener);
         modifyProductMenuItem = new JMenuItem("Modifier / mettre à jour");
+        modifyProductMenuItem.addActionListener(menuItemListener);
         findProductMenuItem = new JMenuItem("Trouver");
+        findProductMenuItem.addActionListener(menuItemListener);
         productMenu.add(newProductMenuItem);
         productMenu.add(deleteProductMenuItem);
         productMenu.add(modifyProductMenuItem);
@@ -98,42 +108,46 @@ public class MainWindow extends JFrame {
 
     }
 
-    /*
-    private class MenuItemListener implements ActionListener{
+    private void setPanelToDisplay(JPanel pannelToDisplay) {
+        this.remove(welcomePanel);
+        this.add(pannelToDisplay, BorderLayout.CENTER);
+        this.repaint();
+        this.revalidate();
+    }
 
+    private class MenuItemListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent event) {
             Object source = event.getSource();
-            if(source = exitMenuItem) {
-
-            } else if(source = userManuelMenuItem) {
-
-            } else if(source = softwareInfosMenuItem) {
-
-            } else if(source = searchProductMenuItem) {
-
-            } else if(source = searchAProductQuantityMenuItem) {
-
-            } else if(source = searchProductSupplementsDueToEventMenuItem) {
-
-            } else if(source = searchAdressMenuItem) {
-
-            } else if(source = searchOutOfStockProductMenuItem) {
-
-            } else if(source = newProductMenuItem) {
-
-            } else if(source = deleteProductMenuItem) {
-
-            } else if(source = modifyProductMenuItem) {
-
-            } else if(source = findProductMenuItem) {
-
+            if(source == exitMenuItem) {
+                ExitTheAppPopUp exitTheAppPopUp = new ExitTheAppPopUp();
+            } else if(source == userManuelMenuItem) {
+                UserManuelPopUp userManuelPopUp = new UserManuelPopUp();
+            } else if(source == softwareInfosMenuItem) {
+                SoftwareInfosPopUp softwareInfosPopUp = new SoftwareInfosPopUp();
             } else {
-                //ruExcepyion
+                JPanel panelToDisplay = null;
+                if(source == searchProductMenuItem) {
+                    panelToDisplay = new ProductSearchPanel();
+                } else if(source == searchProductTypeOnDelayAMenuItem) {
+                    panelToDisplay = new ProductTypeSearchOnDelayPanel();
+                } else if(source == searchProductSupplementsDueToEventMenuItem) {
+                    panelToDisplay = new ProductSupplementDueToEventSearchPanel();
+                } else if(source == searchAdressMenuItem) {
+                    panelToDisplay = new AdressSearchPanel();
+                } else if(source == searchOutOfStockProductMenuItem) {
+                    panelToDisplay = new ProductOutOfStockAndSupplierSearchPanel();
+                } else if(source == newProductMenuItem) {
+                    panelToDisplay = new ProductCreationPanel();
+                } else if(source == deleteProductMenuItem) {
+                    panelToDisplay = new ProductDeletingPanel();
+                } else if(source == modifyProductMenuItem) {
+                    panelToDisplay = new ProductModifyingPanel();
+                } else if(source == findProductMenuItem) {
+                    panelToDisplay = new ProductSearchPanel();
+                }
+                MainWindow.this.setPanelToDisplay(panelToDisplay);
             }
         }
-
-
     }
-    */
 }

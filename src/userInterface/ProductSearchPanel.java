@@ -1,4 +1,6 @@
 package userInterface;
 
-public class ProductSearchPanel {
+import javax.swing.*;
+
+public class ProductSearchPanel extends JPanel {
 }

@@ -1,4 +1,6 @@
 package userInterface;
 
-public class ProductOutOfStockAndSupplierSearchPanel {
+import javax.swing.*;
+
+public class ProductOutOfStockAndSupplierSearchPanel extends JPanel {
 }

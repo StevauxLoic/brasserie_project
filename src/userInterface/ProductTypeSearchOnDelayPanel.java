@@ -1,4 +1,6 @@
 package userInterface;
 
-public class ProductTypeSearchOnDelayPanel {
+import javax.swing.*;
+
+public class ProductTypeSearchOnDelayPanel extends JPanel {
 }

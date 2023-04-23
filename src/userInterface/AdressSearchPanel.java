@@ -1,4 +1,6 @@
 package userInterface;
 
-public class AdressSearchPanel {
+import javax.swing.*;
+
+public class AdressSearchPanel extends JPanel {
 }

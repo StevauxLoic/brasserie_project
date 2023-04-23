@@ -2,6 +2,8 @@ package userInterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class UserManuelPopUp extends PopUp {
 
@@ -26,6 +28,8 @@ public class UserManuelPopUp extends PopUp {
 
     private JComboBox infoListComboBox;
 
+    private Integer displayedLabelIndex;
+
     private static String[] infosTopics = {"Infos sur l'application", "menus", "menu fichier", "menu aide", "menu recherche",
             "menu recherche", "menu produit", "menu rechercher/Rechercher un produit",
             "menu rechercher/Rechercher la quantité d’un type de produit dans un délai donné",
@@ -34,6 +38,8 @@ public class UserManuelPopUp extends PopUp {
             "menu rechercher/Rechercher un produit en rupture dans le stock et ses fournisseurs",
             "menu produit/Nouveau produit", "menu produit/Suprimer produit", "menu produit/Modifier produit",
             "menu produit/Trouver produit"};
+
+    private JLabel[] labelsArray;
 
     public UserManuelPopUp() {
         super("information de l'application");
@@ -50,6 +56,8 @@ public class UserManuelPopUp extends PopUp {
         // the left part of the screen with the ComboBox to choose the topic we want to see more infos onto
         infoListLabel = new JLabel("Aide à afficher :");
         infoListComboBox = new JComboBox(infosTopics);
+        JComboBoxListener jComboBoxListener = new JComboBoxListener();
+        infoListComboBox.addItemListener(jComboBoxListener);
 
         infosSelecterContainer.add(infoListLabel);
         infosSelecterContainer.add(infoListComboBox);
@@ -90,7 +98,48 @@ public class UserManuelPopUp extends PopUp {
         findProductLabel = new JLabel("<html></html>");
 
 
-        this.add(infosSelecterContainer, BorderLayout.WEST);
-        this.add(infosContainer, BorderLayout.CENTER);
+        labelsArray = new JLabel[17];
+        labelsArray[0] = infoListLabel;
+        labelsArray[1] = helpInfosLabel;
+        labelsArray[2] = softwareInfoLabel;
+        labelsArray[3] = menusLabel;
+        labelsArray[4] = fileMenuLabe;
+        labelsArray[5] = helpMenuLabe;
+        labelsArray[6] = searchMenuLabe;
+        labelsArray[7] = productMenuLabe;
+        labelsArray[8] = searchProductLabel;
+        labelsArray[9] = searchProductByQuantityLabel;
+        labelsArray[10] = searchProductSupplementDueToEventLabel;
+        labelsArray[11] = searchAdressLabel;
+        labelsArray[12] = searchProductOutOfStockLabel;
+        labelsArray[13] = newProductLabel;
+        labelsArray[14] = deleteProductLabel;
+        labelsArray[15] = modifyProductLabel;
+        labelsArray[16] = findProductLabel;
+
+        // add the components to the container
+        mainContainer.add(infosSelecterContainer, BorderLayout.WEST);
+        mainContainer.add(infosContainer, BorderLayout.CENTER);
+    }
+
+    private void changeDisplayedLabel (int labelIndex) {
+        infosContainer.removeAll();
+        infosContainer.add(labelsArray[labelIndex]);
+        infosContainer.repaint();
+        infosContainer.revalidate();
+        displayedLabelIndex = labelIndex;
+    }
+
+    private class JComboBoxListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            int selectedTopic = infoListComboBox.getSelectedIndex();
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                Integer selctedTopicIndex = UserManuelPopUp.this.displayedLabelIndex;
+                if (selctedTopicIndex != null && selectedTopic != selctedTopicIndex){
+                    changeDisplayedLabel(selectedTopic);
+                }
+            }
+        }
     }
 }
