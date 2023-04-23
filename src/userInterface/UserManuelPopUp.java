@@ -139,7 +139,6 @@ public class UserManuelPopUp extends PopUp {
                 if (selctedTopicIndex == null || selectedTopic != selctedTopicIndex){
                     changeDisplayedLabel(selectedTopic);
                 }
-                System.out.println(selectedTopic +" : " + selectedTopic);
             }
         }
     }
