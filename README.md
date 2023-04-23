@@ -16,3 +16,4 @@ projet de la brasserie en java
 
 ##TODO
 - aides/texts dans le manuel d'utilisation
+- voir comment on utilise le productSearchForm (==> abstract? design paterne observer ? ...?)
