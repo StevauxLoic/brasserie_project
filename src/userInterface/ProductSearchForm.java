@@ -85,12 +85,12 @@ public class ProductSearchForm extends JPanel {
         Object selectedProductType = productTypeComboBox.getSelectedItem();
         if (selectedProductType != null) {
             if (productsComboBox.getSelectedItem() != null) {
-                // show product
+                // show product and more
             } else {
                 JOptionPane.showMessageDialog(null, "Vous devez sélectionner un produit pour rechercher", "recherche impossible", JOptionPane.WARNING_MESSAGE);
             }
         } else if (productReferenceTextField.getText().length() > 0) {
-            // show product
+            // show product and more
         } else {
             JOptionPane.showMessageDialog(null, "Vous devez entrer une référence ou sélectionner un type de profuit anisi qu'un produit pour rechercher", "recherche impossible", JOptionPane.WARNING_MESSAGE);
         }
