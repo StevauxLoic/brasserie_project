@@ -8,56 +8,71 @@ import java.awt.*;
 public class ProductInfosPanel extends JPanel {
     private Product produit;
 
-    JLabel nameLabel, referenceLabel, productTypeLabel, vatLabel, quantityInStockLabel, minimumQuantityInStockLabel, sparklingLabel, alcoholLevelLabel, priceLabel, launchingDateLabel, descriptionLabel;
+    JLabel nameLabel,
+            referenceLabel,
+            productTypeLabel,
+            vatLabel,
+            quantityInStockLabel,
+            minimumQuantityInStockLabel,
+            sparklingLabel,
+            alcoholLevelLabel,
+            priceLabel,
+            launchingDateLabel,
+            descriptionLabel,
+            erroMessageLabel;
 
-    public ProductInfosPanel(Product produit, String buttonGoal) {
+    public ProductInfosPanel(Product product) {
         this.setBounds(10, 80,500,150);
         this.setLayout(new GridLayout(11,2,5,5));
+        if (product != null) {
+            nameLabel = new JLabel("nom");
+            this.add(nameLabel);
+            this.add(new JLabel(product.getName()));
 
-        nameLabel = new JLabel("nom");
-        this.add(nameLabel);
-        this.add(new JLabel(produit.getName()));
+            referenceLabel = new JLabel("référence");
+            this.add(referenceLabel);
+            this.add(new JLabel(product.getReference()));
 
-        referenceLabel = new JLabel("référence");
-        this.add(referenceLabel);
-        this.add(new JLabel(produit.getReference()));
+            productTypeLabel = new JLabel("référeance du type de product");
+            this.add(productTypeLabel);
+            this.add(new JLabel(String.valueOf(product.getTypeReference())));            // ref en int
 
-        productTypeLabel = new JLabel("référeance du type de produit");
-        this.add(productTypeLabel);
-        this.add(new JLabel(String.valueOf(produit.getTypeReference())));            // ref en int
+            vatLabel = new JLabel("TVA");
+            this.add(vatLabel);
+            this.add(new JLabel("" + product.getVat() + '%'));
 
-        vatLabel = new JLabel("TVA");
-        this.add(vatLabel);
-        this.add(new JLabel("" + produit.getVat() + '%'));
+            quantityInStockLabel = new JLabel("quantité en stock");
+            this.add(quantityInStockLabel);
+            this.add(new JLabel(product.getQuantityInStock() + "unitée(s)"));
 
-        quantityInStockLabel = new JLabel("quantité en stock");
-        this.add(quantityInStockLabel);
-        this.add(new JLabel(produit.getQuantityInStock() + "unitée(s)"));
+            minimumQuantityInStockLabel = new JLabel("quantité minimum en stock");
+            this.add(minimumQuantityInStockLabel);
+            this.add(new JLabel(product.getMinimumQuantityInStock() + "unitée(s)"));
 
-        minimumQuantityInStockLabel = new JLabel("quantité minimum en stock");
-        this.add(minimumQuantityInStockLabel);
-        this.add(new JLabel(produit.getMinimumQuantityInStock() + "unitée(s)"));
+            sparklingLabel = new JLabel("est pétillant");
+            this.add(sparklingLabel);
+            this.add(new JLabel(product.isSparkling() ? "oui" : "non"));
 
-        sparklingLabel = new JLabel("est pétillant");
-        this.add(sparklingLabel);
-        this.add(new JLabel(produit.isSparkling() ? "oui": "non"));
+            alcoholLevelLabel = new JLabel("niveau d'alcool");
+            this.add(alcoholLevelLabel);
+            Double alcoholLevel = product.getAlcoholLevel();
+            this.add(new JLabel(alcoholLevel != null ? alcoholLevel + "%" : "non alcoolisé"));
 
-        alcoholLevelLabel = new JLabel("niveau d'alcool");
-        this.add(alcoholLevelLabel);
-        Double alcoholLevel = produit.getAlcoholLevel();
-        this.add(new JLabel(alcoholLevel != null ? alcoholLevel + "%" : "non alcoolisé"));
+            priceLabel = new JLabel("prix HTVA (en magasin)");
+            this.add(priceLabel);
+            this.add(new JLabel(product.getPrice() + "€"));
 
-        priceLabel = new JLabel("prix HTVA (en magasin)");
-        this.add(priceLabel);
-        this.add(new JLabel(produit.getPrice() + "€"));
+            launchingDateLabel = new JLabel("date de lancement");
+            this.add(launchingDateLabel);
+            this.add(new JLabel(product.getLaunchingDate().toString()));
 
-        launchingDateLabel = new JLabel("date de lancement");
-        this.add(launchingDateLabel);
-        this.add(new JLabel(produit.getLaunchingDate().toString()));
-
-        descriptionLabel = new JLabel("description");
-        this.add(descriptionLabel);
-        String productDescrpition = produit.getDescription();
-        this.add(new JLabel(productDescrpition != null? productDescrpition : "pas de description" ));
+            descriptionLabel = new JLabel("description");
+            this.add(descriptionLabel);
+            String productDescrpition = product.getDescription();
+            this.add(new JLabel(productDescrpition != null ? productDescrpition : "pas de description"));
+        } else {
+            erroMessageLabel = new JLabel("Pas de produit trouvé (erreur)");
+            this.add(erroMessageLabel);
+        }
     }
 }

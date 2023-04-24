@@ -1,18 +1,23 @@
 package userInterface;
 
+import model.Product;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Date;
 
-public class ProductSearchForm extends JPanel {
-    JPanel titlePanel, formPanel;
-    JComboBox productTypeComboBox, productsComboBox;
-    JTextField productReferenceTextField;
-    JButton resetButton, searchButton;
-    JLabel panelTitleLabel, productTypeComboBoxLabel, productsComboBoxLabel, productReferenceTextFieldLabel;
+public abstract class ProductSearchForm extends JPanel {
+    private JPanel titlePanel, formPanel;
+    private JComboBox productTypeComboBox, productsComboBox;
+    private JTextField productReferenceTextField;
+    private JButton resetButton, searchButton, goBackToSearchButton;
+    private JLabel panelTitleLabel, productTypeComboBoxLabel, productsComboBoxLabel, productReferenceTextFieldLabel;
+
+    private static Product testProduct = new Product("productReference test", "productTypeRef Test", "productName test", 21, 20, false, new Date(2005,10,3), 15, 15.5, "productDescription test");
 
     public ProductSearchForm() {
         this.setLayout(new BorderLayout());
@@ -42,6 +47,9 @@ public class ProductSearchForm extends JPanel {
         searchButton = new JButton("rechercher");
         searchButton.addActionListener(buttonListener);
 
+        goBackToSearchButton = new JButton("Retourner à la page de recherche");
+        goBackToSearchButton.addActionListener(buttonListener);
+
         // labels
         panelTitleLabel = new JLabel("Formulaire de recherche d'un produit (par référence ou type de produit)");
         productTypeComboBoxLabel = new JLabel("type de produit : ");
@@ -49,6 +57,23 @@ public class ProductSearchForm extends JPanel {
         productReferenceTextFieldLabel = new JLabel("référence du produit : ");
 
         // Panels filling
+        fillPanelWithForm();
+
+        this.setVisible(true);
+    }
+
+    private void resetForm() {
+        productsComboBox.setSelectedItem(null);
+        productsComboBox.setEnabled(false);
+
+        productTypeComboBox.setSelectedItem(null);
+        productTypeComboBox.setEnabled(true);
+
+        productReferenceTextField.setText("");
+        productReferenceTextField.setEnabled(true);
+    }
+
+    private void fillPanelWithForm() {
         titlePanel.add(panelTitleLabel);
 
         formPanel.add(productTypeComboBoxLabel);
@@ -69,32 +94,34 @@ public class ProductSearchForm extends JPanel {
         this.add(formPanel, BorderLayout.CENTER);
     }
 
-    private void resetForm() {
-        productsComboBox.setSelectedItem(null);
-        productsComboBox.setEnabled(false);
-
-        productTypeComboBox.setSelectedItem(null);
-        productTypeComboBox.setEnabled(true);
-
-        productReferenceTextField.setText("");
-        productReferenceTextField.setEnabled(true);
-    }
-
 
     private void searchProduct() {
         Object selectedProductType = productTypeComboBox.getSelectedItem();
         if (selectedProductType != null) {
             if (productsComboBox.getSelectedItem() != null) {
-                // show product and more
+                // show product and more TODO search product
+                showProductInfos(testProduct);
             } else {
                 JOptionPane.showMessageDialog(null, "Vous devez sélectionner un produit pour rechercher", "recherche impossible", JOptionPane.WARNING_MESSAGE);
             }
-        } else if (productReferenceTextField.getText().length() > 0) {
-            // show product and more
+        } else if (productReferenceTextField.getText().length() > 0) { // TODO to review while checking what a reference contains
+            // show product and more TODO search product by reference
+            showProductInfos(testProduct);
         } else {
             JOptionPane.showMessageDialog(null, "Vous devez entrer une référence ou sélectionner un type de profuit anisi qu'un produit pour rechercher", "recherche impossible", JOptionPane.WARNING_MESSAGE);
         }
     }
+
+    private void showProductInfos(Product productTodisplay) {
+        this.removeAll();
+        this.add(new ProductInfosPanel(productTodisplay), BorderLayout.CENTER);
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.add(goBackToSearchButton);
+        buttonsPanelUnderProductInfos(productTodisplay, buttonsPanel);
+        this.add(buttonsPanel, BorderLayout.SOUTH);
+    }
+
+    public abstract void buttonsPanelUnderProductInfos(Product foundProduct, JPanel buttonsPanel);
 
     private class ButtonListener implements ActionListener {
         @Override
@@ -104,6 +131,9 @@ public class ProductSearchForm extends JPanel {
                 ProductSearchForm.this.resetForm();
             } else if (source == searchButton) {
                 ProductSearchForm.this.searchProduct();
+            } else if (source == goBackToSearchButton) {
+                ProductSearchForm.this.removeAll();
+                ProductSearchForm.this.fillPanelWithForm();
             }
         }
     }
@@ -128,17 +158,8 @@ public class ProductSearchForm extends JPanel {
             if (event.getStateChange() == ItemEvent.SELECTED) {
                 thisForm.productReferenceTextField.setEnabled(false);
                 thisForm.productsComboBox.setEnabled(true);
+                // TODO rechercher les produits du type sélectionné
             }
         }
     }
 }
-/*
--	JComboBox (type de produit)  grisé si une référence est entrée
-    -	JComboBox (produits)
-     accesible dés que le type à été choisi
--	JField (reference du produit)  grisé si un type de produit est sélectionné
--	JButton (reset)
--	JButton (chercher)
--	Sortie :
--	Infos du produit / pas de produit trouvé à la référence ‘référence donnée’
-*/
