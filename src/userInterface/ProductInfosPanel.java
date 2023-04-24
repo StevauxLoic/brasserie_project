@@ -22,7 +22,6 @@ public class ProductInfosPanel extends JPanel {
             erroMessageLabel;
 
     public ProductInfosPanel(Product product) {
-        this.setBounds(10, 80,500,150);
         this.setLayout(new GridLayout(11,2,5,5));
         if (product != null) {
             nameLabel = new JLabel("nom");
