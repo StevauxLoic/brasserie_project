@@ -17,7 +17,7 @@ public abstract class ProductSearchForm extends JPanel {
     private JButton resetButton, searchButton, goBackToSearchButton;
     private JLabel panelTitleLabel, productTypeComboBoxLabel, productsComboBoxLabel, productReferenceTextFieldLabel;
 
-    private static Product testProduct = new Product("productReference test", "productTypeRef Test", "productName test", 21, 20, false, LocalDate.now(), 15, 15.5, "productDescription test");
+    private static Product testProduct = new Product("productReference test","productName test", 21, 20, false, LocalDate.of(2004, 11, 14), 15.5, 15.5, "productDescritption test");
 
     public ProductSearchForm() {
         this.setLayout(new BorderLayout());
