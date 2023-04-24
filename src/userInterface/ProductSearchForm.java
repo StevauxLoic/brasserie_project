@@ -17,7 +17,7 @@ public abstract class ProductSearchForm extends JPanel {
     private JButton resetButton, searchButton, goBackToSearchButton;
     private JLabel panelTitleLabel, productTypeComboBoxLabel, productsComboBoxLabel, productReferenceTextFieldLabel;
 
-    private static Product testProduct = new Product("productReference test", "productTypeRef Test", "productName test", 21, 20, false, new Date(2005,10,3), 15, 15.5, "productDescription test");
+    private static Product testProduct = new Product("productReference test", "productTypeRef Test", "productName test", 21, 20, false, new Date(2005,7,3), 15, 15.5, "productDescription test");
 
     public ProductSearchForm() {
         this.setLayout(new BorderLayout());
@@ -62,17 +62,6 @@ public abstract class ProductSearchForm extends JPanel {
         this.setVisible(true);
     }
 
-    private void resetForm() {
-        productsComboBox.setSelectedItem(null);
-        productsComboBox.setEnabled(false);
-
-        productTypeComboBox.setSelectedItem(null);
-        productTypeComboBox.setEnabled(true);
-
-        productReferenceTextField.setText("");
-        productReferenceTextField.setEnabled(true);
-    }
-
     private void fillPanelWithForm() {
         titlePanel.add(panelTitleLabel);
 
@@ -88,12 +77,22 @@ public abstract class ProductSearchForm extends JPanel {
         formPanel.add(resetButton);
         formPanel.add(searchButton);
 
-        resetForm();;
+        resetForm();
 
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(formPanel, BorderLayout.CENTER);
     }
 
+    private void resetForm() {
+        productsComboBox.setSelectedItem(null);
+        productsComboBox.setEnabled(false);
+
+        productTypeComboBox.setSelectedItem(null);
+        productTypeComboBox.setEnabled(true);
+
+        productReferenceTextField.setText("");
+        productReferenceTextField.setEnabled(true);
+    }
 
     private void searchProduct() {
         Object selectedProductType = productTypeComboBox.getSelectedItem();
