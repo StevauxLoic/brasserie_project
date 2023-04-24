@@ -25,7 +25,7 @@ public class ProductSearchPanel extends ProductSearchForm {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            JOptionPane.showMessageDialog(null, ProductSearchPanel.this.foundProduct.getReference(), "Référence de" + ProductSearchPanel.this.foundProduct.getName(), JOptionPane.INFORMATION_MESSAGE);
+            ProductReferencePopUp productReferencePopUp = new ProductReferencePopUp(foundProduct.getReference());
         }
     }
 }
