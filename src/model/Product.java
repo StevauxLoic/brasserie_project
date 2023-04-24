@@ -1,7 +1,8 @@
 package model;
 
 import java.awt.*;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 public class Product {
     private String reference; // primaryKey
@@ -11,28 +12,34 @@ public class Product {
     private int quantityInStock;
     private int minimumQuantityInStock;
     private boolean isSparkling;
-    private double alcoholLevel; // non obligatory
-    private Date launchingDate;
+    private double alcoholLevel;
+    private LocalDate launchingDate;
     private double price;
-    private String description;
+    private String description; // non obligatory
 
-    public Product(String reference, String typeReference, String name, double vat, int minimumQuantityInStock, boolean isSparkling, Date launchingDate, double price, double alcoholLevel, String description){
+    public Product(String reference, String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, String description){
         // creation reference
         // type ref est un auto incrément a voir avec mySQL
+
         setReference(reference);
         setName(name);
         setVat(vat);
         setQuantityInStock();
         setMinimumQuantityInStock(minimumQuantityInStock);
+        this.isSparkling = isSparkling;
         setPrice(price);
-        // je sais pas comment faire le date
+        setLaunchingDate(launchingDate);
         setAlcoholLevel(alcoholLevel);
         this.description = description;
     }
 
-    // second constructor to create an product with no despcription
-    public Product(String reference, String typeReference, String name, double vat, int minimumQuantityInStock, boolean isSparkling, Date launchingDate, double price, double alcoholLevel){
-        this(reference, typeReference, name, vat, minimumQuantityInStock, isSparkling, launchingDate, price,alcoholLevel, null);
+    public void setLaunchingDate(LocalDate launchingDate) {
+        if(launchingDate != null && launchingDate.isBefore(LocalDate.now())){
+            this.launchingDate = launchingDate;
+        } else {
+            // throws exept
+        }
+
     }
 
     public void setReference(String reference) {
@@ -47,7 +54,7 @@ public class Product {
         if(name != null){
             this.name = name;
         } else {
-            this.name = null;
+            // throw exept
         }
     }
 
@@ -129,7 +136,7 @@ public class Product {
         return alcoholLevel;
     }
 
-    public Date getLaunchingDate() {
+    public LocalDate getLaunchingDate() {
         return launchingDate;
     }
 
