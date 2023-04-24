@@ -25,7 +25,7 @@ public class ProductDeletingPanel extends ProductSearchForm {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            // TODO page de supression
+            // TODO supression
             JOptionPane.showMessageDialog(null, "Suppression du produit " + foundProduct.getName(), "suppression de produit", JOptionPane.WARNING_MESSAGE);
         }
     }
