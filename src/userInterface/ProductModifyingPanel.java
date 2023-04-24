@@ -25,7 +25,7 @@ public class ProductModifyingPanel extends ProductSearchForm {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-
+            // TODO page de modification
         }
     }
 }

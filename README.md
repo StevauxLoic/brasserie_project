@@ -12,7 +12,7 @@ projet de la brasserie en java
   - 5 produit en rupture de stock et leurs fournisseurs
 - Produit
   - 1 nouveau
-  - 2 supprimer
+  - 3 modifier
 
 ##TODO
 - aides/texts dans le manuel d'utilisation
