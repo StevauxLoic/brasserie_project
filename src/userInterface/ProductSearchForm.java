@@ -17,7 +17,7 @@ public abstract class ProductSearchForm extends JPanel {
     private JButton resetButton, searchButton, goBackToSearchButton;
     private JLabel panelTitleLabel, productTypeComboBoxLabel, productsComboBoxLabel, productReferenceTextFieldLabel;
 
-    private static Product testProduct = new Product("productReference test","productName test", 21, 20, false, LocalDate.of(2004, 11, 14), 15.5, 15.5, "productDescritption test");
+    private static Product testProduct = new Product("productReference test", 14,"productName test", 21, 20, false, LocalDate.of(2004, 11, 14), 15.5, 15.5, "productDescritption test");
 
     public ProductSearchForm() {
         this.setLayout(new BorderLayout());
@@ -126,14 +126,17 @@ public abstract class ProductSearchForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             Object source = event.getSource();
+            ProductSearchForm thisProductSearchPanel = ProductSearchForm.this;
             if (source == resetButton) {
-                ProductSearchForm.this.resetForm();
+                thisProductSearchPanel.resetForm();
             } else if (source == searchButton) {
-                ProductSearchForm.this.searchProduct();
+                thisProductSearchPanel.searchProduct();
             } else if (source == goBackToSearchButton) {
-                ProductSearchForm.this.removeAll();
-                ProductSearchForm.this.fillPanelWithForm();
+                thisProductSearchPanel.removeAll();
+                thisProductSearchPanel.fillPanelWithForm();
             }
+            thisProductSearchPanel.repaint();
+            thisProductSearchPanel.revalidate();
         }
     }
 
