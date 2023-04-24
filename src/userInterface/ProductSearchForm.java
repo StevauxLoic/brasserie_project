@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Date;
+import java.time.LocalDate;
 
 public abstract class ProductSearchForm extends JPanel {
     private JPanel titlePanel, formPanel;
@@ -17,7 +17,7 @@ public abstract class ProductSearchForm extends JPanel {
     private JButton resetButton, searchButton, goBackToSearchButton;
     private JLabel panelTitleLabel, productTypeComboBoxLabel, productsComboBoxLabel, productReferenceTextFieldLabel;
 
-    private static Product testProduct = new Product("productReference test", "productTypeRef Test", "productName test", 21, 20, false, new Date(2005,7,3), 15, 15.5, "productDescription test");
+    private static Product testProduct = new Product("productReference test", "productTypeRef Test", "productName test", 21, 20, false, LocalDate.now(), 15, 15.5, "productDescription test");
 
     public ProductSearchForm() {
         this.setLayout(new BorderLayout());
