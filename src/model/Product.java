@@ -17,10 +17,8 @@ public class Product {
     private double price;
     private String description; // non obligatory
 
-    public Product(String reference, String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, String description){
-        // creation reference
-        // type ref est un auto incrément a voir avec mySQL
-
+    public Product(String reference, int typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, String description){
+        setTypeReference(typeReference);
         setReference(reference);
         setName(name);
         setVat(vat);
@@ -33,13 +31,21 @@ public class Product {
         this.description = description;
     }
 
+    public void setTypeReference(int typeReference) {
+        /*if(typeReference appartient a la bd){
+            this.typeReference = typeReference;
+        } else {
+            throw exept
+        }
+         */
+    }
+
     public void setLaunchingDate(LocalDate launchingDate) {
         if(launchingDate != null && launchingDate.isBefore(LocalDate.now())){
             this.launchingDate = launchingDate;
         } else {
             // throws exept
         }
-
     }
 
     public void setReference(String reference) {
