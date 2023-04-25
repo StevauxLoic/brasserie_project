@@ -3,9 +3,9 @@ package model;
 public class AdditionalRestocking {
     private int amount;
     private String productReference; // primarykey with eventRef & foreignKey
-    private String eventReference; // primaryKey with productRef & foreignKey
+    private int eventReference; // primaryKey with productRef & foreignKey
 
-    public AdditionalRestocking(int amount, String productReference, String eventReference){
+    public AdditionalRestocking(int amount, String productReference, int eventReference){
         setProductReference(productReference);
         setEventReference(eventReference);
         setAmount(amount);
@@ -13,18 +13,20 @@ public class AdditionalRestocking {
 
     public void setProductReference(String productReference) {
         if(productReference != null){
-            this.eventReference = eventReference;
+            this.productReference = productReference;
         } else {
-            this.eventReference = null;
+            // throws erreur
         }
     }
 
-    public void setEventReference(String eventReference){
-        if(eventReference != null){
+    public void setEventReference(int eventReference){
+        /*
+        if(dans la bd){
             this.eventReference = eventReference;
         } else {
-            this.eventReference = null;
+            creer ou erreur
         }
+        */
     }
 
     public void setAmount(int amount){
