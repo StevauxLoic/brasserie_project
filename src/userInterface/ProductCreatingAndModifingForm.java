@@ -4,22 +4,31 @@ import javax.swing.*;
 import java.awt.*;
 
 public abstract class ProductCreatingAndModifingForm extends JPanel {
-    JLabel nameLabel,
-            referenceLabel,
-            productTypeLabel,
-            vatLabel,
-            quantityInStockLabel,
-            minimumQuantityInStockLabel,
-            sparklingLabel,
-            hasAlcoholCheckBoxLabel,
-            alcoholLevelLabel,
-            priceLabel,
-            launchingDateLabel,
-            descriptionLabel;
+    private JLabel nameLabel,
+                    referenceLabel,
+                    productTypeLabel,
+                    vatLabel,
+                    quantityInStockLabel,
+                    minimumQuantityInStockLabel,
+                    sparklingLabel,
+                    hasAlcoholCheckBoxLabel,
+                    alcoholLevelLabel,
+                    priceLabel,
+                    launchingDateLabel,
+                    descriptionLabel;
 
-    JPanel formPanel, buttonsPanel;
-    JButton resetFormButton;
-    JCheckBox isSparklingCheckBox, hasAlcoholCheckBox;
+    private JPanel formPanel, buttonsPanel;
+    private JCheckBox isSparklingCheckBox, hasAlcoholCheckBox;
+    private JComboBox productTypeComboBox;
+    private JTextField nameTextField, 
+                        referenceTextField,
+                        vatTextField,
+                        quantityInStockTextField,
+                        minimumQuantityInStockTextField,
+                        alcoholLevelTextField,
+                        priceTextField,
+                        descriptionTextField;
+    private JSpinner launchingDateSpinner;
 
     public ProductCreatingAndModifingForm() {
         this.setLayout(new BorderLayout());
@@ -33,35 +42,86 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
 
         // labels
         nameLabel = new JLabel("nom");
-
         referenceLabel = new JLabel("référence");
-
         productTypeLabel = new JLabel("type de product");
-
         vatLabel = new JLabel("TVA");
-
         quantityInStockLabel = new JLabel("quantité en stock");
-
         minimumQuantityInStockLabel = new JLabel("quantité minimum en stock");
-
         sparklingLabel = new JLabel("est pétillant");
-
-        alcoholLevelLabel = new JLabel("niveau d'alcool");
-
-        priceLabel = new JLabel("prix HTVA (en magasin)");
-
-        launchingDateLabel = new JLabel("date de lancement");
-
-        descriptionLabel = new JLabel("description");
-
         hasAlcoholCheckBoxLabel = new JLabel("contient de l'alcool");
-
-        // button
-        resetFormButton = new JButton();
+        alcoholLevelLabel = new JLabel("niveau d'alcool");
+        priceLabel = new JLabel("prix HTVA (en magasin)");
+        launchingDateLabel = new JLabel("date de lancement");
+        descriptionLabel = new JLabel("description");
+        
 
         // checkBoxes
-        isSparklingCheckBox = new JCheckBox();
+        isSparklingCheckBox = new JCheckBox("oui");
+        hasAlcoholCheckBox = new JCheckBox("oui");
+        
+        // text fields
+        nameTextField = new JTextField();
+        referenceTextField = new JTextField();
+        vatTextField = new JTextField();
+        quantityInStockTextField = new JTextField();
+        minimumQuantityInStockTextField = new JTextField();
+        alcoholLevelTextField = new JTextField();
+        priceTextField = new JTextField();
+        descriptionTextField = new JTextField();
 
-        hasAlcoholCheckBox = new JCheckBox();
+        // JComboBox
+        productTypeComboBox = new JComboBox(new String[]{"spiritueu", "bière", "soda", "whisky"});
+
+        // spinners
+        launchingDateSpinner = new JSpinner();
+
+        // fill the panel and display it
+        fillFormPanel();
+        fillButtonsPanel();
+
+        this.add(formPanel);
+        this.add(buttonsPanel);
+
+        this.setVisible(true);
     }
+
+    private void fillFormPanel() {
+        // fill the form panel
+        formPanel.add(nameLabel);
+        formPanel.add(nameTextField);
+
+        formPanel.add(referenceLabel);
+        formPanel.add(referenceTextField);
+
+        formPanel.add(productTypeLabel);
+        formPanel.add(productTypeComboBox);
+
+        formPanel.add(vatLabel);
+        formPanel.add(vatTextField);
+
+        formPanel.add(quantityInStockLabel);
+        formPanel.add(quantityInStockTextField);
+
+        formPanel.add(minimumQuantityInStockLabel);
+        formPanel.add(minimumQuantityInStockTextField);
+
+        formPanel.add(sparklingLabel);
+        formPanel.add(isSparklingCheckBox);
+
+        formPanel.add(hasAlcoholCheckBoxLabel);
+        formPanel.add(hasAlcoholCheckBox);
+
+        formPanel.add(alcoholLevelLabel);
+        formPanel.add(alcoholLevelTextField);
+
+        formPanel.add(priceLabel);
+        formPanel.add(priceTextField);
+
+        formPanel.add(launchingDateLabel);
+        formPanel.add(launchingDateSpinner);
+
+        formPanel.add(descriptionLabel);
+        formPanel.add(descriptionTextField);
+    }
+    public abstract void fillButtonsPanel();
 }
