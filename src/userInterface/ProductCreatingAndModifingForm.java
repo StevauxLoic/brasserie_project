@@ -1,5 +1,7 @@
 package userInterface;
 
+import model.Product;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -76,7 +78,7 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         launchingDateSpinner = new JSpinner();
 
         // fill the panel and display it
-        fillFormPanel();
+        fillFormPanel(formPanel);
         fillButtonsPanel();
 
         this.add(formPanel);
@@ -85,7 +87,7 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         this.setVisible(true);
     }
 
-    private void fillFormPanel() {
+    private void fillFormPanel(JPanel buttonsPanel) {
         // fill the form panel
         formPanel.add(nameLabel);
         formPanel.add(nameTextField);
@@ -124,4 +126,12 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         formPanel.add(descriptionTextField);
     }
     public abstract void fillButtonsPanel();
+
+    // return null if ther is a problem (something is not filled)
+    /*public Product readForm(){
+        if ()
+        // Product redProduct = new Product();
+    }*/
+
+    public abstract void fillButtonsPanel(JPanel buttonsPanel);
 }
