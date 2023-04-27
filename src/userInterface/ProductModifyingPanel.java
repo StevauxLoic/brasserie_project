@@ -21,11 +21,18 @@ public class ProductModifyingPanel extends ProductSearchForm {
         }
     }
 
+    private void displayModifyingForm() {
+        this.removeAll();
+        this.add(new ProductModifyingForm(foundProduct));
+        this.revalidate();
+        this.repaint();
+    }
+
     private class ButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            // TODO page de modification
+            ProductModifyingPanel.this.displayModifyingForm();
         }
     }
 }

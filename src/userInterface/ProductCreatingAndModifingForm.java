@@ -4,6 +4,10 @@ import model.Product;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public abstract class ProductCreatingAndModifingForm extends JPanel {
     private JLabel nameLabel,
@@ -60,6 +64,7 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         // checkBoxes
         isSparklingCheckBox = new JCheckBox("oui");
         hasAlcoholCheckBox = new JCheckBox("oui");
+        hasAlcoholCheckBox.addItemListener(new ChecboxListener());
         
         // text fields
         nameTextField = new JTextField();
@@ -70,6 +75,16 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         alcoholLevelTextField = new JTextField();
         priceTextField = new JTextField();
         descriptionTextField = new JTextField();
+        
+        TextFieldListener textFieldListener = new TextFieldListener();
+        nameTextField.addActionListener(textFieldListener);
+        referenceTextField.addActionListener(textFieldListener);
+        vatTextField.addActionListener(textFieldListener);
+        quantityInStockTextField.addActionListener(textFieldListener);
+        minimumQuantityInStockTextField.addActionListener(textFieldListener);
+        alcoholLevelTextField.addActionListener(textFieldListener);
+        priceTextField.addActionListener(textFieldListener);
+        descriptionTextField.addActionListener(textFieldListener);
 
         // JComboBox
         productTypeComboBox = new JComboBox(new String[]{"spiritueu", "bière", "soda", "whisky"});
@@ -79,7 +94,7 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
 
         // fill the panel and display it
         fillFormPanel(formPanel);
-        fillButtonsPanel();
+        fillButtonsPanel(buttonsPanel);
 
         this.add(formPanel);
         this.add(buttonsPanel);
@@ -87,7 +102,7 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         this.setVisible(true);
     }
 
-    private void fillFormPanel(JPanel buttonsPanel) {
+    private void fillFormPanel(JPanel formPanel) {
         // fill the form panel
         formPanel.add(nameLabel);
         formPanel.add(nameTextField);
@@ -125,13 +140,140 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         formPanel.add(descriptionLabel);
         formPanel.add(descriptionTextField);
     }
-    public abstract void fillButtonsPanel();
-
-    // return null if ther is a problem (something is not filled)
-    /*public Product readForm(){
-        if ()
-        // Product redProduct = new Product();
-    }*/
 
     public abstract void fillButtonsPanel(JPanel buttonsPanel);
+
+    public JCheckBox getIsSparklingCheckBox() {
+        return isSparklingCheckBox;
+    }
+
+    public JCheckBox getHasAlcoholCheckBox() {
+        return hasAlcoholCheckBox;
+    }
+
+    public JComboBox getProductTypeComboBox() {
+        return productTypeComboBox;
+    }
+
+    public JTextField getNameTextField() {
+        return nameTextField;
+    }
+
+    public JTextField getReferenceTextField() {
+        return referenceTextField;
+    }
+
+    public JTextField getVatTextField() {
+        return vatTextField;
+    }
+
+    public JTextField getQuantityInStockTextField() {
+        return quantityInStockTextField;
+    }
+
+    public JTextField getMinimumQuantityInStockTextField() {
+        return minimumQuantityInStockTextField;
+    }
+
+    public JTextField getAlcoholLevelTextField() {
+        return alcoholLevelTextField;
+    }
+
+    public JTextField getPriceTextField() {
+        return priceTextField;
+    }
+
+    public JTextField getDescriptionTextField() {
+        return descriptionTextField;
+    }
+
+    public JSpinner getLaunchingDateSpinner() {
+        return launchingDateSpinner;
+    }
+
+    private boolean isValideDouble (String textToVerify) {
+        try {
+            double reference = Double.parseDouble(textToVerify);
+            return true;
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, "l'entrée doit être un nombre à virgule", "erreure d'entrée", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+    }
+
+    private boolean isValideInt (String textToVerify) {
+        try {
+            int reference = Integer.parseInt(textToVerify);
+            return true;
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, "l'entrée doit être un nombre entier", "erreure d'entrée", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+    }
+    
+    private void showTextFieldError(String message, JTextField textField) {
+        textField.setText(null);
+        JOptionPane.showMessageDialog(null, message, "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+
+    }
+
+    public Product readForm() {
+        // lis les champs et renvoie le produit en fonction de et renvoie null si au moins un champs est mal rempli
+
+        return null;
+    }
+
+    private class ChecboxListener implements ItemListener {
+
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            boolean hasAlcohol = event.getStateChange() == ItemEvent.SELECTED;
+            ProductCreatingAndModifingForm.this.getAlcoholLevelTextField().setEnabled(hasAlcohol);
+        }
+    }
+
+    private class TextFieldListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            JTextField eventSource = (JTextField) event.getSource();
+
+            String textFieldText = eventSource.getText();
+            if(eventSource == nameTextField) {
+                if (textFieldText.length() > 180 || textFieldText.length() == 0) {
+                    showTextFieldError("le nom doit contenir entre 0 et 180 caractères", eventSource);
+                }
+            } else if(eventSource == referenceTextField) {
+                if (textFieldText.length() > 10 || textFieldText.length() == 0) {
+                    showTextFieldError("la référence doit contenir entre 0 et 10 caractères", eventSource);
+                }
+            } else if(eventSource == descriptionTextField) {
+                if (textFieldText.length() < 1) {
+                    eventSource.setText(null);
+                }
+            } else {
+                if(eventSource == vatTextField) {
+                    if (!isValideDouble(textFieldText) || Double.valueOf(textFieldText) > 100 || Double.valueOf(textFieldText) < 0) {
+                        showTextFieldError("la tva doit être un nombre (à virgule ou non) entre 0 et 100", eventSource);
+                    }
+                } else if(eventSource == alcoholLevelTextField) {
+                    if (!isValideDouble(textFieldText) || Double.valueOf(textFieldText) > 100 || Double.valueOf(textFieldText) <= 0) {
+                        showTextFieldError("le taux d'alcool doit être un nombre (à virgule ou non) entre 0 et 100 % (100 compris mais 0 non), si le produit n'est pas alcoolisé, ne coché pas la case qui dit que le produit l'est", eventSource);
+                    }
+                } else if(eventSource == priceTextField) {
+                    if (!isValideDouble(textFieldText) || Double.valueOf(textFieldText) < 0) {
+                        showTextFieldError("le prix doit être un nombre (à virgule ou non) non négatif", eventSource);
+                    }
+                } else if(eventSource == quantityInStockTextField) {
+                    if (!isValideInt(textFieldText) || Integer.valueOf(textFieldText) < 0) {
+                        showTextFieldError("la quantité en stock doit être un nombre entier positif ou nul", eventSource);
+                    }
+                } else if(eventSource == minimumQuantityInStockTextField) {
+                    if (!isValideInt(textFieldText) || Integer.valueOf(textFieldText) < 0) {
+                        showTextFieldError("la quantité minimum en stock doit être un nombre entier positif ou nul", eventSource);
+                    }
+                }
+            }
+        }
+    }
 }
