@@ -11,7 +11,7 @@ public class Statut {
         setReference(reference);
         setLabel(label);
         this.mustPayDeposit = mustPayDeposit;
-        this.creditLimitation = creditLimitation;
+        setCreditLimitation(creditLimitation);
         this.discount = discount;
     }
 
@@ -23,6 +23,15 @@ public class Statut {
         }
 
     }
+
+    public void setCreditLimitation(Double creditLimitation) {
+        if(creditLimitation < 0){
+            this.creditLimitation = 0.0;
+        } else {
+            this.creditLimitation = creditLimitation;
+        }
+    }
+
 
     public void setLabel(String label) {
         if(label != null){
