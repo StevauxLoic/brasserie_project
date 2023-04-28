@@ -3,11 +3,14 @@ package userInterface;
 import model.Product;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.time.LocalDate;
 
 public abstract class ProductCreatingAndModifingForm extends JPanel {
     private JLabel nameLabel,
@@ -29,11 +32,12 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
     private JTextField nameTextField, 
                         referenceTextField,
                         vatTextField,
-                        quantityInStockTextField,
-                        minimumQuantityInStockTextField,
                         alcoholLevelTextField,
                         priceTextField,
                         descriptionTextField;
+    private JSpinner quantityInStockSpinner,
+            minimumQuantityInStockSpinner;
+
     private JSpinner launchingDateSpinner;
 
     public ProductCreatingAndModifingForm() {
@@ -70,8 +74,6 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         nameTextField = new JTextField();
         referenceTextField = new JTextField();
         vatTextField = new JTextField();
-        quantityInStockTextField = new JTextField();
-        minimumQuantityInStockTextField = new JTextField();
         alcoholLevelTextField = new JTextField();
         priceTextField = new JTextField();
         descriptionTextField = new JTextField();
@@ -80,8 +82,6 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         nameTextField.addActionListener(textFieldListener);
         referenceTextField.addActionListener(textFieldListener);
         vatTextField.addActionListener(textFieldListener);
-        quantityInStockTextField.addActionListener(textFieldListener);
-        minimumQuantityInStockTextField.addActionListener(textFieldListener);
         alcoholLevelTextField.addActionListener(textFieldListener);
         priceTextField.addActionListener(textFieldListener);
         descriptionTextField.addActionListener(textFieldListener);
@@ -90,7 +90,16 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         productTypeComboBox = new JComboBox(new String[]{"spiritueu", "bière", "soda", "whisky"});
 
         // spinners
+        quantityInStockSpinner = new JSpinner();
+        minimumQuantityInStockSpinner = new JSpinner();
+
         launchingDateSpinner = new JSpinner();
+
+        SpinnerListener spinnerListener = new SpinnerListener();
+        quantityInStockSpinner.addChangeListener(spinnerListener);
+        minimumQuantityInStockSpinner.addChangeListener(spinnerListener);
+
+
 
         // fill the panel and display it
         fillFormPanel(formPanel);
@@ -117,10 +126,10 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         formPanel.add(vatTextField);
 
         formPanel.add(quantityInStockLabel);
-        formPanel.add(quantityInStockTextField);
+        formPanel.add(quantityInStockSpinner);
 
         formPanel.add(minimumQuantityInStockLabel);
-        formPanel.add(minimumQuantityInStockTextField);
+        formPanel.add(minimumQuantityInStockSpinner);
 
         formPanel.add(sparklingLabel);
         formPanel.add(isSparklingCheckBox);
@@ -167,12 +176,12 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         return vatTextField;
     }
 
-    public JTextField getQuantityInStockTextField() {
-        return quantityInStockTextField;
+    public JSpinner getQuantityInStockSpinner() {
+        return quantityInStockSpinner;
     }
 
-    public JTextField getMinimumQuantityInStockTextField() {
-        return minimumQuantityInStockTextField;
+    public JSpinner getMinimumQuantityInStockSpinner() {
+        return minimumQuantityInStockSpinner;
     }
 
     public JTextField getAlcoholLevelTextField() {
@@ -191,6 +200,7 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         return launchingDateSpinner;
     }
 
+    //TODO verif que la valeur est la même avant et après le parsint ou le parsdouble
     private boolean isValideDouble (String textToVerify) {
         try {
             double reference = Double.parseDouble(textToVerify);
@@ -200,26 +210,78 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
             return false;
         }
     }
-
-    private boolean isValideInt (String textToVerify) {
-        try {
-            int reference = Integer.parseInt(textToVerify);
-            return true;
-        } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, "l'entrée doit être un nombre entier", "erreure d'entrée", JOptionPane.WARNING_MESSAGE);
-            return false;
-        }
-    }
     
     private void showTextFieldError(String message, JTextField textField) {
         textField.setText(null);
         JOptionPane.showMessageDialog(null, message, "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
-
     }
 
     public Product readForm() {
         // lis les champs et renvoie le produit en fonction de et renvoie null si au moins un champs est mal rempli
+        // chaque champs est lu, si il est validé il est enregistré dans une variable sinon la fonction renvoie directement null
+        // si tout les champs sont validés un Product avec les données lues sera renvoyé
+        if (nameTextField.getText().length() > 180 || nameTextField.getText().length() == 0) {
+            showTextFieldError("le nom doit contenir entre 0 et 180 caractères", nameTextField);
+        } else {
+            String name = nameTextField.getText();
 
+            if (referenceTextField.getText().length() > 10 || referenceTextField.getText().length() == 0) {
+                showTextFieldError("la référence doit contenir entre 0 et 10 caractères", referenceTextField);
+            } else {
+                String reference = referenceTextField.getText();
+
+                // en cas d'erreur pour ne pas avoir de "" à la place de null
+                if (descriptionTextField.getText().length() < 1) {
+                    descriptionTextField.setText(null);
+                }
+                String description = descriptionTextField.getText();
+
+                if (!isValideDouble(vatTextField.getText()) || Double.parseDouble(vatTextField.getText()) > 100 || Double.parseDouble(vatTextField.getText()) < 0) {
+                    showTextFieldError("la tva doit être un nombre (à virgule ou non) entre 0 et 100", vatTextField);
+                } else {
+                    Double vat = Double.parseDouble(vatTextField.getText());
+
+                    boolean alcoholLevelOrCheckBoxAreValid = hasAlcoholCheckBox.isSelected() && (isValideDouble(alcoholLevelTextField.getText()) || Double.parseDouble(alcoholLevelTextField.getText()) <= 100 || Double.parseDouble(alcoholLevelTextField.getText()) > 0);
+                    if (!alcoholLevelOrCheckBoxAreValid) {
+                        showTextFieldError("le taux d'alcool doit être un nombre (à virgule ou non) entre 0 et 100 % (100 compris mais 0 non), si le produit n'est pas alcoolisé, ne coché pas la case qui dit que le produit l'est", alcoholLevelTextField);
+                    } else {
+                        Double alcoholLevel = hasAlcoholCheckBox.isSelected() ? Double.parseDouble(alcoholLevelTextField.getText()) : 0;
+
+                        if (!isValideDouble(priceTextField.getText()) || Double.parseDouble(priceTextField.getText()) < 0) {
+                            showTextFieldError("le prix doit être un nombre (à virgule ou non) non négatif", priceTextField);
+                        } else {
+                            Double price = Double.parseDouble(priceTextField.getText());
+
+                            if ((int) quantityInStockSpinner.getValue() < 0) {
+                                JOptionPane.showMessageDialog(null, "la quantité en stock doit être un nombre entier positif ou nul", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+                                quantityInStockSpinner.setValue(0);
+                            } else {
+                                int quantityInStock = (int) quantityInStockSpinner.getValue()    ;
+
+                                if ((int) minimumQuantityInStockSpinner.getValue() < 0) {
+                                    JOptionPane.showMessageDialog(null, "la quantité minimum en stock doit être un nombre entier positif ou nul", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+                                    minimumQuantityInStockSpinner.setValue(0);
+                                } else {
+                                    int minimumInStock = (int) minimumQuantityInStockSpinner.getValue();
+
+                                    if (productTypeComboBox.getSelectedItem() == null) {
+                                        JOptionPane.showMessageDialog(null, "un type de produit doit être choisi", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+                                    } else {
+                                        int productTypeReference = productTypeComboBox.getSelectedIndex() + 1;
+                                        boolean isSparkling = isSparklingCheckBox.isSelected();
+                                        // TODO régler le problème du JSpinner ici et aussi à la création de ce dernier pour qu'il face des dates
+                                        LocalDate launchingDate = new LocalDate(launchingDateSpinner.getAutoscrolls());
+
+                                        //isSparklingCheckBox
+                                        return new Product(reference, productTypeReference, name, vat, minimumInStock, isSparkling, launchingDate, price, alcoholLevel, description, quantityInStock);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return null;
     }
 
@@ -264,14 +326,26 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
                     if (!isValideDouble(textFieldText) || Double.valueOf(textFieldText) < 0) {
                         showTextFieldError("le prix doit être un nombre (à virgule ou non) non négatif", eventSource);
                     }
-                } else if(eventSource == quantityInStockTextField) {
-                    if (!isValideInt(textFieldText) || Integer.valueOf(textFieldText) < 0) {
-                        showTextFieldError("la quantité en stock doit être un nombre entier positif ou nul", eventSource);
-                    }
-                } else if(eventSource == minimumQuantityInStockTextField) {
-                    if (!isValideInt(textFieldText) || Integer.valueOf(textFieldText) < 0) {
-                        showTextFieldError("la quantité minimum en stock doit être un nombre entier positif ou nul", eventSource);
-                    }
+                }
+            }
+        }
+    }
+
+    private class SpinnerListener implements ChangeListener {
+
+        @Override
+        public void stateChanged(ChangeEvent event) {
+            JSpinner eventSource = (JSpinner) event.getSource();
+            int spinnerValue = (int) eventSource.getValue();
+            if(eventSource == quantityInStockSpinner) {
+                if (spinnerValue < 0) {
+                    JOptionPane.showMessageDialog(null, "la quantité en stock doit être un nombre entier positif ou nul", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+                    quantityInStockSpinner.setValue(0);
+                }
+            } else if(eventSource == minimumQuantityInStockSpinner) {
+                if (spinnerValue < 0) {
+                    JOptionPane.showMessageDialog(null, "la quantité minimum en stock doit être un nombre entier positif ou nul", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+                    minimumQuantityInStockSpinner.setValue(0);
                 }
             }
         }

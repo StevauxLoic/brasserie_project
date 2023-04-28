@@ -22,8 +22,6 @@ public class UserManuelPopUp extends PopUp {
             searchAdressLabel,
             searchProductOutOfStockLabel,
             newProductLabel,
-            deleteProductLabel,
-            modifyProductLabel,
             findProductLabel;
 
     private JComboBox infoListComboBox;
@@ -36,8 +34,7 @@ public class UserManuelPopUp extends PopUp {
             "menu rechercher/Recherche des produits avec une demande de réassort supplémentaire suite aux évènements dans un délai donné",
             "menu rechercher/Recherche les adresses d’une personne/entreprise",
             "menu rechercher/Rechercher un produit en rupture dans le stock et ses fournisseurs",
-            "menu produit/Nouveau produit", "menu produit/Suprimer produit", "menu produit/Modifier produit",
-            "menu produit/Trouver produit"};
+            "menu produit/Nouveau produit", "menu produit/Trouver produit"};
 
     private JLabel[] labelsArray;
 
@@ -93,14 +90,10 @@ public class UserManuelPopUp extends PopUp {
 
         newProductLabel = new JLabel("<html><p>infos nouveau produit</p></html>");
 
-        deleteProductLabel = new JLabel("<html><p>infos supprimer un produit</p></html>");
-
-        modifyProductLabel = new JLabel("<html><p>infos modifier un produit</p></html>");
-
         findProductLabel = new JLabel("<html><p>infos trouver produit</p></html>");
 
 
-        labelsArray = new JLabel[15];
+        labelsArray = new JLabel[13];
         labelsArray[0] = softwareInfoLabel;
         labelsArray[1] = menusLabel;
         labelsArray[2] = fileMenuLabe;
@@ -113,9 +106,7 @@ public class UserManuelPopUp extends PopUp {
         labelsArray[9] = searchAdressLabel;
         labelsArray[10] = searchProductOutOfStockLabel;
         labelsArray[11] = newProductLabel;
-        labelsArray[12] = deleteProductLabel;
-        labelsArray[13] = modifyProductLabel;
-        labelsArray[14] = findProductLabel;
+        labelsArray[12] = findProductLabel;
 
         // add the components to the container
         this.add(infosSelecterContainer, BorderLayout.NORTH);

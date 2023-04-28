@@ -17,12 +17,12 @@ public class Product {
     private double price;
     private String description; // non obligatory
 
-    public Product(String reference, int typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, String description){
+    public Product(String reference, int typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, String description, int quantityInStock){
         setTypeReference(typeReference);
         setReference(reference);
         setName(name);
         setVat(vat);
-        setQuantityInStock();
+        setQuantityInStock(quantityInStock);
         setMinimumQuantityInStock(minimumQuantityInStock);
         this.isSparkling = isSparkling;
         setPrice(price);
@@ -89,7 +89,10 @@ public class Product {
         }
     }
 
-    public void setQuantityInStock(){
+    public void setQuantityInStock(int quantityInStock){
+        if (quantityInStock >= 0 ) {
+            this.quantityInStock = quantityInStock;
+        }
         // do with the sql part to calculate how many we have
     }
 

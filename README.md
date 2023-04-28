@@ -11,9 +11,8 @@ projet de la brasserie en java
   - 4 adresse d'une businessEntity
   - 5 produit en rupture de stock et leurs fournisseurs
 - Produit
-  - 1 nouveau
-  - 3 modifier
+  - modifier/supprimer
+    - juste le JSpinner de date à modifier puis tout devrais être bon 
 
-##TODO
+#TODO
 - aides/texts dans le manuel d'utilisation
-- voir comment on utilise le productSearchForm (==> abstract? design paterne observer ? ...?)

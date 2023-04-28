@@ -16,16 +16,19 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
     private JTextField nameTextField,
             referenceTextField,
             vatTextField,
-            quantityInStockTextField,
-            minimumQuantityInStockTextField,
             alcoholLevelTextField,
             priceTextField,
             descriptionTextField;
+    private JSpinner quantityInStockTextField,
+            minimumQuantityInStockTextField;
+
     private JSpinner launchingDateSpinner;
 
     public ProductModifyingForm(Product productToModify) {
         super();
         this.productToModify = productToModify;
+
+        // get and fill the different input and field with the productToModify informations
 
         this.isSparklingCheckBox = this.getIsSparklingCheckBox();
         isSparklingCheckBox.setSelected(productToModify.isSparkling());
@@ -45,11 +48,11 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
         this.vatTextField = this.getVatTextField();
         vatTextField.setText(String.valueOf(productToModify.getVat()));
 
-        this.quantityInStockTextField = this.getQuantityInStockTextField();
-        quantityInStockTextField.setText(String.valueOf(productToModify.getQuantityInStock()));
+        this.quantityInStockTextField = this.getQuantityInStockSpinner();
+        quantityInStockTextField.setValue(String.valueOf(productToModify.getQuantityInStock()));
 
-        this.minimumQuantityInStockTextField = this.getMinimumQuantityInStockTextField();
-        minimumQuantityInStockTextField.setText(String.valueOf(productToModify.getMinimumQuantityInStock()));
+        this.minimumQuantityInStockTextField = this.getMinimumQuantityInStockSpinner();
+        minimumQuantityInStockTextField.setValue(String.valueOf(productToModify.getMinimumQuantityInStock()));
 
         this.alcoholLevelTextField = this.getAlcoholLevelTextField();
         alcoholLevelTextField.setText(String.valueOf(productToModify.getAlcoholLevel()));
@@ -68,7 +71,6 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
         }
     }
 
-
     @Override
     public void fillButtonsPanel(JPanel buttonsPanel) {
         modifyButton = new JButton("modifier");
@@ -79,6 +81,7 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
     private void modifyProduct(Product productToModify, Product modifiedProduct) {
         // TODO updating the product in the database
         // si erreur JOptionPane
+        JOptionPane.showMessageDialog(null, "modification (mise à jour) de l'objet en db", "modification du produit", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private class ButtonListener implements ActionListener {
@@ -92,5 +95,4 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
             }
         }
     }
-
 }

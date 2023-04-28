@@ -21,6 +21,7 @@ public class ProductInfosPanel extends JPanel {
             descriptionLabel,
             erroMessageLabel;
 
+    // show the product infos or only a message 'no product found' if the given product is null
     public ProductInfosPanel(Product product) {
         this.setLayout(new GridLayout(11,2,5,5));
         if (product != null) {

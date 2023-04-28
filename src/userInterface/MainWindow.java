@@ -16,8 +16,6 @@ public class MainWindow extends JFrame {
             searchAdressMenuItem,
             searchOutOfStockProductMenuItem,
             newProductMenuItem,
-            deleteProductMenuItem,
-            modifyProductMenuItem,
             findProductMenuItem;
 
     JPanel welcomePanel;
@@ -82,15 +80,9 @@ public class MainWindow extends JFrame {
 
         newProductMenuItem = new JMenuItem("Nouveau");
         newProductMenuItem.addActionListener(menuItemListener);
-        deleteProductMenuItem = new JMenuItem("Suprimer");
-        deleteProductMenuItem.addActionListener(menuItemListener);
-        modifyProductMenuItem = new JMenuItem("Modifier / mettre à jour");
-        modifyProductMenuItem.addActionListener(menuItemListener);
-        findProductMenuItem = new JMenuItem("Trouver");
+        findProductMenuItem = new JMenuItem("Trouver/modifier/supprimer");
         findProductMenuItem.addActionListener(menuItemListener);
         productMenu.add(newProductMenuItem);
-        productMenu.add(deleteProductMenuItem);
-        productMenu.add(modifyProductMenuItem);
         productMenu.add(findProductMenuItem);
 
         // welcome
@@ -128,7 +120,7 @@ public class MainWindow extends JFrame {
             } else {
                 JPanel panelToDisplay = null;
                 if(source == searchProductMenuItem || source == findProductMenuItem) { // les deux mènenet au même endroit (une recherche de produit)
-                    panelToDisplay = new ProductSearchPanel();
+                    panelToDisplay = new ProductFindPanel();
                 } else if(source == searchProductTypeOnDelayAMenuItem) {
                     panelToDisplay = new ProductTypeSearchOnDelayPanel();
                 } else if(source == searchProductSupplementsDueToEventMenuItem) {
@@ -139,10 +131,6 @@ public class MainWindow extends JFrame {
                     panelToDisplay = new ProductOutOfStockAndSupplierSearchPanel();
                 } else if(source == newProductMenuItem) {
                     panelToDisplay = new ProductCreationPanel();
-                } else if(source == deleteProductMenuItem) {
-                    panelToDisplay = new ProductDeletingPanel();
-                } else if(source == modifyProductMenuItem) {
-                    panelToDisplay = new ProductModifyingPanel();
                 }
                 MainWindow.this.setPanelToDisplay(panelToDisplay);
             }
