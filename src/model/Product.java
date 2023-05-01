@@ -32,7 +32,7 @@ public class Product {
     }
 
     public void setTypeReference(int typeReference) throws TypeExeption{
-        if(typeReference <= 0 ||typeReference > /* auto increment*/){
+        if(typeReference <= 0 ||typeReference >= /* auto increment*/){
             String message = "le type numero : " + typeReference + " n'est pas un type existants";
             throw new TypeExeption(typeReference, message);
         } else {
@@ -50,11 +50,12 @@ public class Product {
         }
     }
 
-    public void setReference(String reference) {
+    public void setReference(String reference) throws ReferenceExeption{
         if(reference != null){
             this.reference = reference;
         } else {
-            this.reference = null;
+            String message = "reference null";
+            throw new ReferenceExeption(reference, message);
         }
     }
 

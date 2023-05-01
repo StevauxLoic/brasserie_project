@@ -8,7 +8,7 @@ import java.awt.*;
 public class ProductInfosPanel extends JPanel {
     private Product produit;
 
-    JLabel nameLabel,
+    private JLabel nameLabel,
             referenceLabel,
             productTypeLabel,
             vatLabel,
