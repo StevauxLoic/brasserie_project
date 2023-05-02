@@ -12,7 +12,10 @@ projet de la brasserie en java
   - 5 produit en rupture de stock et leurs fournisseurs
 - Produit
   - modifier/supprimer
-    - juste le JSpinner de date à modifier puis tout devrais être bon 
+    - juste le JSpinner de date à modifier puis tout devrais être bon
 
 #TODO
 - aides/texts dans le manuel d'utilisation
+- script pour remplir la bd
+- DAO
+- lien avec le singleton 

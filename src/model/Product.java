@@ -31,36 +31,40 @@ public class Product {
         this.description = description;
     }
 
-    public void setTypeReference(int typeReference) {
-        /*if(typeReference appartient a la bd){
-            this.typeReference = typeReference;
+    public void setTypeReference(int typeReference) throws TypeExeption{
+        if(typeReference <= 0 ||typeReference >= /* auto increment*/){
+            String message = "le type numero : " + typeReference + " n'est pas un type existants";
+            throw new TypeExeption(typeReference, message);
         } else {
-            throw exept
+            this.typeReference = typeReference;
         }
-         */
+
     }
 
-    public void setLaunchingDate(LocalDate launchingDate) {
+    public void setLaunchingDate(LocalDate launchingDate) throws DateExeption{
         if(launchingDate != null && launchingDate.isBefore(LocalDate.now())){
             this.launchingDate = launchingDate;
         } else {
-            // throws exept
+            String message = "La date selectionner (" + launchingDate + ") n'est pas encore existante soit vous devez en mettre une";
+            throw new DateExeption(launchingDate, message);
         }
     }
 
-    public void setReference(String reference) {
+    public void setReference(String reference) throws ReferenceExeption{
         if(reference != null){
             this.reference = reference;
         } else {
-            this.reference = null;
+            String message = "reference null";
+            throw new ReferenceExeption(reference, message);
         }
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws NameExeption{
         if(name != null){
             this.name = name;
         } else {
-            // throw exept
+            String message = "Vous devez ajouter un nom";
+            throw new NameExeption(name, message);
         }
     }
 
