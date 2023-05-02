@@ -6,8 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.time.LocalDate;
 
 /*
@@ -19,11 +17,10 @@ import java.time.LocalDate;
 */
 
 public class FindProductPanel extends JPanel {
-    private JPanel titlePanel, formPanel;
-    private JComboBox productTypeComboBox, productsComboBox;
-    private JTextField productReferenceTextField;
-    private JButton resetButton, searchButton, goBackToSearchButton, showReferenceButton, deleteButton, modifyButton;
+    private JPanel titlePanel, tablePanel;
     private JLabel panelTitleLabel, productTypeComboBoxLabel, productsComboBoxLabel, productReferenceTextFieldLabel;
+    private JButton searchButton, modifyButton, deleteButton, goBackToSearchButton;
+    private JTable productsTable;
 
     private ButtonListener buttonListener;
     private Product foundProduct;
@@ -46,30 +43,29 @@ public class FindProductPanel extends JPanel {
         //Panel
         titlePanel = new JPanel();
         titlePanel.setLayout(new FlowLayout());
-        formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(4,2, 10, 10));
+        tablePanel = new JPanel();
+        tablePanel.setLayout(new FlowLayout());
 
-        // ComboBox
-        JComboBoxListener jComboBoxListener = new JComboBoxListener();
-        productTypeComboBox = new JComboBox(new String[]{"spiritueu", "bière", "soda", "whisky"});
-        productTypeComboBox.addItemListener(jComboBoxListener);
-        productsComboBox = new JComboBox(new String[]{"jupiler", "champagne", "sprite", "amaretto"});
-        // TODO rechercher les types de produits
-
-        // textField
-        TextListener textListener = new TextListener();
-        productReferenceTextField = new JTextField();
-        productReferenceTextField.addActionListener(textListener);
-
-        // button
+        // first step button : search
         this.buttonListener = new ButtonListener();
-        resetButton = new JButton("recommencer");
-        resetButton.addActionListener(buttonListener);
         searchButton = new JButton("rechercher");
         searchButton.addActionListener(buttonListener);
 
+        // second step buttons
+        // go back button
         goBackToSearchButton = new JButton("Retour");
         goBackToSearchButton.addActionListener(buttonListener);
+
+        // delete button
+        deleteButton = new JButton("Suprimer");
+        deleteButton.addActionListener(buttonListener);
+
+        // modify button
+        modifyButton = new JButton("Modifier");
+        modifyButton.addActionListener(buttonListener);
+
+
+
 
         // labels
         panelTitleLabel = new JLabel("Formulaire de recherche d'un produit (par référence ou type de produit)");
@@ -78,59 +74,11 @@ public class FindProductPanel extends JPanel {
         productReferenceTextFieldLabel = new JLabel("référence du produit : ");
 
         // Panels filling
-        fillPanelWithForm();
+        // TODO fill the panel
 
         this.setVisible(true);
     }
 
-    private void fillPanelWithForm() {
-        titlePanel.add(panelTitleLabel);
-
-        formPanel.add(productTypeComboBoxLabel);
-        formPanel.add(productTypeComboBox);
-
-        formPanel.add(productsComboBoxLabel);
-        formPanel.add(productsComboBox);
-
-        formPanel.add(productReferenceTextFieldLabel);
-        formPanel.add(productReferenceTextField);
-
-        formPanel.add(resetButton);
-        formPanel.add(searchButton);
-
-        resetForm();
-
-        this.add(titlePanel, BorderLayout.NORTH);
-        this.add(formPanel, BorderLayout.CENTER);
-    }
-
-    private void resetForm() {
-        productsComboBox.setSelectedItem(null);
-        productsComboBox.setEnabled(false);
-
-        productTypeComboBox.setSelectedItem(null);
-        productTypeComboBox.setEnabled(true);
-
-        productReferenceTextField.setText("");
-        productReferenceTextField.setEnabled(true);
-    }
-
-    private void searchProduct() {
-        Object selectedProductType = productTypeComboBox.getSelectedItem();
-        if (selectedProductType != null) {
-            if (productsComboBox.getSelectedItem() != null) {
-                // show product and more TODO search product
-                showProductInfosAndButtonsPanels(testProduct);
-            } else {
-                JOptionPane.showMessageDialog(null, "Vous devez sélectionner un produit pour rechercher", "recherche impossible", JOptionPane.WARNING_MESSAGE);
-            }
-        } else if (productReferenceTextField.getText().length() > 0) { // TODO to review while checking what a reference contains
-            // show product and more TODO search product by reference
-            showProductInfosAndButtonsPanels(testProduct);
-        } else {
-            JOptionPane.showMessageDialog(null, "Vous devez entrer une référence ou sélectionner un type de profuit anisi qu'un produit pour rechercher", "recherche impossible", JOptionPane.WARNING_MESSAGE);
-        }
-    }
 
     private void showProductInfosAndButtonsPanels(Product productTodisplay) {
         // the productToDisplay could have been set earlier but by placing it in this function, the code line is just
@@ -147,25 +95,9 @@ public class FindProductPanel extends JPanel {
         buttonsPanel.add(goBackToSearchButton);
 
         if (productTodisplay != null) {
-            // show reference Button
-            this.showReferenceButton = new JButton("Afficher la référence dans un pop-up");
-            showReferenceButton.addActionListener(buttonListener);
-
-            buttonsPanel.add(showReferenceButton);
-
-            // delete button
-            deleteButton = new JButton("Suprimer");
-            deleteButton.addActionListener(buttonListener);
-
             buttonsPanel.add(deleteButton);
-
-            // modify button
-            modifyButton = new JButton("Modifier");
-            modifyButton.addActionListener(buttonListener);
-
             buttonsPanel.add(modifyButton);
         }
-
 
         this.add(buttonsPanel, BorderLayout.SOUTH);
     }
@@ -182,49 +114,14 @@ public class FindProductPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             Object source = event.getSource();
             FindProductPanel thisProductSearchPanel = FindProductPanel.this;
-            if (source == showReferenceButton) {
-                ProductReferencePopUp productReferencePopUp = new ProductReferencePopUp(foundProduct.getReference());
-            } else if (source == deleteButton){
+             if (source == deleteButton){
                 // TODO supression
                 JOptionPane.showMessageDialog(null, "Suppression du produit " + foundProduct.getName(), "suppression de produit", JOptionPane.WARNING_MESSAGE);
             } else if (source == modifyButton) {
                 FindProductPanel.this.displayModifyForm();
             } else {
-                if (source == resetButton) {
-                    thisProductSearchPanel.resetForm();
-                } else if (source == searchButton) {
-                    thisProductSearchPanel.searchProduct();
-                } else if (source == goBackToSearchButton) {
-                    thisProductSearchPanel.removeAll();
-                    thisProductSearchPanel.fillPanelWithForm();
-                }
                 thisProductSearchPanel.repaint();
                 thisProductSearchPanel.revalidate();
-            }
-        }
-    }
-
-    private class TextListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            FindProductPanel thisForm = FindProductPanel.this;
-            if (thisForm.productReferenceTextField.getText() != "") {
-                thisForm.productTypeComboBox.setEnabled(false);
-            } else if (!thisForm.productTypeComboBox.isEnabled()) {
-                thisForm.productTypeComboBox.setEnabled(true);
-            }
-        }
-    }
-
-    private class JComboBoxListener implements ItemListener {
-        @Override
-        public void itemStateChanged(ItemEvent event) {
-            FindProductPanel thisForm = FindProductPanel.this;
-            if (event.getStateChange() == ItemEvent.SELECTED) {
-                thisForm.productReferenceTextField.setEnabled(false);
-                thisForm.productsComboBox.setEnabled(true);
-                // TODO rechercher les produits du type sélectionné
             }
         }
     }
