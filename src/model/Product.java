@@ -33,7 +33,7 @@ public class Product {
     }
 
     public void setTypeReference(int typeReference) throws TypeExeption{
-        if(typeReference <= 0 ||typeReference >= /* auto increment*/){
+        if(typeReference <= 0 ){//||typeReference >= /* auto increment*/){ TODO revoir la règle ici
             String message = "le type numero : " + typeReference + " n'est pas un type existants";
             throw new TypeExeption(typeReference, message);
         } else {

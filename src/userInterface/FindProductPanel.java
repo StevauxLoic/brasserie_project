@@ -1,6 +1,6 @@
 package userInterface;
 
-import model.Product;
+import model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +18,7 @@ import java.time.LocalDate;
     depending on choice, the whole Panel will change
 */
 
-public class ProductFindPanel extends JPanel {
+public class FindProductPanel extends JPanel {
     private JPanel titlePanel, formPanel;
     private JComboBox productTypeComboBox, productsComboBox;
     private JTextField productReferenceTextField;
@@ -28,9 +28,19 @@ public class ProductFindPanel extends JPanel {
     private ButtonListener buttonListener;
     private Product foundProduct;
 
-    private static Product testProduct = new Product("productReference test", 14,"productName test", 21, 20, false, LocalDate.of(2004, 11, 14), 15.5, 15.5, "productDescritption test", 12);
+    private static Product testProduct;
 
-    public ProductFindPanel() {
+
+    // TODO a supprimer quand on en aura plus besoin pour les tests
+    static {
+        try {
+            testProduct = new Product("productReference test", 14,"productName test", 21, 20, false, LocalDate.of(2004, 11, 14), 15.5, 15.5, "productDescritption test", 12);
+        } catch (Exception exeption) {
+            System.out.println(exeption.getMessage());
+        }
+    }
+
+    public FindProductPanel() {
         this.setLayout(new BorderLayout());
 
         //Panel
@@ -170,14 +180,14 @@ public class ProductFindPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             Object source = event.getSource();
-            ProductFindPanel thisProductSearchPanel = ProductFindPanel.this;
+            FindProductPanel thisProductSearchPanel = FindProductPanel.this;
             if (source == showReferenceButton) {
                 ProductReferencePopUp productReferencePopUp = new ProductReferencePopUp(foundProduct.getReference());
             } else if (source == deleteButton){
                 // TODO supression
                 JOptionPane.showMessageDialog(null, "Suppression du produit " + foundProduct.getName(), "suppression de produit", JOptionPane.WARNING_MESSAGE);
             } else if (source == modifyButton) {
-                ProductFindPanel.this.displayModifyForm();
+                FindProductPanel.this.displayModifyForm();
             } else {
                 if (source == resetButton) {
                     thisProductSearchPanel.resetForm();
@@ -197,7 +207,7 @@ public class ProductFindPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            ProductFindPanel thisForm = ProductFindPanel.this;
+            FindProductPanel thisForm = FindProductPanel.this;
             if (thisForm.productReferenceTextField.getText() != "") {
                 thisForm.productTypeComboBox.setEnabled(false);
             } else if (!thisForm.productTypeComboBox.isEnabled()) {
@@ -209,7 +219,7 @@ public class ProductFindPanel extends JPanel {
     private class JComboBoxListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
-            ProductFindPanel thisForm = ProductFindPanel.this;
+            FindProductPanel thisForm = FindProductPanel.this;
             if (event.getStateChange() == ItemEvent.SELECTED) {
                 thisForm.productReferenceTextField.setEnabled(false);
                 thisForm.productsComboBox.setEnabled(true);

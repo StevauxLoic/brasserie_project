@@ -1,6 +1,6 @@
 package userInterface;
 
-import model.Product;
+import model.*;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.sql.Date;
+import java.util.concurrent.ExecutionException;
 
 public abstract class ProductCreatingAndModifingForm extends JPanel {
     private JLabel nameLabel,
@@ -88,12 +91,16 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
 
         // JComboBox
         productTypeComboBox = new JComboBox(new String[]{"spiritueu", "bière", "soda", "whisky"});
+        // TODO get the types list
 
         // spinners
         quantityInStockSpinner = new JSpinner();
         minimumQuantityInStockSpinner = new JSpinner();
 
-        launchingDateSpinner = new JSpinner();
+        launchingDateSpinner = new JSpinner(new SpinnerDateModel(new Date(0,0,0), null, null, Calendar.YEAR));
+        JSpinner.DateEditor launchingDateEditor = new JSpinner.DateEditor(launchingDateSpinner,"dd/MM/yyyy");
+        launchingDateSpinner.setEditor(launchingDateEditor);
+        add(launchingDateSpinner);
 
         SpinnerListener spinnerListener = new SpinnerListener();
         quantityInStockSpinner.addChangeListener(spinnerListener);
@@ -269,11 +276,16 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
                                     } else {
                                         int productTypeReference = productTypeComboBox.getSelectedIndex() + 1;
                                         boolean isSparkling = isSparklingCheckBox.isSelected();
-                                        // TODO régler le problème du JSpinner ici et aussi à la création de ce dernier pour qu'il face des dates
-                                        LocalDate launchingDate = new LocalDate(launchingDateSpinner.getAutoscrolls());
 
-                                        //isSparklingCheckBox
-                                        return new Product(reference, productTypeReference, name, vat, minimumInStock, isSparkling, launchingDate, price, alcoholLevel, description, quantityInStock);
+                                        Date launchingDate = (Date) launchingDateSpinner.getValue();
+
+                                        try {
+                                            Product product = new Product(reference, productTypeReference, name, vat, minimumInStock, isSparkling, launchingDate.toLocalDate(), price, alcoholLevel, description, quantityInStock);
+                                            return product;
+                                        } catch (Exception exception) {
+                                                JOptionPane.showMessageDialog(null, exception.getMessage(), "erreurs rencontrée", JOptionPane.WARNING_MESSAGE);
+                                        }
+                                        return null;
                                     }
                                 }
                             }

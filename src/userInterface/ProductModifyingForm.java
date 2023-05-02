@@ -5,6 +5,7 @@ import model.Product;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 public class ProductModifyingForm extends ProductCreatingAndModifingForm{
 
@@ -19,8 +20,8 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
             alcoholLevelTextField,
             priceTextField,
             descriptionTextField;
-    private JSpinner quantityInStockTextField,
-            minimumQuantityInStockTextField;
+    private JSpinner quantityInStockSpinner,
+            minimumQuantityInStockSpinner;
 
     private JSpinner launchingDateSpinner;
 
@@ -37,7 +38,7 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
         hasAlcoholCheckBox.setSelected(productToModify.getAlcoholLevel() > 0);
 
         this.productTypeComboBox = this.getProductTypeComboBox();
-        productTypeComboBox.setSelectedIndex(productToModify.getTypeReference());
+        productTypeComboBox.setSelectedItem(productToModify.getTypeReference());
 
         this.nameTextField = this.getNameTextField();
         nameTextField.setText(productToModify.getName());
@@ -48,11 +49,11 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
         this.vatTextField = this.getVatTextField();
         vatTextField.setText(String.valueOf(productToModify.getVat()));
 
-        this.quantityInStockTextField = this.getQuantityInStockSpinner();
-        quantityInStockTextField.setValue(String.valueOf(productToModify.getQuantityInStock()));
+        this.quantityInStockSpinner = this.getQuantityInStockSpinner();
+        quantityInStockSpinner.setValue(productToModify.getQuantityInStock());
 
-        this.minimumQuantityInStockTextField = this.getMinimumQuantityInStockSpinner();
-        minimumQuantityInStockTextField.setValue(String.valueOf(productToModify.getMinimumQuantityInStock()));
+        this.minimumQuantityInStockSpinner = this.getMinimumQuantityInStockSpinner();
+        minimumQuantityInStockSpinner.setValue(productToModify.getMinimumQuantityInStock());
 
         this.alcoholLevelTextField = this.getAlcoholLevelTextField();
         alcoholLevelTextField.setText(String.valueOf(productToModify.getAlcoholLevel()));
@@ -64,7 +65,8 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
         descriptionTextField.setText(productToModify.getDescription());
 
         this.launchingDateSpinner = this.getLaunchingDateSpinner();
-        launchingDateSpinner.setValue(productToModify.getLaunchingDate());
+        LocalDate launchingDateToSet = productToModify.getLaunchingDate();
+        launchingDateSpinner.setValue(java.sql.Date.valueOf(launchingDateToSet));
 
         if (hasAlcoholCheckBox.isSelected()) {
             alcoholLevelTextField.setEnabled(false);
