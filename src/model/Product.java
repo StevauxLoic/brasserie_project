@@ -2,6 +2,7 @@ package model;
 
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 
 public class Product {
@@ -17,7 +18,7 @@ public class Product {
     private double price;
     private String description; // non obligatory
 
-    public Product(String reference, int typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, String description, int quantityInStock){
+    public Product(String reference, int typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, String description, int quantityInStock) throws ReferenceExeption , TypeExeption, NameExeption, DateExeption {
         setTypeReference(typeReference);
         setReference(reference);
         setName(name);
