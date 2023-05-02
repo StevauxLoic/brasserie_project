@@ -103,8 +103,8 @@ public class MainWindow extends JFrame {
     private void setPanelToDisplay(JPanel pannelToDisplay) {
         this.remove(welcomePanel);
         this.add(pannelToDisplay, BorderLayout.CENTER);
-        this.repaint();
         this.revalidate();
+        this.repaint();
     }
 
     private class MenuItemListener implements ActionListener{

@@ -68,7 +68,7 @@ public class FindProductPanel extends JPanel {
         searchButton = new JButton("rechercher");
         searchButton.addActionListener(buttonListener);
 
-        goBackToSearchButton = new JButton("Retourner à la page de recherche");
+        goBackToSearchButton = new JButton("Retour");
         goBackToSearchButton.addActionListener(buttonListener);
 
         // labels
@@ -143,6 +143,7 @@ public class FindProductPanel extends JPanel {
 
         this.add(new ProductInfosPanel(productTodisplay), BorderLayout.CENTER);
         JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new GridLayout());
         buttonsPanel.add(goBackToSearchButton);
 
         if (productTodisplay != null) {
