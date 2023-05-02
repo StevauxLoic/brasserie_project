@@ -57,6 +57,8 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
 
         this.alcoholLevelTextField = this.getAlcoholLevelTextField();
         alcoholLevelTextField.setText(String.valueOf(productToModify.getAlcoholLevel()));
+        // if checkBox is Selected the field shhould be enabeled
+        alcoholLevelTextField.setEnabled(hasAlcoholCheckBox.isSelected());
 
         this.priceTextField = this.getPriceTextField();
         priceTextField.setText(String.valueOf(productToModify.getPrice()));
@@ -68,9 +70,6 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
         LocalDate launchingDateToSet = productToModify.getLaunchingDate();
         launchingDateSpinner.setValue(java.sql.Date.valueOf(launchingDateToSet));
 
-        if (hasAlcoholCheckBox.isSelected()) {
-            alcoholLevelTextField.setEnabled(false);
-        }
     }
 
     @Override

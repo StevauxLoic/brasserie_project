@@ -10,11 +10,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.sql.Date;
-import java.util.concurrent.ExecutionException;
 
+/**
+ * This abstract class is for the creat and modifying part of the crud (on the table Product)
+ * <br> <br>
+ * it will create a whole form with fields, panel, chckboxes,... and have a function to read the form
+ * <br>
+ * the fields have a listener that check if the value is valid, if it is not, the user will be notified and the value reset
+**/
 public abstract class ProductCreatingAndModifingForm extends JPanel {
     private JLabel nameLabel,
                     referenceLabel,
@@ -38,10 +43,13 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
                         alcoholLevelTextField,
                         priceTextField,
                         descriptionTextField;
+    // int spinners
     private JSpinner quantityInStockSpinner,
             minimumQuantityInStockSpinner;
-
+    //date spinner
     private JSpinner launchingDateSpinner;
+
+    private Date launchingDateSelected;
 
     public ProductCreatingAndModifingForm() {
         this.setLayout(new BorderLayout());
@@ -97,7 +105,8 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         quantityInStockSpinner = new JSpinner();
         minimumQuantityInStockSpinner = new JSpinner();
 
-        launchingDateSpinner = new JSpinner(new SpinnerDateModel(new Date(0,0,0), null, null, Calendar.YEAR));
+        launchingDateSelected = new Date(1, 1, 0); // default var we decided to use TODO decide about it
+        launchingDateSpinner = new JSpinner(new SpinnerDateModel(launchingDateSelected, null, null, Calendar.YEAR));
         JSpinner.DateEditor launchingDateEditor = new JSpinner.DateEditor(launchingDateSpinner,"dd/MM/yyyy");
         launchingDateSpinner.setEditor(launchingDateEditor);
         add(launchingDateSpinner);
@@ -112,8 +121,8 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         fillFormPanel(formPanel);
         fillButtonsPanel(buttonsPanel);
 
-        this.add(formPanel);
-        this.add(buttonsPanel);
+        this.add(formPanel, BorderLayout.CENTER);
+        this.add(buttonsPanel, BorderLayout.SOUTH);
 
         this.setVisible(true);
     }
@@ -207,13 +216,17 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         return launchingDateSpinner;
     }
 
+    public Date getLaunchingDateSelected() {
+        return launchingDateSelected;
+    }
+
     //TODO verif que la valeur est la même avant et après le parsint ou le parsdouble
     private boolean isValideDouble (String textToVerify) {
         try {
             double reference = Double.parseDouble(textToVerify);
             return true;
         } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, "l'entrée doit être un nombre à virgule", "erreure d'entrée", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "l'entrée de la tva et du niveau d'alcool doivent être un nombre (à virgule ou non)", "erreure d'entrée", JOptionPane.WARNING_MESSAGE);
             return false;
         }
     }
@@ -223,6 +236,11 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         JOptionPane.showMessageDialog(null, message, "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
     }
 
+    /**
+     * This readForm function will read each field one by one and check if the user wrote a valide value.
+     * <br>
+     * if it's not, a JOptionPane or a showTextFieldError() will show the mistake to the user and reset the field
+    **/
     public Product readForm() {
         // lis les champs et renvoie le produit en fonction de et renvoie null si au moins un champs est mal rempli
         // chaque champs est lu, si il est validé il est enregistré dans une variable sinon la fonction renvoie directement null
@@ -248,7 +266,7 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
                 } else {
                     Double vat = Double.parseDouble(vatTextField.getText());
 
-                    boolean alcoholLevelOrCheckBoxAreValid = hasAlcoholCheckBox.isSelected() && (isValideDouble(alcoholLevelTextField.getText()) || Double.parseDouble(alcoholLevelTextField.getText()) <= 100 || Double.parseDouble(alcoholLevelTextField.getText()) > 0);
+                    boolean alcoholLevelOrCheckBoxAreValid = !hasAlcoholCheckBox.isSelected() || ((isValideDouble(alcoholLevelTextField.getText()) && Double.parseDouble(alcoholLevelTextField.getText()) <= 100 && Double.parseDouble(alcoholLevelTextField.getText()) > 0));
                     if (!alcoholLevelOrCheckBoxAreValid) {
                         showTextFieldError("le taux d'alcool doit être un nombre (à virgule ou non) entre 0 et 100 % (100 compris mais 0 non), si le produit n'est pas alcoolisé, ne coché pas la case qui dit que le produit l'est", alcoholLevelTextField);
                     } else {
@@ -277,10 +295,8 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
                                         int productTypeReference = productTypeComboBox.getSelectedIndex() + 1;
                                         boolean isSparkling = isSparklingCheckBox.isSelected();
 
-                                        Date launchingDate = (Date) launchingDateSpinner.getValue();
-
                                         try {
-                                            Product product = new Product(reference, productTypeReference, name, vat, minimumInStock, isSparkling, launchingDate.toLocalDate(), price, alcoholLevel, description, quantityInStock);
+                                            Product product = new Product(reference, productTypeReference, name, vat, minimumInStock, isSparkling, getLaunchingDateSelected().toLocalDate(), price, alcoholLevel, description, quantityInStock);
                                             return product;
                                         } catch (Exception exception) {
                                                 JOptionPane.showMessageDialog(null, exception.getMessage(), "erreurs rencontrée", JOptionPane.WARNING_MESSAGE);

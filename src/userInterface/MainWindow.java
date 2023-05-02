@@ -18,7 +18,7 @@ public class MainWindow extends JFrame {
             newProductMenuItem,
             findProductMenuItem;
 
-    JPanel welcomePanel;
+    JPanel welcomePanel, activePanel;
     JLabel welcomeLabel;
 
     public MainWindow() throws HeadlessException {
@@ -95,13 +95,20 @@ public class MainWindow extends JFrame {
 
         this.add(welcomePanel, BorderLayout.CENTER);
 
+        //set active panel
+        activePanel = welcomePanel;
+
         // window display
         this.setVisible(true);
 
     }
 
+    public void setActivePanel(JPanel activePanel) {
+        this.activePanel = activePanel;
+    }
+
     private void setPanelToDisplay(JPanel pannelToDisplay) {
-        this.remove(welcomePanel);
+        this.remove(activePanel);
         this.add(pannelToDisplay, BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
@@ -118,6 +125,7 @@ public class MainWindow extends JFrame {
             } else if(source == softwareInfosMenuItem) {
                 SoftwareInfosPopUp softwareInfosPopUp = new SoftwareInfosPopUp();
             } else {
+                MainWindow thisMainWindow = MainWindow.this;
                 JPanel panelToDisplay = null;
                 if(source == searchProductMenuItem || source == findProductMenuItem) { // les deux mènenet au même endroit (une recherche de produit)
                     panelToDisplay = new FindProductPanel();
@@ -132,7 +140,8 @@ public class MainWindow extends JFrame {
                 } else if(source == newProductMenuItem) {
                     panelToDisplay = new ProductCreationPanel();
                 }
-                MainWindow.this.setPanelToDisplay(panelToDisplay);
+                thisMainWindow.setPanelToDisplay(panelToDisplay);
+                thisMainWindow.setActivePanel(panelToDisplay);
             }
         }
     }
