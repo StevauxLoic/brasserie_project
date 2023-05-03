@@ -56,30 +56,23 @@ public class AllProductModel extends AbstractTableModel {
             // change a java.util.Date into a LocalDate with the system default TimeZone
             case 8 : return java.util.Date.from(product.getLaunchingDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
             case 9 : return product.getPrice();
-            case 10 :
-                String description = product.getDescription();
-                if (description != null) {
-                    return description;
-                } else {
-                    return  null;
-                }
+            case 10 : return product.getDescription();  // can return null
             default : return null;
         }
     }
 
-
+    @Override
     public String getColumnName(int columnIndex) { return columnNames.get(columnIndex);}
 
     public Class getColumnClass (int columnIndex) {
-        Class columnClass;
-        switch (columnIndex) {
-            case 0, 1, 10: columnClass = String.class;
-            case  2, 4, 5 : columnClass = Integer.class;
-            case 3, 7, 9 : columnClass = Double.class;
-            case 6 : columnClass = Boolean.class;
-            case 8 : columnClass = LocalDate.class;
-            default : columnClass = String.class;
-        }
+        Class columnClass = switch (columnIndex) {
+            // case 0, 1, 10 -> String.class;    ==> not necessary because it goes in default
+            case  2, 4, 5 -> Integer.class;
+            case 3, 7, 9 -> Double.class;
+            case 6 -> Boolean.class;
+            case 8 -> LocalDate.class;
+            default -> String.class;
+        };
         return columnClass;
     }
 

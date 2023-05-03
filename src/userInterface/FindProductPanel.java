@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class FindProductPanel extends JPanel {
     private JPanel titlePanel, tablePanel, buttonsPanel;
-    private JLabel panelTitleLabel;
+    private JLabel titleLabel;
     private JButton modifyButton, deleteButton;
 
     private JTable productsTable;
@@ -33,10 +33,11 @@ public class FindProductPanel extends JPanel {
 
 
     // TODO a supprimer quand on en aura plus besoin pour les tests
-    private static Product testProduct;
+    private static Product testProduct, secondTestProduct;
     static {
         try {
             testProduct = new Product("productRef", 14,"productName test", 21, 20, false, LocalDate.of(2004, 11, 14), 15.5, 15.5, "productDescritption test", 12);
+            secondTestProduct = new Product("txtRef", 2,"second test", 6, 5, true, LocalDate.of(2010, 9, 22), 4, 0, null, 11);
         } catch (Exception exeption) {
             System.out.println(exeption.getMessage());
         }
@@ -70,16 +71,23 @@ public class FindProductPanel extends JPanel {
         // TODO à supprimer la liste d'exemple
         ArrayList<Product> productsList = new ArrayList<Product>();
         productsList.add(testProduct);
-        allProductModel = new AllProductModel(productsList);
-        productsTable = new JTable(allProductModel);
-        productsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        listSelect = productsTable.getSelectionModel();
+        productsList.add(secondTestProduct);
 
-        productsScrollPane = new JScrollPane(productsTable);
-        tablePanel.add(productsTable);
+        if (!productsList.isEmpty()) {
+            allProductModel = new AllProductModel(productsList);
+            productsTable = new JTable(allProductModel);
+            productsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            listSelect = productsTable.getSelectionModel();
+
+            productsScrollPane = new JScrollPane(productsTable);
+            tablePanel.add(productsTable);
+        } else {
+            tablePanel.add(new JLabel("pas de produits trouvé"));
+        }
 
         // labels
-        panelTitleLabel = new JLabel("Table des rpoduits");
+        titleLabel = new JLabel("Table des rpoduits à sélectionner");
+        titlePanel.add(titleLabel);
 
         // Panels filling
         // TODO fill the panel
