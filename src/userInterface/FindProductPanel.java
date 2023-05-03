@@ -64,7 +64,7 @@ public class FindProductPanel extends JPanel {
         // explain the fact that there is not any product found
 
         if (!productsList.isEmpty()) {
-            @celian vien chck ici pour le JTable, le model est dans AllProductModel.java
+            //@celian vien chck ici pour le JTable, le model est dans AllProductModel.java
             allProductModel = new AllProductModel(productsList);
             productsTable = new JTable(allProductModel);
             productsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);

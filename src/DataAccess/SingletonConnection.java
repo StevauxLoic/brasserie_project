@@ -1,11 +1,20 @@
 package DataAccess;
 
-public class SingletonConnection {
-    private static  Connection uniqueConnection;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-    public static Connection getInstance(){
+public class SingletonConnection {
+    private static Connection uniqueConnection;
+
+    public static Connection getUniqueConnection(){
         if(uniqueConnection == null){
-            // creer la connection
+            try {
+                uniqueConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/brasserie", "root", "root") ;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return uniqueConnection;
     }

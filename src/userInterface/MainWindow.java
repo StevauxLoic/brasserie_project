@@ -129,6 +129,7 @@ public class MainWindow extends JFrame {
                 JPanel panelToDisplay = null;
                 if(source == searchProductMenuItem || source == findProductMenuItem) { // les deux mènenet au même endroit (une recherche de produit)
                     panelToDisplay = new FindProductPanel();
+                    // TODO il est la ton problème car ton jpannel c'est censé etre un jtable ...
                 } else if(source == searchProductTypeOnDelayAMenuItem) {
                     panelToDisplay = new ProductTypeSearchOnDelayPanel();
                 } else if(source == searchProductSupplementsDueToEventMenuItem) {
