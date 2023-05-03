@@ -54,26 +54,17 @@ public class FindProductPanel extends JPanel {
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout());
 
-        // button Listener
-        buttonListener = new ButtonListener();
-
-        // delete button
-        deleteButton = new JButton("Suprimer");
-        deleteButton.addActionListener(buttonListener);
-        buttonsPanel.add(deleteButton);
-
-        // modify button
-        modifyButton = new JButton("Modifier");
-        modifyButton.addActionListener(buttonListener);
-        buttonsPanel.add(modifyButton);
-
         // JTables and scrollPane
         // TODO à supprimer la liste d'exemple
         ArrayList<Product> productsList = new ArrayList<Product>();
         productsList.add(testProduct);
         productsList.add(secondTestProduct);
 
+        // if no table ==> the table and buttons are replace by JLabel that
+        // explain the fact that there is not any product found
+
         if (!productsList.isEmpty()) {
+            @celian vien chck ici pour le JTable
             allProductModel = new AllProductModel(productsList);
             productsTable = new JTable(allProductModel);
             productsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -81,8 +72,22 @@ public class FindProductPanel extends JPanel {
 
             productsScrollPane = new JScrollPane(productsTable);
             tablePanel.add(productsTable);
+
+            // button Listener
+            buttonListener = new ButtonListener();
+
+            // delete button
+            deleteButton = new JButton("Suprimer");
+            deleteButton.addActionListener(buttonListener);
+            buttonsPanel.add(deleteButton);
+
+            // modify button
+            modifyButton = new JButton("Modifier");
+            modifyButton.addActionListener(buttonListener);
+            buttonsPanel.add(modifyButton);
         } else {
             tablePanel.add(new JLabel("pas de produits trouvé"));
+            buttonsPanel.add(new JLabel("pas d'opérations disponibles"));
         }
 
         // labels

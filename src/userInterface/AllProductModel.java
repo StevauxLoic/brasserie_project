@@ -76,6 +76,11 @@ public class AllProductModel extends AbstractTableModel {
         return columnClass;
     }
 
+    /**
+     * getObject() return the object at the given rowIndex
+     * @param rowIndex the indew of the row
+     * @return type : Product <br> product at the givent row
+    **/
     public Product getObject(int rowIndex) {
         return this.contents.get(rowIndex);
     }
