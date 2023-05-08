@@ -217,7 +217,7 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
     }
 
     public Date getLaunchingDateSelected() {
-        return launchingDateSelected;
+        return (Date) getLaunchingDateSpinner().getValue();
     }
 
     //TODO verif que la valeur est la même avant et après le parsint ou le parsdouble
