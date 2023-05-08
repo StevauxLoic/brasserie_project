@@ -4,6 +4,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.Date;
 
+// TODO montrer que une seule exeption
 
 public class Product {
     private String reference; // primaryKey
