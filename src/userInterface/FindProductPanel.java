@@ -18,7 +18,6 @@ import java.util.ArrayList;
  * if the button to delete is pushed, the selectedProduct is delete and if the modify button is selected, the panel will change
  * to a panel of modification for the selected porduct
 */
-
 public class FindProductPanel extends JPanel {
     private JPanel titlePanel, tablePanel, buttonsPanel;
     private JLabel titleLabel;
@@ -49,8 +48,10 @@ public class FindProductPanel extends JPanel {
         //Panel
         titlePanel = new JPanel();
         titlePanel.setLayout(new FlowLayout());
+
         tablePanel = new JPanel();
         tablePanel.setLayout(new FlowLayout());
+
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout());
 
@@ -76,18 +77,21 @@ public class FindProductPanel extends JPanel {
             // button Listener
             buttonListener = new ButtonListener();
 
-            // delete button
+            // buttons
             deleteButton = new JButton("Suprimer");
             deleteButton.addActionListener(buttonListener);
             buttonsPanel.add(deleteButton);
 
-            // modify button
             modifyButton = new JButton("Modifier");
             modifyButton.addActionListener(buttonListener);
             buttonsPanel.add(modifyButton);
+
+            // add the button pannel
+
+            this.add(buttonsPanel, BorderLayout.SOUTH);
+
         } else {
             tablePanel.add(new JLabel("pas de produits trouvé"));
-            buttonsPanel.add(new JLabel("pas d'opérations disponibles"));
         }
 
         // labels
@@ -98,7 +102,6 @@ public class FindProductPanel extends JPanel {
         // TODO fill the panel
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(tablePanel, BorderLayout.CENTER);
-        this.add(buttonsPanel, BorderLayout.SOUTH);
 
         this.setVisible(true);
     }

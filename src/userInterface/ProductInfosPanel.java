@@ -24,6 +24,8 @@ public class ProductInfosPanel extends JPanel {
     // show the product infos or only a message 'no product found' if the given product is null
     public ProductInfosPanel(Product product) {
         this.setLayout(new GridLayout(11,2,5,5));
+
+        // fill the form with the information about the product to modify
         if (product != null) {
             nameLabel = new JLabel("nom");
             this.add(nameLabel);
@@ -70,6 +72,7 @@ public class ProductInfosPanel extends JPanel {
             this.add(descriptionLabel);
             String productDescrpition = product.getDescription();
             this.add(new JLabel(productDescrpition != null ? productDescrpition : "pas de description"));
+
         } else {
             erroMessageLabel = new JLabel("Pas de produit trouvé (erreur)");
             this.add(erroMessageLabel);

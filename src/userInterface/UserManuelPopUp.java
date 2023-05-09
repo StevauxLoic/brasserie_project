@@ -46,11 +46,14 @@ public class UserManuelPopUp extends PopUp {
     public void fillThePopUpFrame() {
         this.setLayout(new BorderLayout());
 
+        // panels
+
         infosSelecterContainer = new JPanel();
         infosContainer = new JPanel();
         infosContainer.setLayout(new FlowLayout());
 
         // the left part of the screen with the ComboBox to choose the topic we want to see more infos onto
+
         comboBoxLabel = new JLabel("Aide à afficher :");
         infoListComboBox = new JComboBox(infosTopics);
         infoListComboBox.setSelectedItem(null);
@@ -62,10 +65,12 @@ public class UserManuelPopUp extends PopUp {
         infosSelecterContainer.add(infoListComboBox, BorderLayout.SOUTH);
 
         // the label that appear when the window appears :
+
         helpInfosLabel = new JLabel("<html><p>Selectionnez un thème sur lequel vous voulez être informé</p></html>");
         infosContainer.add(helpInfosLabel);
 
         // the diffrents label that contain infos on a topic :
+
         softwareInfoLabel = new JLabel("<html><p>infos de l'app</p></html>");
 
         menusLabel = new JLabel("<html><p>infos des menus</p></html>");
@@ -93,6 +98,7 @@ public class UserManuelPopUp extends PopUp {
         findProductLabel = new JLabel("<html><p>infos trouver produit</p></html>");
 
 
+        // fill the array of help messages
         labelsArray = new JLabel[13];
         labelsArray[0] = softwareInfoLabel;
         labelsArray[1] = menusLabel;
