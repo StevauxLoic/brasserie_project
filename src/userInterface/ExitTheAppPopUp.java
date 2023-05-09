@@ -18,21 +18,27 @@ public class ExitTheAppPopUp extends PopUp {
     @Override
     public void fillThePopUpFrame() {
         this.setLayout(new BorderLayout());
-        exitQuestion = new JLabel("Voulez vous quitter l'application ?");
 
-        cancelButton = new JButton("Annuler");
-        exitButton = new JButton("Quitter");
+        // listener
         ButtonListener buttonListener = new ButtonListener();
-        cancelButton.addActionListener(buttonListener);
-        exitButton.addActionListener(buttonListener);
 
+        // panels
         textPanel = new JPanel();
+        buttonsPanel = new JPanel();
+
+        // label
+        exitQuestion = new JLabel("Voulez vous quitter l'application ?");
         textPanel.add(exitQuestion);
 
-        buttonsPanel = new JPanel();
+        cancelButton = new JButton("Annuler");
+        cancelButton.addActionListener(buttonListener);
         buttonsPanel.add(cancelButton);
+
+        exitButton = new JButton("Quitter");
+        exitButton.addActionListener(buttonListener);
         buttonsPanel.add(exitButton);
 
+        // adding the panels
         this.add(textPanel, BorderLayout.CENTER);
         this.add(buttonsPanel, BorderLayout.SOUTH);
     }

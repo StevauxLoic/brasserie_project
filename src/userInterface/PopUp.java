@@ -28,7 +28,6 @@ public abstract class PopUp extends JFrame {
             }
         });
 
-
         // pop-up filling
         fillThePopUpFrame();
 
