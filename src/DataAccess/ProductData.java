@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+// TODO qd on crée c'est qu'avec les truc obligatoire
 
 public class ProductData implements  IProductData{
     private Connection connection = SingletonConnection.getUniqueConnection();
@@ -36,10 +37,10 @@ public class ProductData implements  IProductData{
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, referenceOfTheProduct);
         ResultSet data = statement.executeQuery();
+        data.next();
         Product product = new Product(data.getString("id"), data.getInt("type_id"), data.getString("tag"), data.getDouble("vat"), data.getInt("minimum_quantity_in_stock"),
                 data.getBoolean("is_sparkling"), data.getDate("launching_date").toLocalDate(), data.getDouble("price"), data.getDouble("alcohol_level"), data.getString("description_of_the_product"),
-                data.getInt("quantity_in_stock")
-        ) ;
+                data.getInt("quantity_in_stock")) ;
         return product;
     }
 
