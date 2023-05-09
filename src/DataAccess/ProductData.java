@@ -26,7 +26,9 @@ public class ProductData implements  IProductData{
         statement.setDouble(8, productToCreate.getAlcoholLevel());
         statement.setDate(9, java.sql.Date.valueOf(productToCreate.getLaunchingDate()));
         statement.setDouble(10, productToCreate.getPrice());
-        statement.setString(11, productToCreate.getDescription());
+        if(productToCreate.getDescription() != null) {
+            statement.setString(11, productToCreate.getDescription());
+        }
         statement.executeUpdate();
     }
 
@@ -39,8 +41,12 @@ public class ProductData implements  IProductData{
         ResultSet data = statement.executeQuery();
         data.next();
         Product product = new Product(data.getString("id"), data.getInt("type_id"), data.getString("tag"), data.getDouble("vat"), data.getInt("minimum_quantity_in_stock"),
-                data.getBoolean("is_sparkling"), data.getDate("launching_date").toLocalDate(), data.getDouble("price"), data.getDouble("alcohol_level"), data.getString("description_of_the_product"),
+                data.getBoolean("is_sparkling"), data.getDate("launching_date").toLocalDate(), data.getDouble("price"), data.getDouble("alcohol_level"),
                 data.getInt("quantity_in_stock")) ;
+        String description = data.getString("description_of_the_product");
+        if(!data.wasNull()){
+            product.setDescription(description);
+        }
         return product;
     }
 
@@ -54,12 +60,13 @@ public class ProductData implements  IProductData{
             String VATNumber, siteName;
 
             while (data.next()) {
-                 product = new Product(data.getString("id"), data.getInt("type_id"), data.getString("tag"), data.getDouble("vat"), data.getInt("minimum_quantity_in_stock"),
-                        data.getBoolean("is_sparkling"), data.getDate("launching_date").toLocalDate(), data.getDouble("price"), data.getDouble("alcohol_level"), data.getString("description_of_the_product"),
-                        data.getInt("quantity_in_stock")
-                ) ;
-
-
+                product = new Product(data.getString("id"), data.getInt("type_id"), data.getString("tag"), data.getDouble("vat"), data.getInt("minimum_quantity_in_stock"),
+                        data.getBoolean("is_sparkling"), data.getDate("launching_date").toLocalDate(), data.getDouble("price"), data.getDouble("alcohol_level"),
+                        data.getInt("quantity_in_stock")) ;
+                String description = data.getString("description_of_the_product");
+                if(!data.wasNull()){
+                    product.setDescription(description);
+                }
 
                 products.add(product);
             }
@@ -94,5 +101,7 @@ public class ProductData implements  IProductData{
         String sql = "DELETE FROM product WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, productToDelete.getReference());
+
+        statement.executeUpdate();
     }
 }
