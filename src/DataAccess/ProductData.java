@@ -28,11 +28,15 @@ public class ProductData implements  IProductData{
     }
 
 
-    public Product showOneProduct(String referenceOfTheProduct){
-        // TODO faire les methodes qui retourne les produits
+    public Product showOneProduct(String referenceOfTheProduct) throws SQLException{
+        String sql = "SELECT id, type_id, tag, vat, quantity_in_stock, is_sparkling, alcohol_level, launching_date, price, description_of_the_product" +
+                "WHERE id = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, referenceOfTheProduct);
+        statement.executeQuery();
     }
 
-    public ArrayList<Product> showAllProducts(){
+    public ArrayList<Product> showAllProducts()throws  SQLException{
 
     }
 
