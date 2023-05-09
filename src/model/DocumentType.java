@@ -1,7 +1,7 @@
 package model;
 
 public class DocumentType {
-    private int reference; // primary key
+    private Integer reference; // primary key
     private String label;
 
 

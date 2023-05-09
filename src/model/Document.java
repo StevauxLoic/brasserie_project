@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class Document {
-    private int reference; // primaryKey
+    private Integer reference; // primaryKey
     private LocalDate date;
     private Double discount; // non
     private LocalDate deadLine; // non
@@ -14,33 +14,20 @@ public class Document {
     private LocalDate deliveryDate; // non
     private Double deposit; // non
     private Double additionalFees; // non
-    private int documentTypeReference; // foreignKey
+    private Integer documentTypeReference; // foreignKey
     private String deliveryAdressReference; // foreignKey && non
 
-    public Document(LocalDate date, Double discount, LocalDate deadLine, Boolean isPaid, LocalDate validityDate, Boolean isDelivered, LocalDate deliveryDate, Double deposit, Double additionalFees, int documentTypeReference, String deliveryAdressReference){
-        setDocumentTypeReference(documentTypeReference);
+    public Document(Integer reference,LocalDate date,  int documentTypeReference){
+        this.reference = reference;
         setDate(date);
         this.documentTypeReference = documentTypeReference;
-        this.deliveryAdressReference = deliveryAdressReference;
-        setDiscount(discount);
-        setDeadLine(deadLine);
-        this.isPaid = isPaid;
-        setValidityDate(validityDate);
-        this.isDelivered = isDelivered;
-        setDeliveryDate(deliveryDate);
-        setDeposit(deposit);
-        setAdditionalFees(additionalFees);
     }
 
-    public void setDocumentTypeReference(int documentTypeReference) {
-        /*
-        if(documentTypeReference appartient a la bd){
-            this.documentTypeReference = documentTypeReference;
-        } else {
-            throw erreur
-        }
-         */
+    public Document(LocalDate date,  int documentTypeReference){
+        this(null, date, documentTypeReference);
     }
+
+
 
     public void setDate(LocalDate date) {
         if(date != null /*&& date <= dateDuJour */){
@@ -67,12 +54,20 @@ public class Document {
         }
     }
 
+    public void setPaid(Boolean paid) {
+        isPaid = paid;
+    }
+
     public void setValidityDate(LocalDate validityDate) {
         if(validityDate == null || validityDate.isAfter(date)){
             this.validityDate= validityDate;
         } else {
             // throw exept
         }
+    }
+
+    public void setIsDelivered(boolean delivered){
+        this.isDelivered = delivered;
     }
 
     public void setDeliveryDate(LocalDate deliveryDate) {
@@ -98,5 +93,9 @@ public class Document {
             this.additionalFees = additionalFees;
         }
 
+    }
+
+    public void setDeliveryAdressReference(String deliveryAdressReference) {
+        this.deliveryAdressReference = deliveryAdressReference;
     }
 }

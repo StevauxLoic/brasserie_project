@@ -9,18 +9,10 @@ public class DetailsLine {
     private String productReference; // foreignKey
     private int documentReference; // foreignKey
 
-    public DetailsLine(double price, int quantity, int anomaliesQuantity, double vat, Double discount, String productReference, int documentReference){
-        setPrice(price);
+    public DetailsLine(int quantity, String productReference, int documentReference){
         setQuantity(quantity);
-        setAnomaliesQuantity(anomaliesQuantity);
-        setVat(vat);
         this.productReference = productReference;
         this.documentReference = documentReference;
-        setDiscount(discount);
-    }
-
-    public DetailsLine(double price, int quantity, int anomaliesQuantity, double vat, String productReference, int documentReference){
-        this(price, quantity, anomaliesQuantity, vat, null, productReference, documentReference);
     }
 
     public void setPrice(double price) {

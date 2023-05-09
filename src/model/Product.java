@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Product {
     private String reference; // primaryKey
-    private int typeReference; // foreignKey
+    private Integer typeReference; // foreignKey
     private String name;
     private double vat;
     private int quantityInStock;
@@ -19,7 +19,7 @@ public class Product {
     private double price;
     private String description; // non obligatory
 
-    public Product(String reference, int typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, String description, int quantityInStock) throws ReferenceExeption , TypeExeption, NameExeption, DateExeption {
+    public Product(String reference, Integer typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, String description, int quantityInStock) throws ReferenceExeption , TypeExeption, NameExeption, DateExeption {
         setTypeReference(typeReference);
         setReference(reference);
         setName(name);
@@ -30,10 +30,9 @@ public class Product {
         setPrice(price);
         setLaunchingDate(launchingDate);
         setAlcoholLevel(alcoholLevel);
-        this.description = description;
     }
 
-    public void setTypeReference(int typeReference) throws TypeExeption{
+    public void setTypeReference(Integer typeReference) throws TypeExeption{
         if(typeReference <= 0 ){//||typeReference >= /* auto increment*/){ TODO revoir la règle ici
             String message = "le type numero : " + typeReference + " n'est pas un type existants";
             throw new TypeExeption(typeReference, message);
@@ -117,6 +116,10 @@ public class Product {
         } else {
             this.price = price;
         }
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getReference() {

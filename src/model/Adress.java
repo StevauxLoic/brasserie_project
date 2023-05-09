@@ -12,14 +12,11 @@ public class Adress {
         this.reference = reference;
         this.street = street;
         setNumber(number);
-        // businessEntityRef
+        this.businessEntityReference = reference;
         this.typeReference = typeReference;
         this.cityReference = cityReference;
     }
 
-    public Adress(String reference, String street, int number, String typeReference, String cityReference){
-        this(reference, street, number, null /*here is the businessEntityRef*/, typeReference, cityReference);
-    }
 
     public void setNumber(int number){
         if(number < 1){

@@ -1,17 +1,17 @@
 package model;
 
-import java.security.ProtectionDomain;
-
 public class ProductType {
-    private int reference; // foreign key
+    private Integer reference;
     private String label;
 
-    public ProductType(int reference, String label){
-        setReference(reference);
+    public ProductType(Integer reference, String label){
+        this.reference = reference;
         this.label = label;
     }
 
-    public void setReference(int reference) {
-        // c'est censé être un auto incrémentation
+    public ProductType(String label){
+        this(null, label);
     }
+
+
 }

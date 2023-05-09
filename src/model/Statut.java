@@ -7,21 +7,21 @@ public class Statut {
     private Double creditLimitation;
     private Boolean discount;
 
-    public Statut(String reference, String label, Boolean mustPayDeposit, Double creditLimitation, Boolean discount){
+    public Statut(String reference, String label){
         setReference(reference);
         setLabel(label);
-        this.mustPayDeposit = mustPayDeposit;
-        setCreditLimitation(creditLimitation);
-        this.discount = discount;
     }
 
     public void setReference(String reference) {
-        if(reference != null){
-            this.reference = reference;
-        } else {
-            // throw exept
-        }
+       this.reference = reference;
+    }
 
+    public void setDiscount(Boolean discount) {
+        this.discount = discount;
+    }
+
+    public void setMustPayDeposit(Boolean mustPayDeposit) {
+        this.mustPayDeposit = mustPayDeposit;
     }
 
     public void setCreditLimitation(Double creditLimitation) {
@@ -34,10 +34,6 @@ public class Statut {
 
 
     public void setLabel(String label) {
-        if(label != null){
-            this.label = label;
-        } else {
-            // throw Erreur
-        }
+        this.label = label;
     }
 }
