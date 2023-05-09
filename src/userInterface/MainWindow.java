@@ -147,7 +147,7 @@ public class MainWindow extends JFrame {
                 } else if(source == searchProductSupplementsDueToEventMenuItem) {
                     panelToDisplay = new ProductSupplementDueToEventSearchPanel();
                 } else if(source == searchAdressMenuItem) {
-                    panelToDisplay = new AdressSearchPanel();
+                    panelToDisplay = new BusinessEntityAdressSearchPanel();
                 } else if(source == searchOutOfStockProductMenuItem) {
                     panelToDisplay = new ProductOutOfStockAndSupplierSearchPanel();
                 } else if(source == newProductMenuItem) {
