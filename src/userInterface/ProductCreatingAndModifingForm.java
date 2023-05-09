@@ -10,8 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * This abstract class is for the creat and modifying part of the crud (on the table Product)
@@ -61,60 +63,61 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout());
 
-        // labels
-        nameLabel = new JLabel("nom");
-        referenceLabel = new JLabel("référence");
-        productTypeLabel = new JLabel("type de product");
-        vatLabel = new JLabel("TVA");
-        quantityInStockLabel = new JLabel("quantité en stock");
-        minimumQuantityInStockLabel = new JLabel("quantité minimum en stock");
-        sparklingLabel = new JLabel("est pétillant");
-        hasAlcoholCheckBoxLabel = new JLabel("contient de l'alcool");
-        alcoholLevelLabel = new JLabel("niveau d'alcool");
-        priceLabel = new JLabel("prix HTVA (en magasin)");
-        launchingDateLabel = new JLabel("date de lancement");
-        descriptionLabel = new JLabel("description");
-        
-
-        // checkBoxes
-        isSparklingCheckBox = new JCheckBox("oui");
-        hasAlcoholCheckBox = new JCheckBox("oui");
-        hasAlcoholCheckBox.addItemListener(new ChecboxListener());
-        
-        // text fields
-        nameTextField = new JTextField();
-        referenceTextField = new JTextField();
-        vatTextField = new JTextField();
-        alcoholLevelTextField = new JTextField();
-        priceTextField = new JTextField();
-        descriptionTextField = new JTextField();
-        
+        //listeners
         TextFieldListener textFieldListener = new TextFieldListener();
+        ChecboxListener checboxListener = new ChecboxListener();
+        SpinnerListener spinnerListener = new SpinnerListener();
+
+        // modules
+        nameLabel = new JLabel("nom");
+        nameTextField = new JTextField();
         nameTextField.addActionListener(textFieldListener);
+
+        referenceLabel = new JLabel("référence");
+        referenceTextField = new JTextField();
         referenceTextField.addActionListener(textFieldListener);
-        vatTextField.addActionListener(textFieldListener);
-        alcoholLevelTextField.addActionListener(textFieldListener);
-        priceTextField.addActionListener(textFieldListener);
-        descriptionTextField.addActionListener(textFieldListener);
 
-        // JComboBox
-        productTypeComboBox = new JComboBox(new String[]{"spiritueu", "bière", "soda", "whisky"});
+        productTypeLabel = new JLabel("type de product");
         // TODO get the types list
+        productTypeComboBox = new JComboBox(new String[]{"spiritueu", "bière", "soda", "whisky"});
 
-        // spinners
+        vatLabel = new JLabel("TVA");
+        vatTextField = new JTextField();
+        vatTextField.addActionListener(textFieldListener);
+
+        quantityInStockLabel = new JLabel("quantité en stock");
         quantityInStockSpinner = new JSpinner();
-        minimumQuantityInStockSpinner = new JSpinner();
+        quantityInStockSpinner.addChangeListener(spinnerListener);
 
-        launchingDateSelected = new Date(1, 1, 0); // default var we decided to use TODO decide about it
+        minimumQuantityInStockLabel = new JLabel("quantité minimum en stock");
+        minimumQuantityInStockSpinner = new JSpinner();
+        minimumQuantityInStockSpinner.addChangeListener(spinnerListener);
+
+        sparklingLabel = new JLabel("est pétillant");
+        isSparklingCheckBox = new JCheckBox("oui");
+
+        hasAlcoholCheckBoxLabel = new JLabel("contient de l'alcool");
+        hasAlcoholCheckBox = new JCheckBox("oui");
+        hasAlcoholCheckBox.addItemListener(checboxListener);
+
+        alcoholLevelLabel = new JLabel("niveau d'alcool");
+        alcoholLevelTextField = new JTextField();
+        alcoholLevelTextField.setEnabled(false);
+        alcoholLevelTextField.addActionListener(textFieldListener);
+
+        priceLabel = new JLabel("prix HTVA (en magasin)");
+        priceTextField = new JTextField();
+        priceTextField.addActionListener(textFieldListener);
+
+        launchingDateLabel = new JLabel("date de lancement");
+        launchingDateSelected = new Date();
         launchingDateSpinner = new JSpinner(new SpinnerDateModel(launchingDateSelected, null, null, Calendar.YEAR));
         JSpinner.DateEditor launchingDateEditor = new JSpinner.DateEditor(launchingDateSpinner,"dd/MM/yyyy");
         launchingDateSpinner.setEditor(launchingDateEditor);
-        add(launchingDateSpinner);
 
-        SpinnerListener spinnerListener = new SpinnerListener();
-        quantityInStockSpinner.addChangeListener(spinnerListener);
-        minimumQuantityInStockSpinner.addChangeListener(spinnerListener);
-
+        descriptionLabel = new JLabel("description");
+        descriptionTextField = new JTextField();
+        descriptionTextField.addActionListener(textFieldListener);
 
 
         // fill the panel and display it
@@ -168,6 +171,7 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
 
     public abstract void fillButtonsPanel(JPanel buttonsPanel);
 
+    // getters
     public JCheckBox getIsSparklingCheckBox() {
         return isSparklingCheckBox;
     }
@@ -217,10 +221,10 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
     }
 
     public Date getLaunchingDateSelected() {
-        return (Date) getLaunchingDateSpinner().getValue();
+        return ((Date) getLaunchingDateSpinner().getValue());
     }
 
-    //TODO verif que la valeur est la même avant et après le parsint ou le parsdouble
+    // input validity tests
     private boolean isValideDouble (String textToVerify) {
         try {
             double reference = Double.parseDouble(textToVerify);
@@ -236,83 +240,82 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         JOptionPane.showMessageDialog(null, message, "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
     }
 
+    public boolean isFormValid() {
+        if (nameTextField.getText().length() > 180 || nameTextField.getText().length() == 0) {
+            showTextFieldError("le nom doit contenir entre 0 et 180 caractères", nameTextField);
+            return false;
+        }
+
+        if (referenceTextField.getText().length() > 10 || referenceTextField.getText().length() == 0) {
+            showTextFieldError("la référence doit contenir entre 0 et 10 caractères", referenceTextField);
+            return false;
+        }
+
+        if (productTypeComboBox.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "un type de produit doit être choisi", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        if (!isValideDouble(vatTextField.getText()) || Double.parseDouble(vatTextField.getText()) > 100 || Double.parseDouble(vatTextField.getText()) < 0) {
+            showTextFieldError("la tva doit être un nombre (à virgule ou non) entre 0 et 100", vatTextField);
+            return false;
+        }
+
+        boolean alcoholLevelOrCheckBoxAreValid = !hasAlcoholCheckBox.isSelected() || ((isValideDouble(alcoholLevelTextField.getText()) && Double.parseDouble(alcoholLevelTextField.getText()) <= 100 && Double.parseDouble(alcoholLevelTextField.getText()) > 0));
+        if (!alcoholLevelOrCheckBoxAreValid) {
+            showTextFieldError("le taux d'alcool doit être un nombre (à virgule ou non) entre 0 et 100 % (100 compris mais 0 non), si le produit n'est pas alcoolisé, ne coché pas la case qui dit que le produit l'est", alcoholLevelTextField);
+            return false;
+        }
+
+        if (!isValideDouble(priceTextField.getText()) || Double.parseDouble(priceTextField.getText()) < 0) {
+            showTextFieldError("le prix doit être un nombre (à virgule ou non) non négatif", priceTextField);
+            return false;
+        }
+
+        if ((int) quantityInStockSpinner.getValue() < 0) {
+            JOptionPane.showMessageDialog(null, "la quantité en stock doit être un nombre entier positif ou nul", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+            quantityInStockSpinner.setValue(0);
+            return false;
+        }
+
+        if ((int) minimumQuantityInStockSpinner.getValue() < 0) {
+                JOptionPane.showMessageDialog(null, "la quantité minimum en stock doit être un nombre entier positif ou nul", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+                minimumQuantityInStockSpinner.setValue(0);
+                return false;
+        }
+
+        // every inputs are good
+        return true;
+    }
+
     /**
      * This readForm function will read each field one by one and check if the user wrote a valide value.
      * <br>
      * if it's not, a JOptionPane or a showTextFieldError() will show the mistake to the user and reset the field
     **/
-    public Product readForm() {
-        // lis les champs et renvoie le produit en fonction de et renvoie null si au moins un champs est mal rempli
-        // chaque champs est lu, si il est validé il est enregistré dans une variable sinon la fonction renvoie directement null
-        // si tout les champs sont validés un Product avec les données lues sera renvoyé
-        if (nameTextField.getText().length() > 180 || nameTextField.getText().length() == 0) {
-            showTextFieldError("le nom doit contenir entre 0 et 180 caractères", nameTextField);
-        } else {
-            String name = nameTextField.getText();
+    public Product readForm() throws DateExeption, TypeExeption, NameExeption, ReferenceExeption {
+        String name = nameTextField.getText();
+        String reference = referenceTextField.getText();
+        String description = descriptionTextField.getText();
+        Double vat = Double.parseDouble(vatTextField.getText());
+        Double alcoholLevel = hasAlcoholCheckBox.isSelected() ? Double.parseDouble(alcoholLevelTextField.getText()) : 0;
+        Double price = Double.parseDouble(priceTextField.getText());
+        int quantityInStock = (int) quantityInStockSpinner.getValue()    ;
+        int minimumInStock = (int) minimumQuantityInStockSpinner.getValue();
+        int productTypeReference = productTypeComboBox.getSelectedIndex() + 1;
+        boolean isSparkling = isSparklingCheckBox.isSelected();
+        LocalDate launchingDate = getLaunchingDateSelected().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-            if (referenceTextField.getText().length() > 10 || referenceTextField.getText().length() == 0) {
-                showTextFieldError("la référence doit contenir entre 0 et 10 caractères", referenceTextField);
-            } else {
-                String reference = referenceTextField.getText();
-
-                // en cas d'erreur pour ne pas avoir de "" à la place de null
-                if (descriptionTextField.getText().length() < 1) {
-                    descriptionTextField.setText(null);
-                }
-                String description = descriptionTextField.getText();
-
-                if (!isValideDouble(vatTextField.getText()) || Double.parseDouble(vatTextField.getText()) > 100 || Double.parseDouble(vatTextField.getText()) < 0) {
-                    showTextFieldError("la tva doit être un nombre (à virgule ou non) entre 0 et 100", vatTextField);
-                } else {
-                    Double vat = Double.parseDouble(vatTextField.getText());
-
-                    boolean alcoholLevelOrCheckBoxAreValid = !hasAlcoholCheckBox.isSelected() || ((isValideDouble(alcoholLevelTextField.getText()) && Double.parseDouble(alcoholLevelTextField.getText()) <= 100 && Double.parseDouble(alcoholLevelTextField.getText()) > 0));
-                    if (!alcoholLevelOrCheckBoxAreValid) {
-                        showTextFieldError("le taux d'alcool doit être un nombre (à virgule ou non) entre 0 et 100 % (100 compris mais 0 non), si le produit n'est pas alcoolisé, ne coché pas la case qui dit que le produit l'est", alcoholLevelTextField);
-                    } else {
-                        Double alcoholLevel = hasAlcoholCheckBox.isSelected() ? Double.parseDouble(alcoholLevelTextField.getText()) : 0;
-
-                        if (!isValideDouble(priceTextField.getText()) || Double.parseDouble(priceTextField.getText()) < 0) {
-                            showTextFieldError("le prix doit être un nombre (à virgule ou non) non négatif", priceTextField);
-                        } else {
-                            Double price = Double.parseDouble(priceTextField.getText());
-
-                            if ((int) quantityInStockSpinner.getValue() < 0) {
-                                JOptionPane.showMessageDialog(null, "la quantité en stock doit être un nombre entier positif ou nul", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
-                                quantityInStockSpinner.setValue(0);
-                            } else {
-                                int quantityInStock = (int) quantityInStockSpinner.getValue()    ;
-
-                                if ((int) minimumQuantityInStockSpinner.getValue() < 0) {
-                                    JOptionPane.showMessageDialog(null, "la quantité minimum en stock doit être un nombre entier positif ou nul", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
-                                    minimumQuantityInStockSpinner.setValue(0);
-                                } else {
-                                    int minimumInStock = (int) minimumQuantityInStockSpinner.getValue();
-
-                                    if (productTypeComboBox.getSelectedItem() == null) {
-                                        JOptionPane.showMessageDialog(null, "un type de produit doit être choisi", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
-                                    } else {
-                                        int productTypeReference = productTypeComboBox.getSelectedIndex() + 1;
-                                        boolean isSparkling = isSparklingCheckBox.isSelected();
-
-                                        try {
-                                            Product product = new Product(reference, productTypeReference, name, vat, minimumInStock, isSparkling, getLaunchingDateSelected().toLocalDate(), price, alcoholLevel, description, quantityInStock);
-                                            return product;
-                                        } catch (Exception exception) {
-                                                JOptionPane.showMessageDialog(null, exception.getMessage(), "erreurs rencontrée", JOptionPane.WARNING_MESSAGE);
-                                        }
-                                        return null;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        try {
+            Product product = new Product(reference, productTypeReference, name, vat, minimumInStock, isSparkling, launchingDate, price, alcoholLevel, description, quantityInStock);
+            return product;
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "erreurs rencontrée", JOptionPane.WARNING_MESSAGE);
+            throw exception;
         }
-        return null;
     }
 
+    // listeners
     private class ChecboxListener implements ItemListener {
 
         @Override

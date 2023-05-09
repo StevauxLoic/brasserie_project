@@ -89,10 +89,16 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            Product modifiedProduct = readForm();
-
-            if (modifiedProduct != null) {
-                modifyProduct(productToModify, modifiedProduct);
+            if (isFormValid()) {
+                try {
+                    Product productToModify = readForm();
+                    // TODO modif product
+                    JOptionPane.showMessageDialog(null, "objet modifié", "erreur", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "erreur", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Le formulaire doit être correctement rempli pour être validé", "formulaire mal remplis", JOptionPane.WARNING_MESSAGE);
             }
         }
     }

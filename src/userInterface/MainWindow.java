@@ -5,9 +5,9 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MainWindow extends JFrame {
-    JMenuBar menuBar;
-    JMenu fileMenu, helpMenu, searchMenu, productMenu;
-    JMenuItem exitMenuItem,
+    private JMenuBar menuBar;
+    private JMenu fileMenu, helpMenu, searchMenu, productMenu;
+    private JMenuItem exitMenuItem,
             userManuelMenuItem,
             softwareInfosMenuItem,
             searchProductMenuItem,
@@ -18,15 +18,19 @@ public class MainWindow extends JFrame {
             newProductMenuItem,
             findProductMenuItem;
 
-    JPanel welcomePanel, activePanel;
-    JLabel welcomeLabel;
+    private JPanel activePanel;
+    private WelcomePanel welcomePanel;
 
     public MainWindow() throws HeadlessException {
+
         // window
+
         super("Application de gestion");
         setSize(500, 500);
         setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
+
+        // listeners
 
         this.addWindowListener( new WindowAdapter() {
             public void windowClosing ( WindowEvent closingWindowEvent ) {
@@ -34,73 +38,81 @@ public class MainWindow extends JFrame {
             }
         });
 
+        MenuItemListener menuItemListener = new MenuItemListener();
+
         // Menu bar
+
         menuBar = new JMenuBar();
         this.add(menuBar, BorderLayout.NORTH);
 
         // Menus
+
         fileMenu = new JMenu("Fichier");
-        helpMenu = new JMenu("Aide");
-        searchMenu = new JMenu("Recherche");
-        productMenu = new JMenu("Produit");
         menuBar.add(fileMenu);
+
+        helpMenu = new JMenu("Aide");
         menuBar.add(helpMenu);
+
+        searchMenu = new JMenu("Recherche");
         menuBar.add(searchMenu);
+
+        productMenu = new JMenu("Produit");
         menuBar.add(productMenu);
 
         // Menu items
-        MenuItemListener menuItemListener = new MenuItemListener();
+
         exitMenuItem = new JMenuItem("Quitter");
         fileMenu.add(exitMenuItem);
         exitMenuItem.addActionListener(menuItemListener);
 
         userManuelMenuItem = new JMenuItem("Manuel d'utilisation");
         userManuelMenuItem.addActionListener(menuItemListener);
+        helpMenu.add(userManuelMenuItem);
+
         softwareInfosMenuItem = new JMenuItem("Infos sur l'application");
         softwareInfosMenuItem.addActionListener(menuItemListener);
-        helpMenu.add(userManuelMenuItem);
         helpMenu.add(softwareInfosMenuItem);
 
         searchProductMenuItem = new JMenuItem("Un Produit");
         searchProductMenuItem.addActionListener(menuItemListener);
+        searchMenu.add(searchProductMenuItem);
+
         searchProductTypeOnDelayAMenuItem = new JMenuItem("La quantité vendue d’un type de produit dans un délai");
         searchProductTypeOnDelayAMenuItem.addActionListener(menuItemListener);
+        searchMenu.add(searchProductTypeOnDelayAMenuItem);
+
         searchProductSupplementsDueToEventMenuItem = new JMenuItem("Des produits demandant un réassort supplémentaire");
         searchProductSupplementsDueToEventMenuItem.addActionListener(menuItemListener);
+        searchMenu.add(searchProductSupplementsDueToEventMenuItem);
+
         searchAdressMenuItem = new JMenuItem("Les adresses d’une personne/entreprise");
         searchAdressMenuItem.addActionListener(menuItemListener);
+        searchMenu.add(searchAdressMenuItem);
+
         searchOutOfStockProductMenuItem = new JMenuItem("Un produit en rupture dans le stock et ses fournisseurs");
         searchOutOfStockProductMenuItem.addActionListener(menuItemListener);
-        searchMenu.add(searchProductMenuItem);
-        searchMenu.add(searchProductTypeOnDelayAMenuItem);
-        searchMenu.add(searchProductSupplementsDueToEventMenuItem);
-        searchMenu.add(searchAdressMenuItem);
         searchMenu.add(searchOutOfStockProductMenuItem);
-
 
         newProductMenuItem = new JMenuItem("Nouveau");
         newProductMenuItem.addActionListener(menuItemListener);
+        productMenu.add(newProductMenuItem);
+
         findProductMenuItem = new JMenuItem("Trouver/modifier/supprimer");
         findProductMenuItem.addActionListener(menuItemListener);
-        productMenu.add(newProductMenuItem);
         productMenu.add(findProductMenuItem);
 
         // welcome
-        welcomePanel = new JPanel(new FlowLayout());
-        welcomePanel.setLayout(new FlowLayout());
 
-        welcomeLabel = new JLabel("<html><p style=\"text-align: center;\"><image src=\"https://pngimg.com/d/welcome_PNG81.png\" alt=\"l'image n'a put charger\" width=\"220\" height=\"100\"><br>Bienvenue sur le gestionnaire" +
-                "<br>Le manuel d'utilisation se trouve dans le menu aide/Manuel d'utilisation</p></html>");
-        welcomePanel.add(welcomeLabel);
-
+        welcomePanel = new WelcomePanel();
         this.add(welcomePanel, BorderLayout.CENTER);
 
         //set active panel
+
         activePanel = welcomePanel;
 
         // window display
-        this.setVisible(true);
 
+        this.setVisible(true);
     }
 
     public void setActivePanel(JPanel activePanel) {

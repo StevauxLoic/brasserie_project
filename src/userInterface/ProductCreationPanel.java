@@ -1,6 +1,6 @@
 package userInterface;
 
-import model.Product;
+import model.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,10 +32,17 @@ public class ProductCreationPanel extends ProductCreatingAndModifingForm {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            Product productToCreate = readForm();
+            if (isFormValid()) {
 
-            if (productToCreate != null) {
-                createProduct(productToCreate);
+                try {
+                    Product productToCreate = readForm();
+                    // TODO créer
+                    JOptionPane.showMessageDialog(null, "objet créé", "erreur", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "erreur", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Le formulaire doit être correctement rempli pour être validé", "formulaire mal remplis", JOptionPane.WARNING_MESSAGE);
             }
         }
     }

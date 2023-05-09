@@ -3,11 +3,11 @@ package userInterface;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-public class AllProductSellInADelayModel extends AbstractTableModel {
+public class AllProductSoldInADelayModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
-    private ArrayList<ProductSellInADelay> contents;
+    private ArrayList<ProductSoldInADelay> contents;
 
-    public AllProductSellInADelayModel(ArrayList<ProductSellInADelay> contents) {
+    public AllProductSoldInADelayModel(ArrayList<ProductSoldInADelay> contents) {
         columnNames = new ArrayList<>();
         columnNames.add("nom du produit");
         columnNames.add("quantité venude");
@@ -15,7 +15,7 @@ public class AllProductSellInADelayModel extends AbstractTableModel {
         setContents(contents);
     }
 
-    public void setContents(ArrayList<ProductSellInADelay> contents) {
+    public void setContents(ArrayList<ProductSoldInADelay> contents) {
         this.contents = contents;
     }
 
