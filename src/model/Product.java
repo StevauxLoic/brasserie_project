@@ -19,7 +19,7 @@ public class Product {
     private double price;
     private String description; // non obligatory
 
-    public Product(String reference, Integer typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, int quantityInStock, String description) throws ReferenceExeption , TypeExeption, NameExeption, DateExeption {
+    public Product(String reference, Integer typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, int quantityInStock, String description){
            setTypeReference(typeReference);
            setReference(reference);
            setName(name);
@@ -33,45 +33,25 @@ public class Product {
            setDescription(description);
     }
 
-    public Product(String reference, Integer typeReference, String name, double vat, int quantityInStock, int minimumQuantityInStock, boolean isSparkling, double alcoholLevel, LocalDate launchingDate, double price) throws ReferenceExeption , TypeExeption, NameExeption, DateExeption{
+    public Product(String reference, Integer typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, int quantityInStock){
         this(reference, typeReference, name, vat, minimumQuantityInStock, isSparkling, launchingDate, price, alcoholLevel, quantityInStock,null);
     }
 
-    public void setTypeReference(Integer typeReference) throws TypeExeption{
-        if(typeReference <= 0 ){//||typeReference >= /* auto increment*/){ TODO revoir la règle ici
-            String message = "le type numero : " + typeReference + " n'est pas un type existants";
-            throw new TypeExeption(typeReference, message);
-        } else {
-            this.typeReference = typeReference;
-        }
+    public void setTypeReference(Integer typeReference){
+        this.typeReference = typeReference;
 
     }
 
-    public void setLaunchingDate(LocalDate launchingDate) throws DateExeption{
-        if(launchingDate != null && launchingDate.isBefore(LocalDate.now())){
-            this.launchingDate = launchingDate;
-        } else {
-            String message = "La date selectionner (" + launchingDate + ") n'est pas encore existante soit vous devez en mettre une";
-            throw new DateExeption(launchingDate, message);
-        }
+    public void setLaunchingDate(LocalDate launchingDate) {
+        this.launchingDate = launchingDate;
     }
 
-    public void setReference(String reference) throws ReferenceExeption{
-        if(reference != null){
-            this.reference = reference;
-        } else {
-            String message = "reference null";
-            throw new ReferenceExeption(reference, message);
-        }
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
-    public void setName(String name) throws NameExeption{
-        if(name != null){
-            this.name = name;
-        } else {
-            String message = "Vous devez ajouter un nom";
-            throw new NameExeption(name, message);
-        }
+    public void setName(String name) {
+        this.name = name;
     }
 
     // the paramater here is a pourcentage -> if(32.5%) then parameter = 32.5
