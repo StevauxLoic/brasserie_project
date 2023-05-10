@@ -144,7 +144,6 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         formPanel.add(descriptionTextField);
 
         // fill the panel and display it
-
         fillButtonsPanel(buttonsPanel);
 
         this.add(formPanel, BorderLayout.CENTER);
