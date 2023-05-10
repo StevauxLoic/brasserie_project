@@ -98,10 +98,18 @@ public class ProductData implements  IProductData{
     }
 
     public void deleteProduct(Product productToDelete) throws SQLException{
-        String sql = "DELETE FROM product WHERE id = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, productToDelete.getReference());
+        String [] sqlInstructions = new String[]{
+                "DELETE FROM details_line WHERE product_id = ?;",
+                "DELETE FROM additional_restocking WHERE product_id = ?;",
+                "DELETE FROM details_line WHERE product_id = ?;"
+        };
+        try{
+            for(int i = 0; i < 3; i ++){
 
+            }
+        }
+        PreparedStatement statement = connection.prepareStatement();
+        statement.setString(1, productToDelete.getReference());
         statement.executeUpdate();
     }
 }

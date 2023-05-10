@@ -19,17 +19,22 @@ public class Product {
     private double price;
     private String description; // non obligatory
 
-    public Product(String reference, Integer typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, int quantityInStock) throws ReferenceExeption , TypeExeption, NameExeption, DateExeption {
-        setTypeReference(typeReference);
-        setReference(reference);
-        setName(name);
-        setVat(vat);
-        setQuantityInStock(quantityInStock);
-        setMinimumQuantityInStock(minimumQuantityInStock);
-        this.isSparkling = isSparkling;
-        setPrice(price);
-        setLaunchingDate(launchingDate);
-        setAlcoholLevel(alcoholLevel);
+    public Product(String reference, Integer typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, int quantityInStock, String description) throws ReferenceExeption , TypeExeption, NameExeption, DateExeption {
+           setTypeReference(typeReference);
+           setReference(reference);
+           setName(name);
+           setVat(vat);
+           setQuantityInStock(quantityInStock);
+           setMinimumQuantityInStock(minimumQuantityInStock);
+           this.isSparkling = isSparkling;
+           setPrice(price);
+           setLaunchingDate(launchingDate);
+           setAlcoholLevel(alcoholLevel);
+           setDescription(description);
+    }
+
+    public Product(String reference, Integer typeReference, String name, double vat, int quantityInStock, int minimumQuantityInStock, boolean isSparkling, double alcoholLevel, LocalDate launchingDate, double price) throws ReferenceExeption , TypeExeption, NameExeption, DateExeption{
+        this(reference, typeReference, name, vat, minimumQuantityInStock, isSparkling, launchingDate, price, alcoholLevel, quantityInStock,null);
     }
 
     public void setTypeReference(Integer typeReference) throws TypeExeption{
