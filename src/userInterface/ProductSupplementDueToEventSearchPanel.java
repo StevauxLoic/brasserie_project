@@ -114,10 +114,9 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
                 productsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 ListSelectionModel listSelect = productsTable.getSelectionModel();
 
-                Container tableContainer = new Container();
-                tableContainer.add(productsTable);
+                JScrollPane productsScrollPane = new JScrollPane(productsTable);
 
-                this.add(tableContainer, BorderLayout.CENTER);
+                this.add(productsScrollPane, BorderLayout.CENTER);
             } else {
                 JOptionPane.showMessageDialog(null, "aucuns produit lié à un évènement dans ce délai n'a été trouvé", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
             }

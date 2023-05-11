@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class ProductTypeSearchOnDelayPanel extends JPanel {
+public class ProductSoldOnDelaySearchPanel extends JPanel {
     private JComboBox productTypeComboBox;
     private JSpinner delayBeginingSpinner,
                         delayEndSpinner;
@@ -27,7 +27,7 @@ public class ProductTypeSearchOnDelayPanel extends JPanel {
     private Date delayBeginingDateSelected,
                     delayEndDateSelected;
 
-    public ProductTypeSearchOnDelayPanel() {
+    public ProductSoldOnDelaySearchPanel() {
         this.setLayout(new BorderLayout());
 
         // panels
@@ -126,10 +126,9 @@ public class ProductTypeSearchOnDelayPanel extends JPanel {
                 productsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 ListSelectionModel listSelect = productsTable.getSelectionModel();
 
-                Container tableContainer = new Container();
-                tableContainer.add(productsTable);
+                JScrollPane productTypesScrollPane = new JScrollPane(productsTable);
 
-                this.add(tableContainer, BorderLayout.CENTER);
+                this.add(productTypesScrollPane, BorderLayout.CENTER);
             } else {
                 JOptionPane.showMessageDialog(null, "aucunes vente n'a été trouvée dans ce délai", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -140,7 +139,7 @@ public class ProductTypeSearchOnDelayPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            ProductTypeSearchOnDelayPanel.this.search();
+            ProductSoldOnDelaySearchPanel.this.search();
         }
     }
 

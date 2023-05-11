@@ -146,7 +146,7 @@ public class MainWindow extends JFrame {
                     panelToDisplay = new FindProductPanel();
                     // TODO il est la ton problème car ton jpannel c'est censé etre un jtable ...
                 } else if(source == searchProductTypeOnDelayAMenuItem) {
-                    panelToDisplay = new ProductTypeSearchOnDelayPanel();
+                    panelToDisplay = new ProductSoldOnDelaySearchPanel();
                 } else if(source == searchProductSupplementsDueToEventMenuItem) {
                     panelToDisplay = new ProductSupplementDueToEventSearchPanel();
                 } else if(source == searchAdressMenuItem) {

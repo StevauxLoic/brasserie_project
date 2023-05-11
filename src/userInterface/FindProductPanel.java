@@ -46,7 +46,7 @@ public class FindProductPanel extends JPanel {
         titlePanel.setLayout(new FlowLayout());
 
         tablePanel = new JPanel();
-        tablePanel.setLayout(new FlowLayout());
+        tablePanel.setLayout(new BorderLayout());
 
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout());
@@ -67,7 +67,7 @@ public class FindProductPanel extends JPanel {
             listSelect = productsTable.getSelectionModel();
 
             productsScrollPane = new JScrollPane(productsTable);
-            tablePanel.add(productsScrollPane);
+            tablePanel.add(productsScrollPane, BorderLayout.CENTER);
 
             // button Listener
             buttonListener = new ButtonListener();

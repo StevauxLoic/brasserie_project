@@ -80,10 +80,9 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
                 adressesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 ListSelectionModel listSelect = adressesTable.getSelectionModel();
 
-                Container tableContainer = new Container();
-                tableContainer.add(adressesTable);
+                JScrollPane adressesScrollPane = new JScrollPane(adressesTable);
 
-                this.add(tableContainer, BorderLayout.CENTER);
+                this.add(adressesScrollPane, BorderLayout.CENTER);
             } else {
                 JOptionPane.showMessageDialog(null, "aucunes adresse n'a été trouvée", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
             }
