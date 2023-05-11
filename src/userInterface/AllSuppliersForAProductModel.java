@@ -47,7 +47,9 @@ public class AllSuppliersForAProductModel extends AbstractTableModel {
      * @param rowIndex the indew of the row
      * @return type : Product <br> product at the givent row
      **/
+
     public SupplierForAProduct getObject(int rowIndex) {
         return this.contents.get(rowIndex);
     }
 }
+

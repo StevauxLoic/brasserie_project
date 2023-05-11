@@ -48,6 +48,7 @@ public class AllProductSupplementDueToEventModel extends AbstractTableModel {
      * @param rowIndex the indew of the row
      * @return type : Product <br> product at the givent row
      **/
+
     public ProductSupplementDueToEvent getObject(int rowIndex) {
         return this.contents.get(rowIndex);
     }

@@ -276,7 +276,7 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
      * <br>
      * if it's not, a JOptionPane or a showTextFieldError() will show the mistake to the user and reset the field
     **/
-    public Product readForm() throws DateExeption, TypeExeption, NameExeption, ReferenceExeption {
+    public Product readForm() {
         String name = nameTextField.getText();
         String reference = referenceTextField.getText();
         String description = descriptionTextField.getText();
@@ -290,7 +290,7 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         LocalDate launchingDate = getLaunchingDateSelected().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         try {
-            Product product = new Product(reference, productTypeReference, name, vat, minimumInStock, isSparkling, launchingDate, price, alcoholLevel, description, quantityInStock);
+            Product product = new Product(reference, productTypeReference, name, vat, minimumInStock, isSparkling, launchingDate, price, alcoholLevel, quantityInStock, description);
             return product;
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "erreurs rencontrée", JOptionPane.WARNING_MESSAGE);

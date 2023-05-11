@@ -35,8 +35,8 @@ public class FindProductPanel extends JPanel {
     private static Product testProduct, secondTestProduct;
     static {
         try {
-            testProduct = new Product("productRef", 14,"productName test", 21, 20, false, LocalDate.of(2004, 11, 14), 15.5, 15.5, "productDescritption test", 12);
-            secondTestProduct = new Product("txtRef", 2,"second test", 6, 5, true, LocalDate.of(2010, 9, 22), 4, 0, null, 11);
+            testProduct = new Product("productRef", 14,"productName test", 21, 20, false, LocalDate.of(2004, 11, 14), 15.5, 15.5, 12, "productDescritption test");
+            secondTestProduct = new Product("txtRef", 2,"second test", 6, 5, true, LocalDate.of(2010, 9, 22), 4, 0, 11);
         } catch (Exception exeption) {
             System.out.println(exeption.getMessage());
         }

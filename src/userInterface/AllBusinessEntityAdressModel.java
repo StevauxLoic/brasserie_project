@@ -47,6 +47,7 @@ public class AllBusinessEntityAdressModel extends AbstractTableModel {
      * @param rowIndex the indew of the row
      * @return type : Product <br> product at the givent row
      **/
+
     public BusinessEntityAdress getObject(int rowIndex) {
         return this.contents.get(rowIndex);
     }

@@ -14,7 +14,7 @@ public class BottlesAnimationThread extends Thread {
         while (true) {
             panel.changeImage();
             try {
-                sleep(35);
+                sleep(40);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
