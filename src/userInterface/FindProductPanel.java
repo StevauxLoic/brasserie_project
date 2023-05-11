@@ -27,7 +27,7 @@ public class FindProductPanel extends JPanel {
     private JScrollPane productsScrollPane;
 
     private ButtonListener buttonListener;
-    private AllProductModel allProductModel;
+    private AllProductsModel allProductModel;
     private ListSelectionModel listSelect;
 
 
@@ -61,7 +61,7 @@ public class FindProductPanel extends JPanel {
         // explain the fact that there is not any product found
 
         if (!productsList.isEmpty()) {
-            allProductModel = new AllProductModel(productsList);
+            allProductModel = new AllProductsModel(productsList);
             productsTable = new JTable(allProductModel);
             productsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             listSelect = productsTable.getSelectionModel();

@@ -5,11 +5,11 @@ import model.ProductSoldInADelay;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-public class AllProductSoldInADelayModel extends AbstractTableModel {
+public class AllProductsSoldInADelayModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
     private ArrayList<ProductSoldInADelay> contents;
 
-    public AllProductSoldInADelayModel(ArrayList<ProductSoldInADelay> contents) {
+    public AllProductsSoldInADelayModel(ArrayList<ProductSoldInADelay> contents) {
         columnNames = new ArrayList<>();
         columnNames.add("nom du produit");
         columnNames.add("quantité venude");

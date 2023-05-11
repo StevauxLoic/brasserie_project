@@ -109,7 +109,7 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
             if (!foundProductSupplementDueToEventList.isEmpty()) {
                 this.removeAll();
 
-                AllProductSupplementDueToEventModel allProductSupplementDueToEvent = new AllProductSupplementDueToEventModel(foundProductSupplementDueToEventList);
+                AllProductSupplementsDueToEventModel allProductSupplementDueToEvent = new AllProductSupplementsDueToEventModel(foundProductSupplementDueToEventList);
                 JTable productsTable = new JTable(allProductSupplementDueToEvent);
                 productsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 ListSelectionModel listSelect = productsTable.getSelectionModel();

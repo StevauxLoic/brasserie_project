@@ -121,7 +121,7 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
             if (!productTypesSoldList.isEmpty()) {
                 this.removeAll();
 
-                AllProductSoldInADelayModel allProductSoldInADelayModel = new AllProductSoldInADelayModel(productTypesSoldList);
+                AllProductsSoldInADelayModel allProductSoldInADelayModel = new AllProductsSoldInADelayModel(productTypesSoldList);
                 JTable productsTable = new JTable(allProductSoldInADelayModel);
                 productsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 ListSelectionModel listSelect = productsTable.getSelectionModel();

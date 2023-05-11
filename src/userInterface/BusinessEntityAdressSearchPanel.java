@@ -75,7 +75,7 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
             if (!adressesLsit.isEmpty()) {
                 this.removeAll();
 
-                AllBusinessEntityAdressModel allBusinessEntityAdressModel = new AllBusinessEntityAdressModel(adressesLsit);
+                AllBusinessesEntityAdressModel allBusinessEntityAdressModel = new AllBusinessesEntityAdressModel(adressesLsit);
                 JTable adressesTable = new JTable(allBusinessEntityAdressModel);
                 adressesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 ListSelectionModel listSelect = adressesTable.getSelectionModel();

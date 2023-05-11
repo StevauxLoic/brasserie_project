@@ -1,26 +1,25 @@
 package userInterface;
 
-import model.ProductSupplementDueToEvent;
+import model.BusinessEntityAdress;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-public class AllProductSupplementDueToEventModel extends AbstractTableModel {
+public class AllBusinessesEntityAdressModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
-    private ArrayList<ProductSupplementDueToEvent> contents;
+    private ArrayList<BusinessEntityAdress> contents;
 
-    public AllProductSupplementDueToEventModel(ArrayList<ProductSupplementDueToEvent> contents) {
+    public AllBusinessesEntityAdressModel(ArrayList<BusinessEntityAdress> contents) {
         columnNames = new ArrayList<>();
-        columnNames.add("nom d'évènement");
-        columnNames.add("type de produit");
-        columnNames.add("nom du produit");
-        columnNames.add("reférence du produit");
-        columnNames.add("minimum nécéssaire en stock");
-        columnNames.add("quantité supplémentaire");
+        columnNames.add("pays");
+        columnNames.add("code postal");
+        columnNames.add("ville");
+        columnNames.add("numéro");
+        columnNames.add("rue");
         setContents(contents);
     }
 
-    public void setContents(ArrayList<ProductSupplementDueToEvent> contents) {
+    public void setContents(ArrayList<BusinessEntityAdress> contents) {
         this.contents = contents;
     }
 
@@ -51,7 +50,7 @@ public class AllProductSupplementDueToEventModel extends AbstractTableModel {
      * @return type : Product <br> product at the givent row
      **/
 
-    public ProductSupplementDueToEvent getObject(int rowIndex) {
+    public BusinessEntityAdress getObject(int rowIndex) {
         return this.contents.get(rowIndex);
     }
 }

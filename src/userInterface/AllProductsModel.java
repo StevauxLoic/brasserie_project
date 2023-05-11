@@ -7,11 +7,11 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 
-public class AllProductModel extends AbstractTableModel {
+public class AllProductsModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
     private ArrayList<Product> contents;
 
-    public AllProductModel(ArrayList<Product> products) {
+    public AllProductsModel(ArrayList<Product> products) {
         columnNames = new ArrayList<>();
         columnNames.add("référence");
         columnNames.add("nom");
