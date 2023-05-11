@@ -5,10 +5,10 @@ public class Adress {
     private String street;
     private  int number;
     private String businessEntityReference; // foreign key & non obligatory
-    private String typeReference; // foreignKey
+    private int typeReference; // foreignKey
     private String cityReference; // foreignKey
 
-    public Adress(String reference, String street, int number, String businessEntityReference, String typeReference, String cityReference){
+    public Adress(String reference, String street, int number, String businessEntityReference, int typeReference, String cityReference){
         this.reference = reference;
         this.street = street;
         setNumber(number);
