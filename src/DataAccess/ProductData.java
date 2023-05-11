@@ -71,7 +71,7 @@ public class ProductData implements  IProductData{
     public ArrayList<Product> getAllProducts()throws SelectExeption{
         ArrayList<Product> products = new ArrayList<>();
         Product product;
-        String sql = "SELECT * FROM Product";
+        String sql = "SELECT * FROM product";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);

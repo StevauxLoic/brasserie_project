@@ -46,4 +46,12 @@ public class BusinessEntity {
             this.vatNumber = null;
         }
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getReference() {
+        return reference;
+    }
 }

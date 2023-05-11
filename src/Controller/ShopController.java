@@ -1,6 +1,8 @@
 package Controller;
 
 import Business.ShopManager;
+import model.Adress;
+import model.BusinessEntity;
 import model.Exeptions.*;
 import model.Product;
 import model.ProductType;
@@ -37,6 +39,14 @@ public class ShopController {
 
     public void createProduct(Product productToCreate) throws CreateExeption{
         shopManager.createProduct(productToCreate);
+    }
+
+    public ArrayList<BusinessEntity> getAllBusinessEntities() throws SelectExeption{
+        return shopManager.getAllBusinessEntities();
+    }
+
+    public ArrayList<Adress> getAllAdressesOfBusinessEntity(BusinessEntity businessEntity) throws SelectExeption{
+        return shopManager.getAllAdressesOfBusinessEntity(businessEntity);
     }
 
 }
