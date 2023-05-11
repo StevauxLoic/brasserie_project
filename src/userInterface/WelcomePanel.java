@@ -6,6 +6,7 @@ import java.awt.*;
 public class WelcomePanel extends JPanel {
     private JLabel welcomeMessage;
     private int iImage;
+    private BottlesAnimationThread bottlesAnimationThread;
 
 
     public WelcomePanel() {
@@ -15,8 +16,12 @@ public class WelcomePanel extends JPanel {
 
         iImage = 0;
 
-        BottlesAnimationThread bottlesAnimationThread = new BottlesAnimationThread(this);
+        bottlesAnimationThread = new BottlesAnimationThread(this);
         bottlesAnimationThread.start();
+    }
+
+    public void stopBottlesAnimation() {
+        bottlesAnimationThread.stop();
     }
 
     public void paint(Graphics g) {
@@ -24,7 +29,7 @@ public class WelcomePanel extends JPanel {
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image currentImage = toolkit.getImage(System.getProperty("user.dir") + "\\src\\userInterface\\images\\bottles-" + iImage + ".png");
-        g.drawImage(currentImage, 120, 200, 250, 200, this);
+        g.drawImage(currentImage, 375, 200, 250, 200, this);
     }
 
     public void changeImage() {
