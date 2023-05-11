@@ -26,7 +26,7 @@ public class MainWindow extends JFrame {
         // window
 
         super("Application de gestion");
-        setSize(500, 500);
+        setSize(1000, 500);
         setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
 
@@ -116,6 +116,9 @@ public class MainWindow extends JFrame {
     }
 
     public void setActivePanel(JPanel activePanel) {
+        if (this.activePanel == welcomePanel) {
+            welcomePanel.stopBottlesAnimation();
+        }
         this.activePanel = activePanel;
     }
 

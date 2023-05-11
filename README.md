@@ -5,17 +5,8 @@ projet de la brasserie en java
 
 
 ## liste todo graphiques :
-- recherches
-  - 2 qtt vendu d'un type de produit dans un délai donné
-  - 3 produits demandant un réassort supp
-  - 4 adresse d'une businessEntity
-  - 5 produit en rupture de stock et leurs fournisseurs
-- Produit
-  - modifier/supprimer
-    - juste le JSpinner de date à modifier puis tout devrais être bon
-
+  - produits demandant un réassort supp
+  - adresse d'une businessEntity
+  - produit en rupture de stock et leurs fournisseurs (tâche métier)
 #TODO
 - aides/texts dans le manuel d'utilisation
-- script pour remplir la bd
-- DAO
-- lien avec le singleton 

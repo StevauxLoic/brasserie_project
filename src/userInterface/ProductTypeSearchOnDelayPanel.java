@@ -51,10 +51,11 @@ public class ProductTypeSearchOnDelayPanel extends JPanel {
         productTypeLabel = new JLabel("type de produit");
         // TODO get the types list
         productTypeComboBox = new JComboBox(new String[]{"spiritueu", "bière", "soda", "whisky"});
+        productTypeComboBox.setSelectedItem(null);
         formPanel.add(productTypeLabel);
         formPanel.add(productTypeComboBox);
 
-        delayBeginingLabel = new JLabel("date de début");
+        delayBeginingLabel = new JLabel("date de début de la recherche");
         delayBeginingDateSelected = new Date();
         delayBeginingSpinner = new JSpinner(new SpinnerDateModel(delayBeginingDateSelected, null,null, Calendar.YEAR));
         JSpinner.DateEditor delayBeginingEditor = new JSpinner.DateEditor(delayBeginingSpinner,"dd/MM/yyyy");
@@ -62,7 +63,7 @@ public class ProductTypeSearchOnDelayPanel extends JPanel {
         formPanel.add(delayBeginingLabel);
         formPanel.add(delayBeginingSpinner);
 
-        delayEndLabel = new JLabel("date de fin");
+        delayEndLabel = new JLabel("date de fin de la recherche");
         delayEndSpinner = new JSpinner();
         delayEndDateSelected = new Date();
         delayEndSpinner = new JSpinner(new SpinnerDateModel(delayEndDateSelected, null, null, Calendar.YEAR));
@@ -122,9 +123,13 @@ public class ProductTypeSearchOnDelayPanel extends JPanel {
 
                 AllProductSoldInADelayModel allProductSoldInADelayModel = new AllProductSoldInADelayModel(productTypesSoldList);
                 JTable productsTable = new JTable(allProductSoldInADelayModel);
-                productsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+                productsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 ListSelectionModel listSelect = productsTable.getSelectionModel();
 
+                Container tableContainer = new Container();
+                tableContainer.add(productsTable);
+
+                this.add(tableContainer, BorderLayout.CENTER);
             } else {
                 JOptionPane.showMessageDialog(null, "aucunes vente n'a été trouvée dans ce délai", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
             }

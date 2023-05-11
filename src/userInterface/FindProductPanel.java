@@ -34,12 +34,8 @@ public class FindProductPanel extends JPanel {
     // TODO a supprimer quand on en aura plus besoin pour les tests
     private static Product testProduct, secondTestProduct;
     static {
-        try {
             testProduct = new Product("productRef", 14,"productName test", 21, 20, false, LocalDate.of(2004, 11, 14), 15.5, 15.5, 12, "productDescritption test");
             secondTestProduct = new Product("txtRef", 2,"second test", 6, 5, true, LocalDate.of(2010, 9, 22), 4, 0, 11);
-        } catch (Exception exeption) {
-            System.out.println(exeption.getMessage());
-        }
     }
 
     public FindProductPanel() {
@@ -65,14 +61,13 @@ public class FindProductPanel extends JPanel {
         // explain the fact that there is not any product found
 
         if (!productsList.isEmpty()) {
-            //@celian vien chck ici pour le JTable, le model est dans AllProductModel.java
             allProductModel = new AllProductModel(productsList);
             productsTable = new JTable(allProductModel);
             productsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             listSelect = productsTable.getSelectionModel();
 
             productsScrollPane = new JScrollPane(productsTable);
-            tablePanel.add(productsTable);
+            tablePanel.add(productsScrollPane);
 
             // button Listener
             buttonListener = new ButtonListener();
@@ -86,22 +81,26 @@ public class FindProductPanel extends JPanel {
             modifyButton.addActionListener(buttonListener);
             buttonsPanel.add(modifyButton);
 
+            // labels
+            titleLabel = new JLabel("Table des poduits à sélectionner");
+            titlePanel.add(titleLabel);
+
             // add the button pannel
 
             this.add(buttonsPanel, BorderLayout.SOUTH);
+            this.add(tablePanel, BorderLayout.CENTER);
 
         } else {
-            tablePanel.add(new JLabel("pas de produits trouvé"));
+            titleLabel = new JLabel("<html><p>aucun produit n'a été trouvé,<br>" +
+                                        "veuillez reselectionner le menu si vous voulez réessayer<br>" +
+                                        "peut-être qu'il n' y a juste aucun produits enregistré<br>" +
+                                        "dans la base de données</p></html>");
+            titlePanel.add(titleLabel);
+            JOptionPane.showMessageDialog(null, "aucun produit n'a été trouvé, veuillez reselectionner le menu si vous voulez réessayer", "pas de rpoduit trouvé", JOptionPane.INFORMATION_MESSAGE);
         }
 
-        // labels
-        titleLabel = new JLabel("Table des rpoduits à sélectionner");
-        titlePanel.add(titleLabel);
-
         // Panels filling
-        // TODO fill the panel
         this.add(titlePanel, BorderLayout.NORTH);
-        this.add(tablePanel, BorderLayout.CENTER);
 
         this.setVisible(true);
     }
