@@ -1,10 +1,7 @@
 package Controller;
 
 import Business.ShopManager;
-import model.Exeptions.DeleteExeption;
-import model.Exeptions.ProductTypeExeption;
-import model.Exeptions.SelectExeption;
-import model.Exeptions.UpdateExeption;
+import model.Exeptions.*;
 import model.Product;
 import model.ProductType;
 
@@ -23,7 +20,7 @@ public class ShopController {
     }
 
     public Product getOneProduct(String referenceOfTheProduct) throws SelectExeption{
-        return shopManager.getOneProuct(referenceOfTheProduct);
+        return shopManager.getOneProduct(referenceOfTheProduct);
     }
 
     public void updateProduct(Product productToUpdate) throws UpdateExeption{
@@ -37,4 +34,9 @@ public class ShopController {
     public ArrayList<ProductType> getAllProductType() throws ProductTypeExeption{
         return shopManager.getAllProductType();
     }
+
+    public void createProduct(Product productToCreate) throws CreateExeption{
+        shopManager.createProduct(productToCreate);
+    }
+
 }

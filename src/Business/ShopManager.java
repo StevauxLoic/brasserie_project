@@ -1,10 +1,7 @@
 package Business;
 
 import DataAccess.ProductData;
-import model.Exeptions.DeleteExeption;
-import model.Exeptions.ProductTypeExeption;
-import model.Exeptions.SelectExeption;
-import model.Exeptions.UpdateExeption;
+import model.Exeptions.*;
 import model.Product;
 import model.ProductType;
 
@@ -21,7 +18,7 @@ public class ShopManager {
         return productDataManager.getAllProducts();
     }
 
-    public Product getOneProuct(String referenceOfTheProduct) throws SelectExeption{
+    public Product getOneProduct(String referenceOfTheProduct) throws SelectExeption{
         return productDataManager.getOneProduct(referenceOfTheProduct);
     }
 
@@ -37,5 +34,8 @@ public class ShopManager {
         return productDataManager.getAllProductType();
     }
 
+    public void createProduct(Product productToCreate) throws CreateExeption{
+        productDataManager.createProduct(productToCreate);
+    }
 
 }
