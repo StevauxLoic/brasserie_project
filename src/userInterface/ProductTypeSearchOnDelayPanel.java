@@ -1,5 +1,7 @@
 package userInterface;
 
+import model.ProductSoldInADelay;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -54,7 +56,7 @@ public class ProductTypeSearchOnDelayPanel extends JPanel {
 
         delayBeginingLabel = new JLabel("date de début");
         delayBeginingDateSelected = new Date();
-        delayBeginingSpinner = new JSpinner(new SpinnerDateModel(delayBeginingDateSelected, null, ((Date) delayEndSpinner.getValue()), Calendar.YEAR)); // TODO verif le début et fin des dates selectable
+        delayBeginingSpinner = new JSpinner(new SpinnerDateModel(delayBeginingDateSelected, null,null, Calendar.YEAR));
         JSpinner.DateEditor delayBeginingEditor = new JSpinner.DateEditor(delayBeginingSpinner,"dd/MM/yyyy");
         delayBeginingSpinner.setEditor(delayBeginingEditor);
         formPanel.add(delayBeginingLabel);
@@ -63,7 +65,7 @@ public class ProductTypeSearchOnDelayPanel extends JPanel {
         delayEndLabel = new JLabel("date de fin");
         delayEndSpinner = new JSpinner();
         delayEndDateSelected = new Date();
-        delayEndSpinner = new JSpinner(new SpinnerDateModel(delayEndDateSelected, ((Date) delayBeginingSpinner.getValue()), null, Calendar.YEAR)); // TODO verif le début et fin des dates selectable
+        delayEndSpinner = new JSpinner(new SpinnerDateModel(delayEndDateSelected, null, null, Calendar.YEAR));
         JSpinner.DateEditor delayEndEditor = new JSpinner.DateEditor(delayEndSpinner,"dd/MM/yyyy");
         delayEndSpinner.setEditor(delayEndEditor);
         formPanel.add(delayEndLabel);
@@ -106,6 +108,7 @@ public class ProductTypeSearchOnDelayPanel extends JPanel {
 
         if (delaybeginingDate.isAfter(endingDate)) {
             JOptionPane.showMessageDialog(null, "la date de début doit être avant la date de fin", "erreur de dates", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
         return true;
     }

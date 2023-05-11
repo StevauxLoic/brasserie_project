@@ -1,5 +1,7 @@
 package userInterface;
 
+import model.ProductSoldInADelay;
+
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 

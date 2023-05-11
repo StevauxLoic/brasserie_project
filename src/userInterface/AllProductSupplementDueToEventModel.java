@@ -1,5 +1,7 @@
 package userInterface;
 
+import model.ProductSupplementDueToEvent;
+
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
