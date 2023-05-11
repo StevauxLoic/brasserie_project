@@ -45,6 +45,7 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
 
         this.referenceTextField = this.getReferenceTextField();
         referenceTextField.setText(productToModify.getReference());
+        referenceTextField.setEnabled(false);
 
         this.vatTextField = this.getVatTextField();
         vatTextField.setText(String.valueOf(productToModify.getVat()));
