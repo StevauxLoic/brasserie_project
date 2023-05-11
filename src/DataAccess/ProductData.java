@@ -1,10 +1,7 @@
 package DataAccess;
 
 import model.*;
-import model.Exeptions.CreateExeption;
-import model.Exeptions.DeleteExeption;
-import model.Exeptions.SelectExeption;
-import model.Exeptions.UpdateExeption;
+import model.Exeptions.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +11,11 @@ import java.util.ArrayList;
 // TODO qd on crée c'est qu'avec les truc obligatoire
 
 public class ProductData implements  IProductData{
-    private Connection connection = SingletonConnection.getUniqueConnection();
+    private Connection connection;
+
+    public ProductData(){
+        this.connection = SingletonConnection.getUniqueConnection();
+    }
 
     public void createProduct(Product productToCreate) throws CreateExeption {
         String sql = "INSERT INTO product (id, type_id, tag, vat, quantity_in_stock, minimum_quantity_in_stock, is_sparkling, alcohol_level, launching_date, price, description_of_the_product) " +
@@ -43,7 +44,7 @@ public class ProductData implements  IProductData{
     }
 
 
-    public Product showOneProduct(String referenceOfTheProduct) throws SelectExeption {
+    public Product getOneProduct(String referenceOfTheProduct) throws SelectExeption {
         String sql = "SELECT id, type_id, tag, vat, quantity_in_stock, is_sparkling, alcohol_level, launching_date, price, description_of_the_product" +
                 "WHERE id = ?";
         Product product;
@@ -67,7 +68,7 @@ public class ProductData implements  IProductData{
         return product;
     }
 
-    public ArrayList<Product> showAllProducts()throws SelectExeption{
+    public ArrayList<Product> getAllProducts()throws SelectExeption{
         ArrayList<Product> products = new ArrayList<>();
         Product product;
         String sql = "SELECT * FROM Product";
@@ -137,6 +138,27 @@ public class ProductData implements  IProductData{
             String message = "Erreur lors de la suppresion du produit d'id = " + productToDelete.getReference();
             throw new DeleteExeption(message);
         }
+    }
 
+    public ArrayList<ProductType> getAllProductType() throws ProductTypeExeption {
+        ArrayList<ProductType> productTypes = new ArrayList<>();
+        ProductType productType;
+        String sql = "SELECT * FROM product_type" +
+                "WHERE id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet data = statement.executeQuery();
+
+            while (data.next()) {
+                productType = new ProductType(data.getInt("id"), data.getString("tag"));
+                productTypes.add(productType);
+            }
+
+        }catch (SQLException exception) {
+            String message = "Erreur lors de la récupération de la liste des types de produits";
+            throw new ProductTypeExeption(message);
+        }
+
+        return productTypes;
     }
 }
