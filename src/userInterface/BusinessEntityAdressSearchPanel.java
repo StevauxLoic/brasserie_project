@@ -6,10 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class BusinessEntityAdressSearchPanel extends JPanel {
     private JComboBox businessEntityComboBox;
@@ -85,6 +82,7 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
 
                 Container tableContainer = new Container();
                 tableContainer.add(adressesTable);
+
                 this.add(tableContainer, BorderLayout.CENTER);
             } else {
                 JOptionPane.showMessageDialog(null, "aucunes adresse n'a été trouvée", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);

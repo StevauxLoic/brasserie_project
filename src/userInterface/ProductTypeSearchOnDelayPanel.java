@@ -128,6 +128,7 @@ public class ProductTypeSearchOnDelayPanel extends JPanel {
 
                 Container tableContainer = new Container();
                 tableContainer.add(productsTable);
+
                 this.add(tableContainer, BorderLayout.CENTER);
             } else {
                 JOptionPane.showMessageDialog(null, "aucunes vente n'a été trouvée dans ce délai", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
