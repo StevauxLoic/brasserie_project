@@ -56,7 +56,8 @@ public class SearchData implements ISearchData{
                 "INNER JOIN festivity fest ON addi.festivity_id = fest.id " +
                 "INNER JOIN product prod ON addi.product_id = prod.id " +
                 "INNER JOIN product_type prod_ty ON prod_ty.id = prod.type_id " +
-                "WHERE (fest.date_of_the_event > ? AND fest.date_of_the_event < ?)";
+                "WHERE (fest.date_of_the_event > ? AND fest.date_of_the_event < ?) " +
+                "GROUP BY fest.tag";
         try{
             PreparedStatement statement = connection.prepareStatement(sqlInstruction);
             statement.setDate(1, java.sql.Date.valueOf(startingDate));
