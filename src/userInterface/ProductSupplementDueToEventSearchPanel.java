@@ -112,7 +112,6 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
                 AllProductSupplementsDueToEventModel allProductSupplementDueToEvent = new AllProductSupplementsDueToEventModel(foundProductSupplementDueToEventList);
                 JTable productsTable = new JTable(allProductSupplementDueToEvent);
                 productsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                ListSelectionModel listSelect = productsTable.getSelectionModel();
 
                 JScrollPane productsScrollPane = new JScrollPane(productsTable);
 

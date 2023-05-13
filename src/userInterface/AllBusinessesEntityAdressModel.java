@@ -37,29 +37,13 @@ public class AllBusinessesEntityAdressModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return null;
-    }
-
-    public String getColumnName(int columnIndex) {
-        return columnNames.get(columnIndex);
-    }
-
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        BusinessEntityAdress product = contents.get(rowIndex);
+        BusinessEntityAdress businessEntityAdress = contents.get(rowIndex);
         switch (columnIndex) {
-            case 0 : return product.getReference();
-            case 1 : return product.getName();
-            case 2 : return product.getReference();
-            case 3 : return product.getVat();
-            case 4 : return product.getQuantityInStock();
-            case 5 : return product.getMinimumQuantityInStock();
-            case 6 : return product.isSparkling();
-            case 7 : return product.getAlcoholLevel();
-            // change a java.util.Date into a LocalDate with the system default TimeZone
-            case 8 : return java.util.Date.from(product.getLaunchingDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            case 9 : return product.getPrice();
-            case 10 : return product.getDescription();  // can return null
+            case 0 : return businessEntityAdress.getCountry();
+            case 1 : return businessEntityAdress.getZipCode();
+            case 2 : return businessEntityAdress.getCity();
+            case 3 : return businessEntityAdress.getHouseNumber();
+            case 4 : return businessEntityAdress.getHouseNumber();
             default : return null;
         }
     }
@@ -67,13 +51,10 @@ public class AllBusinessesEntityAdressModel extends AbstractTableModel {
     @Override
     public String getColumnName(int columnIndex) { return columnNames.get(columnIndex);}
 
-    public Class getColumnClass (int columnIndex) {
+    public Class getColumnClass(int columnIndex) {
         Class columnClass = switch (columnIndex) {
             // case 0, 1, 10 -> String.class;    ==> not necessary because it goes in default
-            case  2, 4, 5 -> Integer.class;
-            case 3, 7, 9 -> Double.class;
-            case 6 -> Boolean.class;
-            case 8 -> LocalDate.class;
+            case  1, 3 -> Integer.class;
             default -> String.class;
         };
         return columnClass;
@@ -81,10 +62,9 @@ public class AllBusinessesEntityAdressModel extends AbstractTableModel {
 
     /**
      * getObject() return the object at the given rowIndex
-     * @param rowIndex the indew of the row
-     * @return type : Product <br> product at the givent row
+     * @param rowIndex the index of the row
+     * @return type : BusinessEntityAdress <br> businessEntityAdress at the givent row
      **/
-
     public BusinessEntityAdress getObject(int rowIndex) {
         return this.contents.get(rowIndex);
     }

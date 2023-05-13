@@ -78,7 +78,6 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
                 AllBusinessesEntityAdressModel allBusinessEntityAdressModel = new AllBusinessesEntityAdressModel(adressesLsit);
                 JTable adressesTable = new JTable(allBusinessEntityAdressModel);
                 adressesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                ListSelectionModel listSelect = adressesTable.getSelectionModel();
 
                 JScrollPane adressesScrollPane = new JScrollPane(adressesTable);
 

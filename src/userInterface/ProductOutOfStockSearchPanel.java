@@ -69,7 +69,7 @@ public class ProductOutOfStockSearchPanel extends JPanel {
 
         // listeners
         ButtonListener buttonListener = new ButtonListener();
-        ChecboxListener checboxListener = new ChecboxListener();
+        CheckBoxListener checboxListener = new CheckBoxListener();
 
         // modules for the first search
         titleLabel = new JLabel("recherche des produits en ruptures dans le stock et leurs fournisseurs");
@@ -77,7 +77,6 @@ public class ProductOutOfStockSearchPanel extends JPanel {
 
 
         productTypeCheckBoxLabel = new JLabel("rechercher un seul type de produit");
-        productTypeComboBox.setEnabled(false);
         byProductTypeCheckBox = new JCheckBox("oui");
         byProductTypeCheckBox.addItemListener(checboxListener);
         formPanel.add(productTypeCheckBoxLabel);
@@ -86,6 +85,7 @@ public class ProductOutOfStockSearchPanel extends JPanel {
         productTypeComboBoxLabel = new JLabel("type de product");
         // TODO get the types list
         productTypeComboBox = new JComboBox(new String[]{"spiritueu", "bière", "soda", "whisky"});
+        productTypeComboBox.setEnabled(false);
         formPanel.add(productTypeComboBoxLabel);
         formPanel.add(productTypeComboBox);
 
@@ -141,6 +141,10 @@ public class ProductOutOfStockSearchPanel extends JPanel {
 
             buttonsPanel.removeAll();
             buttonsPanel.add(searchSupplierButton);
+
+            // refresh the panel
+            this.revalidate();
+            this.repaint();;
         }
     }
 
@@ -157,7 +161,7 @@ public class ProductOutOfStockSearchPanel extends JPanel {
 
     }
 
-    private class ChecboxListener implements ItemListener {
+    private class CheckBoxListener implements ItemListener {
 
         @Override
         public void itemStateChanged(ItemEvent event) {
@@ -175,7 +179,7 @@ public class ProductOutOfStockSearchPanel extends JPanel {
                 if (thisPanel.isFormValid()) {
                     thisPanel.searchProducts();
                 }
-            } else if (source == thisPanel.searchSupplierButton) {
+            } else {
                 thisPanel.searchSuppliers();
             }
         }

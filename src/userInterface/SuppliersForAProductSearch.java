@@ -1,11 +1,12 @@
 package userInterface;
 
-import model.BusinessEntity;
 import model.Product;
 import model.SupplierForAProduct;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -28,14 +29,20 @@ public class SuppliersForAProductSearch extends JPanel {
     private Product selectedProduct;
 
     // TODO a supprimer quand on en aura plus besoin pour les tests
-    private static BusinessEntity testSupplier, secondTestSupplier;
+    private static SupplierForAProduct testSupplier, secondTestSupplier;
     static {
-        testSupplier = new SupplierForAProduct("refEntity", "Aqua drinks", 21533L, "supplier");
-        secondTestSupplier = new SupplierForAProduct("testN2", "Hot drinks", 72815L, "supplier");
+        testSupplier = new SupplierForAProduct("entityName", "Aqua drinks ref", "supplier", 7.0, 20);
+        secondTestSupplier = new SupplierForAProduct("testN2", "Hot drinks ref", "good supplier", 5.2, 10);
     }
 
     public SuppliersForAProductSearch(Product selectedProduct) {
         this.selectedProduct = selectedProduct;
+
+        this.setLayout(new BorderLayout());
+
+        // listeners
+        ButtonListener buttonListener = new ButtonListener();
+        ChecboxListener checboxListener = new ChecboxListener();
 
         // panles
         titlePanel = new JPanel(new BorderLayout());
@@ -51,17 +58,27 @@ public class SuppliersForAProductSearch extends JPanel {
 
         maximumPriceCheckBoxLabel = new JLabel("chercher avec un prix maximum");
         maximumPriceCheckBox = new JCheckBox("oui");
+        maximumPriceCheckBox.addItemListener(checboxListener);
         formPanel.add(maximumPriceCheckBoxLabel);
         formPanel.add(maximumPriceCheckBox);
 
-        maximumPriceSliderLabel = new JLabel("prix maximum du fournisseur pour ce produit");
-        maximumPriceSlider = new JSlider(0, 365);
+        maximumPriceSliderLabel = new JLabel("prix maximum du fournisseur pour ce produit : ");
+        maximumPriceSlider = new JSlider(0,365, 50);
+        // slider : visual options
+        maximumPriceSlider.setPaintTicks(true);   // displays the dots (thin and thinks)
+        maximumPriceSlider.setPaintLabels(true);  // displays the numbers on the big dots
+        maximumPriceSlider.setMajorTickSpacing(30); // thick dots
+        maximumPriceSlider.setMinorTickSpacing(7);  // thin dots
+
+        // TODO afficher le nombre de jours
+
         maximumPriceSlider.setEnabled(false);
         formPanel.add(maximumPriceSliderLabel);
         formPanel.add(maximumPriceSlider);
 
         maximumDeliveryDaysCheckBoxLabel = new JLabel("chercher avec un délai de livraison maximum");
         maximumDeliveryDaysCheckBox = new JCheckBox("oui");
+        maximumDeliveryDaysCheckBox.addItemListener(checboxListener);
         formPanel.add(maximumDeliveryDaysCheckBoxLabel);
         formPanel.add(maximumDeliveryDaysCheckBox);
 
@@ -73,6 +90,7 @@ public class SuppliersForAProductSearch extends JPanel {
 
 
         searchSupplierButton = new JButton("chercher le(s) fournisseur(s)");
+        searchSupplierButton.addActionListener(buttonListener);
         buttonsPanel.add(searchSupplierButton);
 
         // add the panels
@@ -114,7 +132,6 @@ public class SuppliersForAProductSearch extends JPanel {
             AllSuppliersForAProductModel allSuppliersForAProductModel = new AllSuppliersForAProductModel(foundSuppliers);
             JTable foundSuppliersTable = new JTable(allSuppliersForAProductModel);
             foundSuppliersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            ListSelectionModel listSelect = foundSuppliersTable.getSelectionModel();
 
             JScrollPane foundSupplierScrollPane = new JScrollPane(foundSuppliersTable);
 
@@ -122,6 +139,10 @@ public class SuppliersForAProductSearch extends JPanel {
             formPanel.add(foundSupplierScrollPane);
 
             buttonsPanel.removeAll();
+
+            // refresh the panel
+            this.repaint();
+            this.revalidate();
         }
     }
 
@@ -141,4 +162,28 @@ public class SuppliersForAProductSearch extends JPanel {
         }
     }
 
+    private class CheckBoxListener implements ItemListener {
+
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            boolean isSelected = event.getStateChange() == ItemEvent.SELECTED;
+            SuppliersForAProductSearch thisPanel = SuppliersForAProductSearch.this;
+            Object source = event.getSource();
+            if (source == thisPanel.maximumDeliveryDaysCheckBox) {
+                thisPanel.maximumDeliveryDaysSpinner.setEnabled(isSelected);
+            } else {
+                thisPanel.maximumPriceSlider.setEnabled(isSelected);
+            }
+        }
+    }
+
+    private class ButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            SuppliersForAProductSearch thisPanel = SuppliersForAProductSearch.this;
+            if (thisPanel.isFormValid()) {
+                thisPanel.searchSuppliers();
+            }
+        }
+    }
 }

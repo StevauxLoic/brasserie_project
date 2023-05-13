@@ -11,30 +11,32 @@ public class AdditionalRestocking {
         setAmount(amount);
     }
 
-    public void setProductReference(String productReference) {
-        if(productReference != null){
-            this.productReference = productReference;
-        } else {
-            // throws erreur
-        }
-    }
-
-    public void setEventReference(int eventReference){
-        /*
-        if(dans la bd){
-            this.eventReference = eventReference;
-        } else {
-            creer ou erreur
-        }
-        */
-    }
-
-    public void setAmount(int amount){
-        // 10 is an absurd value
-        if(amount <= 10){
-            this.amount = 10;
+    public void setAmount(int amount) {
+        if (amount < 0) {
+            this.amount = 0;
         } else {
             this.amount = amount;
         }
+    }
+
+    public void setProductReference(String productReference) {
+        this.productReference = productReference;
+    }
+
+    public void setEventReference(int eventReference) {
+        this.eventReference = eventReference;
+    }
+
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public String getProductReference() {
+        return productReference;
+    }
+
+    public int getEventReference() {
+        return eventReference;
     }
 }

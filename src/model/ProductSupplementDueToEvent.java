@@ -1,10 +1,5 @@
 package model;
 
-import Controller.ShopController;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 public class ProductSupplementDueToEvent {
     private String eventName, productTypeName, productName,productReference;
     private int minimumQuantityInStock, amount;
@@ -27,11 +22,19 @@ public class ProductSupplementDueToEvent {
     }
 
     public void setAmount(int amount) {
-        this.amount = amount;
+        if (amount < 0) {
+            this.amount = 0;
+        } else {
+            this.amount = amount;
+        }
     }
 
     public void setMinimumQuantityInStock(int minimumQuantityInStock) {
-        this.minimumQuantityInStock = minimumQuantityInStock;
+        if (minimumQuantityInStock < 0) {
+            this.minimumQuantityInStock = 0;
+        } else {
+            this.minimumQuantityInStock = minimumQuantityInStock;
+        }
     }
 
     public void setProductTypeName(String productTypeName) {
