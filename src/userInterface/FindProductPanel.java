@@ -132,7 +132,7 @@ public class FindProductPanel extends JPanel {
                     if (lastSelected != firstSelectedRow) {
                         JOptionPane.showMessageDialog(null, "Veuillez un seul élément doit être séléctionné pour être modifié", "erreur de sélection", JOptionPane.WARNING_MESSAGE);
                     } else {
-                        FindProductPanel.this.displayModifyForm(thisFindProductPanel.allProductModel.getObject(firstSelectedRow));
+                        thisFindProductPanel.displayModifyForm(thisFindProductPanel.allProductModel.getObject(firstSelectedRow));
                     }
                 }
             }
