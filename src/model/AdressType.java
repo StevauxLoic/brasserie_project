@@ -5,12 +5,19 @@ public class AdressType {
     private String label;
 
     public AdressType(Integer reference,String label){
-        this.reference = reference;
-        this.label = label;
+        setReference(reference);
+        setLabel(label);
     }
 
     public AdressType(String label){
         this(null, label);
     }
 
+    public void setReference(Integer reference) {
+        this.reference = reference;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 }

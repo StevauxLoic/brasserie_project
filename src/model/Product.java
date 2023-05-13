@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Product {
     private String reference; // primaryKey
-    private Integer typeReference; // foreignKey
+    private int typeReference; // foreignKey
     private String name;
     private double vat;
     private int quantityInStock;
@@ -19,25 +19,25 @@ public class Product {
     private double price;
     private String description; // non obligatory
 
-    public Product(String reference, Integer typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, int quantityInStock, String description){
+    public Product(String reference, int typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, int quantityInStock, String description){
            setTypeReference(typeReference);
            setReference(reference);
            setName(name);
            setVat(vat);
            setQuantityInStock(quantityInStock);
            setMinimumQuantityInStock(minimumQuantityInStock);
-           this.isSparkling = isSparkling;
+           setSparkling(isSparkling);
            setPrice(price);
            setLaunchingDate(launchingDate);
            setAlcoholLevel(alcoholLevel);
            setDescription(description);
     }
 
-    public Product(String reference, Integer typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, int quantityInStock){
+    public Product(String reference, int typeReference,String name, double vat, int minimumQuantityInStock, boolean isSparkling, LocalDate launchingDate, double price, double alcoholLevel, int quantityInStock){
         this(reference, typeReference, name, vat, minimumQuantityInStock, isSparkling, launchingDate, price, alcoholLevel, quantityInStock,null);
     }
 
-    public void setTypeReference(Integer typeReference){
+    public void setTypeReference(int typeReference){
         this.typeReference = typeReference;
 
     }
@@ -77,6 +77,10 @@ public class Product {
                 this.alcoholLevel = alcoholLevel;
             }
         }
+    }
+
+    public void setSparkling(boolean isSparkling) {
+        this.isSparkling = isSparkling;
     }
 
     public void setQuantityInStock(int quantityInStock){

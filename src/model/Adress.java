@@ -9,12 +9,12 @@ public class Adress {
     private String cityReference; // foreignKey
 
     public Adress(String reference, String street, int number, String businessEntityReference, int typeReference, String cityReference){
-        this.reference = reference;
-        this.street = street;
+        setReference(reference);
+        setStreet(street);
         setNumber(number);
-        this.businessEntityReference = reference;
-        this.typeReference = typeReference;
-        this.cityReference = cityReference;
+        setBusinessEntityReference(businessEntityReference);
+        setTypeReference(typeReference);
+        setCityReference(cityReference);
     }
 
 
@@ -24,5 +24,25 @@ public class Adress {
         } else {
             this.number = number;
         }
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setTypeReference(int typeReference) {
+        this.typeReference = typeReference;
+    }
+
+    public void setCityReference(String cityReference) {
+        this.cityReference = cityReference;
+    }
+
+    public void setBusinessEntityReference(String businessEntityReference) {
+        this.businessEntityReference = businessEntityReference;
     }
 }

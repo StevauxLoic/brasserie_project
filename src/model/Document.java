@@ -18,16 +18,22 @@ public class Document {
     private String deliveryAdressReference; // foreignKey && non
 
     public Document(Integer reference,LocalDate date,  int documentTypeReference){
-        this.reference = reference;
+        setReference(reference);
         setDate(date);
-        this.documentTypeReference = documentTypeReference;
+        setDocumentTypeReference(documentTypeReference);
     }
 
     public Document(LocalDate date,  int documentTypeReference){
         this(null, date, documentTypeReference);
     }
 
+    public void setReference(Integer reference) {
+        this.reference = reference;
+    }
 
+    public void setDocumentTypeReference(Integer documentTypeReference) {
+        this.documentTypeReference = documentTypeReference;
+    }
 
     public void setDate(LocalDate date) {
         if(date != null /*&& date <= dateDuJour */){
@@ -62,7 +68,7 @@ public class Document {
         if(validityDate == null || validityDate.isAfter(date)){
             this.validityDate= validityDate;
         } else {
-            // throw exept
+            // TODO regarder si il faut a ajouter une possible erreur
         }
     }
 
@@ -96,6 +102,10 @@ public class Document {
     }
 
     public void setDeliveryAdressReference(String deliveryAdressReference) {
-        this.deliveryAdressReference = deliveryAdressReference;
+        deliveryAdressReference = deliveryAdressReference;
+    }
+
+    public void setDelivered(Boolean isDelivered) {
+        this.isDelivered = isDelivered;
     }
 }

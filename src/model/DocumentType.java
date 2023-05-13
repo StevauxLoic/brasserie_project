@@ -19,12 +19,6 @@ public class DocumentType {
     }
 
     public void setReference(int reference) {
-        /*
-        if(reference est dans bd){
-            this.reference = reference;
-        } else {
-            // creer ou throws erreur
-        }
-        */
+        this.reference = reference;
     }
 }

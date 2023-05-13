@@ -51,4 +51,6 @@ public class ShopManager {
         return businessEntityDataManager.getAllAdressesOfBusinessEntity(businessEntity);
     }
 
+
+
 }

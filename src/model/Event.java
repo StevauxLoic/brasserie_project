@@ -8,16 +8,22 @@ public class Event {
     private Date date;
 
     public Event(Integer reference, String label, Date date){
-        this.reference = reference;
+        setReference(reference);
         setLabel(label);
-        this.date = date;
+        setDate(date);
     }
 
     public Event(String label, Date date){
         this(null, label, date);
     }
 
+    public void setReference(Integer reference) {
+        this.reference = reference;
+    }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public void setLabel(String label){
         if(label != null){

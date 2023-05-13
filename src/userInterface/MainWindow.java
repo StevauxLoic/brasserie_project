@@ -34,6 +34,7 @@ public class MainWindow extends JFrame {
 
         this.addWindowListener( new WindowAdapter() {
             public void windowClosing ( WindowEvent closingWindowEvent ) {
+                // TODO faire la fermeture de la connection
                 System.exit(0);
             }
         });

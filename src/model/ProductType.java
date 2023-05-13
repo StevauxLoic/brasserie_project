@@ -5,13 +5,19 @@ public class ProductType {
     private String label;
 
     public ProductType(Integer reference, String label){
-        this.reference = reference;
-        this.label = label;
+        setReference(reference);
+        setLabel(label);
     }
 
     public ProductType(String label){
         this(null, label);
     }
 
+    public void setReference(Integer reference) {
+        this.reference = reference;
+    }
 
+    public void setLabel(String label) {
+        this.label = label;
+    }
 }
