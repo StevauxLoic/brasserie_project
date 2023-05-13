@@ -1,7 +1,6 @@
 package userInterface;
 
 import model.BusinessEntityAdress;
-import model.SupplierForAProduct;
 
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
@@ -47,7 +46,7 @@ public class AllBusinessesEntityAdressModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        SupplierForAProduct product = contents.get(rowIndex);
+        BusinessEntityAdress product = contents.get(rowIndex);
         switch (columnIndex) {
             case 0 : return product.getReference();
             case 1 : return product.getName();

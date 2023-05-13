@@ -1,8 +1,6 @@
 package userInterface;
 
 import model.ProductSoldInADelay;
-import model.ProductSupplementDueToEvent;
-import model.SupplierForAProduct;
 
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
@@ -46,7 +44,7 @@ public class AllProductsSoldInADelayModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        SupplierForAProduct product = contents.get(rowIndex);
+        ProductSoldInADelay product = contents.get(rowIndex);
         switch (columnIndex) {
             case 0 : return product.getReference();
             case 1 : return product.getName();
@@ -85,7 +83,7 @@ public class AllProductsSoldInADelayModel extends AbstractTableModel {
      * @return type : Product <br> product at the givent row
      **/
 
-    public ProductSupplementDueToEvent getObject(int rowIndex) {
+    public ProductSoldInADelay getObject(int rowIndex) {
         return this.contents.get(rowIndex);
     }
 }
