@@ -5,8 +5,6 @@ projet de la brasserie en java
 
 
 ## liste todo graphiques :
-  - produits demandant un réassort supp
-  - adresse d'une businessEntity
   - produit en rupture de stock et leurs fournisseurs (tâche métier)
 #TODO
 - aides/texts dans le manuel d'utilisation

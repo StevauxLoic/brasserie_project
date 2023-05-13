@@ -119,10 +119,9 @@ public class SuppliersForAProductSearch extends JPanel {
             JScrollPane foundSupplierScrollPane = new JScrollPane(foundSuppliersTable);
 
             formPanel.removeAll();
-            formPanel.add(foundSupplierScrollPane, BorderLayout.CENTER);
+            formPanel.add(foundSupplierScrollPane);
 
             buttonsPanel.removeAll();
-            buttonsPanel.add(searchSupplierButton);
         }
     }
 
