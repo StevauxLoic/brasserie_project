@@ -1,7 +1,5 @@
 package userInterface;
 
-import model.BusinessEntity;
-import model.Product;
 import model.SupplierForAProduct;
 
 import javax.swing.table.AbstractTableModel;
