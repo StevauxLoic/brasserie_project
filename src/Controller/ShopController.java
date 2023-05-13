@@ -1,11 +1,8 @@
 package Controller;
 
 import Business.ShopManager;
-import model.Adress;
-import model.BusinessEntity;
+import model.*;
 import model.Exeptions.*;
-import model.Product;
-import model.ProductType;
 
 import javax.sound.sampled.Port;
 import java.time.LocalDate;
@@ -50,8 +47,12 @@ public class ShopController {
         return shopManager.getAllAdressesOfBusinessEntity(businessEntity);
     }
 
-    public int countQuantitySoldOfProduct(LocalDate startingDate, LocalDate endingDate, int productType) throws SelectExeption{
-        return shopManager.countQuantitySoldOfProduct(startingDate, endingDate, productType);
+    public ArrayList<ProductSoldInADelay> getAllProductSoldInADelay(LocalDate startingDate, LocalDate endingDate, int productType) throws SelectExeption{
+        return shopManager.getAllProductSoldInADelay(startingDate, endingDate, productType);
+    }
+
+    public ArrayList<ProductSupplementDueToEvent> getAllProductSupplementDueToEvent(LocalDate startingDate, LocalDate endingDate) throws SelectExeption{
+        return shopManager.getAllProductSupplementDueToEvent(startingDate, endingDate);
     }
 
 }

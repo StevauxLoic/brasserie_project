@@ -6,31 +6,64 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProductSupplementDueToEvent {
-    private LocalDate startingDate, endingDate;
-    private ArrayList<Product> productsWithAdditionalRestockingInADelay;
-    private ShopController controller;
+    private String eventName, productTypeName, productName,productReference;
+    private int minimumQuantityInStock, amount;
 
-    public ProductSupplementDueToEvent(LocalDate startingDate, LocalDate endingDate){
-        setStartingDate(startingDate);
-        setEndingDate(endingDate);
-        controller = new ShopController();
-        setProductsWithAdditionalRestockingInADelay(startingDate, endingDate);
+    public ProductSupplementDueToEvent(String eventName, String productTypeName, String productName, String productReference, int minimumQuantityInStock, int amount){
+        setEventName(eventName);
+        setProductTypeName(productTypeName);
+        setProductName(productName);
+        setProductReference(productReference);
+        setMinimumQuantityInStock(minimumQuantityInStock);
+        setAmount(amount);
     }
 
-    public void setStartingDate(LocalDate startingDate) {
-        this.startingDate = startingDate;
+    public void setProductReference(String productReference) {
+        this.productReference = productReference;
     }
 
-    public void setEndingDate(LocalDate endingDate) {
-        this.endingDate = endingDate;
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
-    public void setProductsWithAdditionalRestockingInADelay(LocalDate startingDate, LocalDate endingDate) {
-        this.productsWithAdditionalRestockingInADelay = controller.;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
-    public ArrayList<Product> getProductsWithAdditionalRestockingInADelay() {
-        return productsWithAdditionalRestockingInADelay;
+    public void setMinimumQuantityInStock(int minimumQuantityInStock) {
+        this.minimumQuantityInStock = minimumQuantityInStock;
+    }
+
+    public void setProductTypeName(String productTypeName) {
+        this.productTypeName = productTypeName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public int getMinimumQuantityInStock() {
+        return minimumQuantityInStock;
+    }
+
+    public String getProductReference() {
+        return productReference;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public String getProductTypeName() {
+        return productTypeName;
     }
 }
 

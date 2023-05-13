@@ -6,36 +6,37 @@ import model.Exeptions.SelectExeption;
 import java.time.LocalDate;
 
 public class ProductSoldInADelay {
-    private LocalDate startingDate, endingDate;
-    private int productType;
-    private int countOfSoldProduct;
-    private ShopController controller;
+    private String name;
+    private double costPrice;
+    private int quantity;
 
-    public ProductSoldInADelay(LocalDate startingDate, LocalDate endingDate, int productType) throws SelectExeption{
-        setStartingDate(startingDate);
-        setEndingDate(endingDate);
-        setProductType(productType);
-        controller = new ShopController();
-        setCountOfSoldProduct(startingDate, endingDate, productType);
+    public ProductSoldInADelay(String name, double costPrice, int quantity){
+        setName(name);
+        setCostPrice(costPrice);
+        setQuantity(quantity);
     }
 
-    public void setStartingDate(LocalDate startingDate) {
-        this.startingDate = startingDate;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public void setEndingDate(LocalDate endingDate) {
-        this.endingDate = endingDate;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setProductType(int productType) {
-        this.productType = productType;
+    public void setCostPrice(double costPrice) {
+        this.costPrice = costPrice;
     }
 
-    public void setCountOfSoldProduct(LocalDate startingDate, LocalDate endingDate, int productType) throws SelectExeption {
-        countOfSoldProduct = controller.countQuantitySoldOfProduct(startingDate, endingDate, productType);
+    public String getName() {
+        return name;
     }
 
-    public int getCountOfSoldProduct() {
-        return countOfSoldProduct;
+    public double getCostPrice() {
+        return costPrice;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 }

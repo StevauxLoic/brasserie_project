@@ -3,11 +3,8 @@ package Business;
 import DataAccess.BusinessEntityData;
 import DataAccess.ProductData;
 import DataAccess.SearchData;
-import model.Adress;
-import model.BusinessEntity;
+import model.*;
 import model.Exeptions.*;
-import model.Product;
-import model.ProductType;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -55,8 +52,12 @@ public class ShopManager {
         return businessEntityDataManager.getAllAdressesOfBusinessEntity(businessEntity);
     }
 
-    public int countQuantitySoldOfProduct(LocalDate startingDate, LocalDate endingDate, int productType) throws SelectExeption{
-        return searchDataManager.countQuantitySoldOfProduct(startingDate,endingDate,productType);
+    public ArrayList<ProductSoldInADelay> getAllProductSoldInADelay(LocalDate startingDate, LocalDate endingDate, int productType) throws SelectExeption {
+        return searchDataManager.getAllProductSoldInADelay(startingDate, endingDate, productType);
+    }
+
+    public ArrayList<ProductSupplementDueToEvent> getAllProductSupplementDueToEvent(LocalDate startingDate, LocalDate endingDate) throws SelectExeption{
+        return searchDataManager.getAllProductSupplementDueToEvent(startingDate, endingDate);
     }
 
 }
