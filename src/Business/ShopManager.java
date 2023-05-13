@@ -2,21 +2,25 @@ package Business;
 
 import DataAccess.BusinessEntityData;
 import DataAccess.ProductData;
+import DataAccess.SearchData;
 import model.Adress;
 import model.BusinessEntity;
 import model.Exeptions.*;
 import model.Product;
 import model.ProductType;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ShopManager {
     private ProductData productDataManager;
     private BusinessEntityData businessEntityDataManager;
+    private SearchData searchDataManager;
 
     public ShopManager(){
         this.productDataManager = new ProductData();
         this.businessEntityDataManager = new BusinessEntityData();
+        this.searchDataManager = new SearchData();
     }
 
     public ArrayList<Product> getAllProduct() throws SelectExeption{
@@ -51,6 +55,8 @@ public class ShopManager {
         return businessEntityDataManager.getAllAdressesOfBusinessEntity(businessEntity);
     }
 
-
+    public int countQuantitySoldOfProduct(LocalDate startingDate, LocalDate endingDate, int productType) throws SelectExeption{
+        return searchDataManager.countQuantitySoldOfProduct(startingDate,endingDate,productType);
+    }
 
 }

@@ -8,6 +8,7 @@ import model.Product;
 import model.ProductType;
 
 import javax.sound.sampled.Port;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ShopController {
@@ -47,6 +48,10 @@ public class ShopController {
 
     public ArrayList<Adress> getAllAdressesOfBusinessEntity(BusinessEntity businessEntity) throws SelectExeption{
         return shopManager.getAllAdressesOfBusinessEntity(businessEntity);
+    }
+
+    public int countQuantitySoldOfProduct(LocalDate startingDate, LocalDate endingDate, int productType) throws SelectExeption{
+        return shopManager.countQuantitySoldOfProduct(startingDate, endingDate, productType);
     }
 
 }
