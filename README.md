@@ -5,6 +5,14 @@ projet de la brasserie en java
 
 
 ## liste todo graphiques :
-  - produit en rupture de stock et leurs fournisseurs (tâche métier)
+ - crud
+   - create
+   - update
+ - search 1
+ - search2
+ - search3
+ - Business task
+   - part 1
+   - part 2
 #TODO
 - aides/texts dans le manuel d'utilisation
