@@ -96,7 +96,9 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
             String [] productTypesNamesList = new String[productTypesList.size()];
             for (int iProductType = 0; iProductType < productTypesList.size(); iProductType++) {
                 productTypesNamesList[iProductType] = productTypesList.get(iProductType).getLabel()
-                                                    + '(' + productTypesList.get(iProductType).getReference();
+                                                    + "(ref:"
+                                                    + productTypesList.get(iProductType).getReference()
+                                                    + ')';
             }
             productTypeComboBox = new JComboBox(productTypesNamesList);
             formPanel.add(productTypeLabel);
@@ -324,7 +326,8 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
     public Product readForm() {
         String name = nameTextField.getText();
         String reference = referenceTextField.getText();
-        String description = descriptionTextField.getText();
+        boolean hasADescription = descriptionTextField.getText().length() > 0;
+        String description = hasADescription?descriptionTextField.getText():null;
         Double vat = Double.parseDouble(vatTextField.getText());
         Double alcoholLevel = hasAlcoholCheckBox.isSelected() ? Double.parseDouble(alcoholLevelTextField.getText()) : 0;
         Double price = Double.parseDouble(priceTextField.getText());
@@ -334,13 +337,8 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
         boolean isSparkling = isSparklingCheckBox.isSelected();
         LocalDate launchingDate = getLaunchingDateSelected().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        try {
-            Product product = new Product(reference, productTypeReference, name, vat, minimumInStock, isSparkling, launchingDate, price, alcoholLevel, quantityInStock, description);
-            return product;
-        } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "erreurs rencontrée", JOptionPane.WARNING_MESSAGE);
-            throw exception;
-        }
+        Product product = new Product(reference, productTypeReference, name, vat, minimumInStock, isSparkling, launchingDate, price, alcoholLevel, quantityInStock, description);
+        return product;
     }
 
     // listeners

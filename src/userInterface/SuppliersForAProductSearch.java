@@ -120,7 +120,8 @@ public class SuppliersForAProductSearch extends JPanel {
                     (double) (maximumPriceCheckBox.isSelected()?maximumPriceSlider.getValue():null));
 
             if (foundSuppliers.size() == 0) {
-                JOptionPane.showMessageDialog(null, "aucun produits en rupture de stock trouvé", "aucun produits", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "aucun produits en rupture de stock trouvé",
+                        "aucun produits", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 AllSuppliersForAProductModel allSuppliersForAProductModel = new AllSuppliersForAProductModel(foundSuppliers);
                 JTable foundSuppliersTable = new JTable(allSuppliersForAProductModel);

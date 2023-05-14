@@ -93,8 +93,10 @@ public class ProductData implements  IProductData{
     }
 
     public void updateProduct(Product productToUpdate) throws UpdateException, CreateConnectionException {
-        String sql = "UPDATE product set (id = ?, type_id = ?, tag = ?, vat = ?, quantity_in_stock = ?, minimum_quantity_in_stock = ?, is_sparkling = ?, alcohol_level = ?, launching_date = ?, price = ?, description_of_the_product = ?)" +
-                "WHERE id = ?";
+        String sql = "UPDATE product set id = ?, type_id = ?, tag = ?, vat = ?, " +
+                    "quantity_in_stock = ?, minimum_quantity_in_stock = ?, is_sparkling = ?, " +
+                    "alcohol_level = ?, launching_date = ?, price = ?, description_of_the_product = ?" +
+                    "WHERE id = ?";
         try {
             PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sql);
             statement.setString(1, productToUpdate.getReference());

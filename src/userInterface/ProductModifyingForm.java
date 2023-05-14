@@ -15,16 +15,17 @@ public class ProductModifyingForm extends ProductCreatingAndModifingFormTemplate
     private JButton modifyButton;
     private Product productToModify;
     
-    private JCheckBox isSparklingCheckBox, hasAlcoholCheckBox;
+    private JCheckBox isSparklingCheckBox,
+                        hasAlcoholCheckBox;
     private JComboBox productTypeComboBox;
     private JTextField nameTextField,
-            referenceTextField,
-            vatTextField,
-            alcoholLevelTextField,
-            priceTextField,
-            descriptionTextField;
+                        referenceTextField,
+                        vatTextField,
+                        alcoholLevelTextField,
+                        priceTextField,
+                        descriptionTextField;
     private JSpinner quantityInStockSpinner,
-            minimumQuantityInStockSpinner;
+                        minimumQuantityInStockSpinner;
 
     private JSpinner launchingDateSpinner;
 
@@ -33,7 +34,12 @@ public class ProductModifyingForm extends ProductCreatingAndModifingFormTemplate
         this.productToModify = productToModify;
 
         // get and fill the different input and field with the productToModify informations
+        if(getProductTypeComboBox() != null) {
+            fillForm();
+        }
+    }
 
+    public void fillForm() {
         this.isSparklingCheckBox = this.getIsSparklingCheckBox();
         isSparklingCheckBox.setSelected(productToModify.isSparkling());
 
@@ -73,7 +79,6 @@ public class ProductModifyingForm extends ProductCreatingAndModifingFormTemplate
         this.launchingDateSpinner = this.getLaunchingDateSpinner();
         LocalDate launchingDateToSet = productToModify.getLaunchingDate();
         launchingDateSpinner.setValue(java.sql.Date.valueOf(launchingDateToSet));
-
     }
 
     @Override

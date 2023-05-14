@@ -18,8 +18,7 @@ public class ProductTypeData {
     public ArrayList<ProductType> getAllProductType() throws SelectException, CreateConnectionException {
         ArrayList<ProductType> productTypes = new ArrayList<>();
         ProductType productType;
-        String sql = "SELECT * FROM product_type" +
-                "WHERE id = ?";
+        String sql = "SELECT * FROM product_type";
         try {
             PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sql);
             ResultSet data = statement.executeQuery();

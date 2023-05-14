@@ -64,7 +64,9 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
             String[] productTypesNamesList = new String[productTypesList.size()];
             for (int iProductType = 0; iProductType < productTypesList.size(); iProductType++) {
                 productTypesNamesList[iProductType] = productTypesList.get(iProductType).getLabel()
-                        + '(' + productTypesList.get(iProductType).getReference();
+                                                        + "(ref:"
+                                                        + productTypesList.get(iProductType).getReference()
+                                                        + ')';
             }
             productTypeComboBox = new JComboBox(productTypesNamesList);
             formPanel.add(productTypeLabel);

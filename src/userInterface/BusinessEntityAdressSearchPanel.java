@@ -59,7 +59,9 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
             String [] businessEntitiesNamesList = new String[businessEntitiesList.size()];
             for (int iBusinessEntity = 0; iBusinessEntity < businessEntitiesList.size(); iBusinessEntity++) {
                 businessEntitiesNamesList[iBusinessEntity] = businessEntitiesList.get(iBusinessEntity).getName()
-                        + '(' + businessEntitiesList.get(iBusinessEntity).getReference() + ')';
+                                                            + "(ref:"
+                                                            + businessEntitiesList.get(iBusinessEntity).getReference()
+                                                            + ')';
             }
             businessEntityComboBox = new JComboBox(businessEntitiesNamesList);
             businessEntityComboBox.setSelectedItem(null);
