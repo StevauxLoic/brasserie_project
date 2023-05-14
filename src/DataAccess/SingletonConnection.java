@@ -21,4 +21,14 @@ public class SingletonConnection {
         return uniqueConnection;
     }
 
+    public static void closeConnection() throws CloseConnectionException {
+        try {
+            SingletonConnection.getUniqueConnection().close();
+        } catch (SQLException event) {
+            throw new CloseConnectionException("la fermeture de la connexion d'accès aux données");
+        } catch (CreateConnectionException event) {
+
+        }
+    }
+
 }
