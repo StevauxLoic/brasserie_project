@@ -1,5 +1,5 @@
 USE shop_db;
-CREATE TABLE shop_db.festivity
+CREATE TABLE festivity
 (
 	id INT NOT NULL AUTO_INCREMENT,
 	tag VARCHAR(100) NOT NULL UNIQUE,
@@ -7,28 +7,28 @@ CREATE TABLE shop_db.festivity
 	CONSTRAINT festivity_pk PRIMARY KEY(id)
 );
 
-CREATE TABLE shop_db.adress_type
+CREATE TABLE adress_type
 (
 	id INT NOT NULL AUTO_INCREMENT,
     tag VARCHAR(50) NOT NULL UNIQUE,
     CONSTRAINT adress_type_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE shop_db.product_type
+CREATE TABLE product_type
 (
 	id INT NOT NULL AUTO_INCREMENT,
 	tag VARCHAR(20) NOT NULL UNIQUE,
 	CONSTRAINT product_type_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE shop_db.document_type
+CREATE TABLE document_type
 (
 	id INT NOT NULL AUTO_INCREMENT,
 	tag VARCHAR(60) NOT NULL UNIQUE,
 	CONSTRAINT document_type_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE shop_db.product
+CREATE TABLE product
 (
 	id VARCHAR(10) NOT NULL,
 	type_id INT NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE shop_db.product
 
 
 
-CREATE TABLE shop_db.additional_restocking
+CREATE TABLE additional_restocking
 (
 	amount INT NOT NULL,
 	product_id VARCHAR(10) NOT NULL,
@@ -58,14 +58,14 @@ CREATE TABLE shop_db.additional_restocking
 	CONSTRAINT festivity_fk FOREIGN KEY(festivity_id) REFERENCES festivity(id)
 );
 
-CREATE TABLE shop_db.country
+CREATE TABLE country
 (
 	id VARCHAR(10) NOT NULL,
 	tag VARCHAR(60) NOT NULL,
 	CONSTRAINT country_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE shop_db.city
+CREATE TABLE city
 (
 	id VARCHAR(10) NOT NULL,
 	tag VARCHAR(60) NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE shop_db.city
 	CONSTRAINT country_fk FOREIGN KEY (country_id) REFERENCES country(id)
 );
 
-CREATE TABLE shop_db.statut
+CREATE TABLE statut
 (
 	id VARCHAR(10) NOT NULL,
 	denomination VARCHAR(60) NOT NULL,
@@ -85,18 +85,19 @@ CREATE TABLE shop_db.statut
 	CONSTRAINT statut_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE shop_db.business_entity
+CREATE TABLE business_entity
 (
 	id VARCHAR(10) NOT NULL,
 	denomination VARCHAR(60) NOT NULL,
 	vat_number INT NOT NULL,
 	statut_id VARCHAR(10) NOT NULL,
+    
 
 	CONSTRAINT business_Entity_pk PRIMARY KEY (id),
 	CONSTRAINT statut_id_fk FOREIGN KEY (statut_id) REFERENCES statut(id)
 );
 
-CREATE TABLE shop_db.adress
+CREATE TABLE adress
 (
 	id VARCHAR(10) NOT NULL,
 	street VARCHAR(26) NOT NULL,
@@ -112,7 +113,7 @@ CREATE TABLE shop_db.adress
 
 );
 
-CREATE TABLE shop_db.document
+CREATE TABLE document
 (
 	id INT NOT NULL AUTO_INCREMENT,
 	creation_date DATE NOT NULL,
@@ -131,7 +132,7 @@ CREATE TABLE shop_db.document
 	CONSTRAINT delivery_adress_fk FOREIGN KEY (delivery_adress_id) REFERENCES adress(id)
 );
 
-CREATE TABLE shop_db.details_line
+	CREATE TABLE details_line
 (
 	price DECIMAL(7,2),
 	quantity INT NOT NULL,
@@ -145,10 +146,25 @@ CREATE TABLE shop_db.details_line
 	CONSTRAINT details_line_pk PRIMARY KEY (product_id, document_id) 
 	);
     
-CREATE TABLE shop_db.supplier_product_details
+	CREATE TABLE supplier_product_details
 (
 	price DECIMAL(7,2) NOT NULL,
     delivery_time INT NOT NULL,
     product_ref VARCHAR(10) NOT NULL,
     business_entity_ref VARCHAR(10) NOT NULL
 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -41,3 +41,8 @@ VALUES (50, 'pek_viol',1), (100, 'fant', 2);
 
 INSERT INTO supplier_product_details(price, delivery_time, product_ref, business_entity_ref)
 VALUES (1, 3, 'fant', 'ours'), (1.5, 2, 'corn', 'ours');
+
+
+
+
+
