@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-// TODO qd on crée c'est qu'avec les truc obligatoire
 
 public class ProductData implements  IProductData{
 

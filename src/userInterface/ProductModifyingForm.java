@@ -105,7 +105,7 @@ public class ProductModifyingForm extends ProductCreatingAndModifingFormTemplate
         @Override
         public void actionPerformed(ActionEvent event) {
             ProductModifyingForm thisPanel = ProductModifyingForm.this;
-            if (isFormValid()) {
+            if (thisPanel.isFormValid()) {
                 Product modifiedProduct = thisPanel.readForm();
                 thisPanel.modifyProduct(modifiedProduct);
             } else {

@@ -1,5 +1,8 @@
 package userInterface;
 
+import Controller.ShopController;
+import model.Exeptions.CreateConnectionException;
+import model.Exeptions.SelectException;
 import model.ProductSupplementDueToEvent;
 
 import javax.swing.*;
@@ -13,6 +16,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ProductSupplementDueToEventSearchPanel extends JPanel {
+
+    private ShopController shopController;
+
     private JLabel titleLabel,
                     delayBeginingLabel,
                     delayEndLabel;
@@ -27,6 +33,8 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
 
     public ProductSupplementDueToEventSearchPanel() {
         this.setLayout(new BorderLayout());
+
+        this.shopController = new ShopController();
 
         // panels
         titlePanel = new JPanel();
@@ -104,20 +112,30 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
 
     private void search() {
         if (isFormValid()) {
-            // TODO recherche et afficher dans le JTable
-            ArrayList<ProductSupplementDueToEvent> foundProductSupplementDueToEventList = new ArrayList<ProductSupplementDueToEvent>();
-            if (!foundProductSupplementDueToEventList.isEmpty()) {
-                this.removeAll();
+            try {
+                ArrayList<ProductSupplementDueToEvent> foundProductSupplementDueToEventList = shopController
+                                    .getAllProductSupplementDueToEvent(getDelayBeginingDate(), getDelayEndDate());
 
-                AllProductSupplementsDueToEventModel allProductSupplementDueToEvent = new AllProductSupplementsDueToEventModel(foundProductSupplementDueToEventList);
-                JTable productsTable = new JTable(allProductSupplementDueToEvent);
-                productsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                if (!foundProductSupplementDueToEventList.isEmpty()) {
+                    this.removeAll();
 
-                JScrollPane productsScrollPane = new JScrollPane(productsTable);
+                    AllProductSupplementsDueToEventModel allProductSupplementDueToEvent = new AllProductSupplementsDueToEventModel(foundProductSupplementDueToEventList);
+                    JTable productsTable = new JTable(allProductSupplementDueToEvent);
+                    productsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-                this.add(productsScrollPane, BorderLayout.CENTER);
-            } else {
-                JOptionPane.showMessageDialog(null, "aucuns produit lié à un évènement dans ce délai n'a été trouvé", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
+                    JScrollPane productsScrollPane = new JScrollPane(productsTable);
+
+                    this.add(productsScrollPane, BorderLayout.CENTER);
+                } else {
+                    JOptionPane.showMessageDialog(null, "aucuns produit lié à un évènement dans ce délai n'a été trouvé", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (SelectException exception) {
+                JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+                        "erreur de recherche", JOptionPane.ERROR_MESSAGE);
+
+            } catch (CreateConnectionException exception) {
+                JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+                        "erreur de connexion aux données", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

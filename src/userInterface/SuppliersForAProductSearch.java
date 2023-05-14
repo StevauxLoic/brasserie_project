@@ -1,5 +1,8 @@
 package userInterface;
 
+import Controller.ShopController;
+import model.Exeptions.CreateConnectionException;
+import model.Exeptions.SelectException;
 import model.Product;
 import model.SupplierForAProduct;
 
@@ -14,6 +17,9 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 public class SuppliersForAProductSearch extends JPanel {
+
+    private ShopController shopController;
+
     private JPanel titlePanel,
                     formPanel,
                     buttonsPanel;
@@ -30,17 +36,12 @@ public class SuppliersForAProductSearch extends JPanel {
 
     private Product selectedProduct;
 
-    // TODO a supprimer quand on en aura plus besoin pour les tests
-    private static SupplierForAProduct testSupplier, secondTestSupplier;
-    static {
-        testSupplier = new SupplierForAProduct("entityName", "Aqua drinks ref", "supplier", 7.0, 20);
-        secondTestSupplier = new SupplierForAProduct("testN2", "Hot drinks ref", "good supplier", 5.2, 10);
-    }
 
     public SuppliersForAProductSearch(Product selectedProduct) {
-        this.selectedProduct = selectedProduct;
-
         this.setLayout(new BorderLayout());
+
+        this.selectedProduct = selectedProduct;
+        this.shopController = new ShopController();
 
         // listeners
         ButtonListener buttonListener = new ButtonListener();
@@ -113,37 +114,36 @@ public class SuppliersForAProductSearch extends JPanel {
     public void searchSuppliers() {
         ArrayList<SupplierForAProduct> foundSuppliers;
 
-        if (maximumPriceCheckBox.isSelected() && maximumDeliveryDaysCheckBox.isSelected()) {
-            // TODO recherche avec prix et délai max
-        } else if(maximumPriceCheckBox.isSelected()) {
-            // TODO recherche avec le prix max
-        } else if (maximumDeliveryDaysCheckBox.isSelected()) {
-            // TODO recherche avec le délai max
-        } else {
-            // TODO recherche sans précisions
-        }
-        // TODO à supp quand les recherches seront bonnes
-        foundSuppliers = new ArrayList<SupplierForAProduct>();
-        foundSuppliers.add(testSupplier);
-        foundSuppliers.add(secondTestSupplier);
+        try {
+            foundSuppliers = shopController.getAllSupplierForAProduct(selectedProduct,
+                    (Integer) (maximumDeliveryDaysCheckBox.isSelected()?maximumDeliveryDaysSpinner.getValue():null),
+                    (double) (maximumPriceCheckBox.isSelected()?maximumPriceSlider.getValue():null));
 
-        if (foundSuppliers.size() == 0) {
-            JOptionPane.showMessageDialog(null, "aucun produits en rupture de stock trouvé", "aucun produits", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            AllSuppliersForAProductModel allSuppliersForAProductModel = new AllSuppliersForAProductModel(foundSuppliers);
-            JTable foundSuppliersTable = new JTable(allSuppliersForAProductModel);
-            foundSuppliersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            if (foundSuppliers.size() == 0) {
+                JOptionPane.showMessageDialog(null, "aucun produits en rupture de stock trouvé", "aucun produits", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                AllSuppliersForAProductModel allSuppliersForAProductModel = new AllSuppliersForAProductModel(foundSuppliers);
+                JTable foundSuppliersTable = new JTable(allSuppliersForAProductModel);
+                foundSuppliersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-            JScrollPane foundSupplierScrollPane = new JScrollPane(foundSuppliersTable);
+                JScrollPane foundSupplierScrollPane = new JScrollPane(foundSuppliersTable);
 
-            formPanel.removeAll();
-            formPanel.add(foundSupplierScrollPane);
+                formPanel.removeAll();
+                formPanel.add(foundSupplierScrollPane);
 
-            buttonsPanel.removeAll();
+                buttonsPanel.removeAll();
 
-            // refresh the panel
-            this.repaint();
-            this.revalidate();
+                // refresh the panel
+                this.repaint();
+                this.revalidate();
+            }
+        } catch (SelectException exception) {
+            JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+                    "erreur de recherche", JOptionPane.ERROR_MESSAGE);
+
+        } catch (CreateConnectionException exception) {
+            JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+                    "erreur de connexion aux données", JOptionPane.ERROR_MESSAGE);
         }
     }
 
