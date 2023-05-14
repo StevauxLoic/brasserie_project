@@ -6,6 +6,7 @@ import model.Exeptions.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 
 public class ProductData implements  IProductData{
@@ -30,8 +31,10 @@ public class ProductData implements  IProductData{
             statement.setDouble(8, productToCreate.getAlcoholLevel());
             statement.setDate(9, java.sql.Date.valueOf(productToCreate.getLaunchingDate()));
             statement.setDouble(10, productToCreate.getPrice());
-            if(productToCreate.getDescription() != null) {
+            if (productToCreate.getDescription() != null) {
                 statement.setString(11, productToCreate.getDescription());
+            } else {
+                statement.setNull(11, Types.VARCHAR);
             }
             statement.executeUpdate();
         } catch (SQLException exception){
@@ -95,7 +98,7 @@ public class ProductData implements  IProductData{
     public void updateProduct(Product productToUpdate) throws UpdateException, CreateConnectionException {
         String sql = "UPDATE product set id = ?, type_id = ?, tag = ?, vat = ?, " +
                     "quantity_in_stock = ?, minimum_quantity_in_stock = ?, is_sparkling = ?, " +
-                    "alcohol_level = ?, launching_date = ?, price = ?, description_of_the_product = ?" +
+                    "alcohol_level = ?, launching_date = ?, price = ?, description_of_the_product = ? " +
                     "WHERE id = ?";
         try {
             PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sql);
@@ -109,7 +112,11 @@ public class ProductData implements  IProductData{
             statement.setDouble(8, productToUpdate.getAlcoholLevel());
             statement.setDate(9, java.sql.Date.valueOf(productToUpdate.getLaunchingDate()));
             statement.setDouble(10, productToUpdate.getPrice());
-            statement.setString(11, productToUpdate.getDescription());
+            if (productToUpdate.getDescription() != null) {
+                statement.setString(11, productToUpdate.getDescription());
+            } else {
+                statement.setNull(11, Types.VARCHAR);
+            }
             statement.setString(12, productToUpdate.getReference());
             statement.executeUpdate();
         } catch (SQLException exception) {

@@ -47,7 +47,7 @@ public class ProductModifyingForm extends ProductCreatingAndModifingFormTemplate
         hasAlcoholCheckBox.setSelected(productToModify.getAlcoholLevel() > 0);
 
         this.productTypeComboBox = this.getProductTypeComboBox();
-        productTypeComboBox.setSelectedItem(productToModify.getTypeReference());
+        productTypeComboBox.setSelectedIndex(productToModify.getTypeReference() - 1);
 
         this.nameTextField = this.getNameTextField();
         nameTextField.setText(productToModify.getName());

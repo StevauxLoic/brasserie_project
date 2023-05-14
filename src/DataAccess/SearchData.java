@@ -20,13 +20,16 @@ public class SearchData implements ISearchData{
     ////// search the count of one product type in a delay
     public ArrayList<ProductSoldInADelay> getAllProductSoldInADelay(LocalDate startingDate, LocalDate endingDate, ProductType productType) throws SelectException, CreateConnectionException{
         ArrayList<ProductSoldInADelay> allProductsSoldInADelay = new ArrayList<>();
-        String sqlInstruction = "SELECT prod.tag, det.quantity, det.price*det.quantity as cost_price FROM details_line det " +
+        String sqlInstruction = "SELECT prod.tag, det.quantity, det.price*det.quantity as cost_price " +
+                                "FROM details_line det " +
                                 "INNER JOIN document doc ON doc.id = det.document_id " +
-                                "INNER JOIN document_type d_type ON d_type = doc.document_type_id " +
+                                "INNER JOIN document_type d_type ON d_type.id = doc.document_type_id " +
                                 "INNER JOIN product prod ON prod.id = det.product_id " +
-                                "INNER JOIN product_type p_type ON product_type.p_type = prod.type_id " +
-                                "WHERE (doc.creation_date > ? AND doc.creation_date < ? " +
-                                "AND (d_type = 1 AND product_type.p_type = ?)";
+                                "INNER JOIN product_type p_type ON p_type.id = prod.type_id " +
+                                "WHERE doc.creation_date > ? " +
+                                "AND doc.creation_date < ? " +
+                                "AND doc.id = 1 " +
+                                "AND p_type.id = ?;";
         try{
             PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstruction);
             statement.setDate(1, java.sql.Date.valueOf(startingDate));
@@ -69,19 +72,19 @@ public class SearchData implements ISearchData{
         return allProductSupplementDueToEvent;
     }
 
-    //////
+
     public ArrayList<BusinessEntityAdress> getAllAdressesOfABusinessEntity(BusinessEntity businessEntity) throws SelectException, CreateConnectionException{
         ArrayList<BusinessEntityAdress> allAdressesOfABusinessEntity = new ArrayList<>();
-        String sqlInstruction = "SELECT coun.tag as country_name, cit.zip_code as zip_code, cit.tag " +
-                                "as city_name, adre.street as adress_street, adre.number_of_the_house " +
-                                "as adress_number " +
+        String sqlInstruction = "SELECT coun.tag as country_name, cit.zip_code as zip_code, " +
+                                "cit.tag as city_name, adre.street as adress_street, " +
+                                "adre.number_of_the_house as adress_number " +
                                 "FROM adress adre " +
                                 "INNER JOIN business_entity busi ON adre.business_entity_id = busi.id " +
                                 "INNER JOIN adress_type adre_ty ON adre.type_id = adre_ty.id " +
                                 "INNER JOIN city cit ON adre.city_id = cit.id " +
                                 "INNER JOIN country coun ON cit.country_id = coun.id " +
                                 "WHERE busi.id = ? " +
-                                "ORDER BY coun.tag, city.tag";
+                                "ORDER BY coun.tag, cit.tag";
         try{
             PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstruction);
             statement.setString(1, businessEntity.getReference());
@@ -104,18 +107,18 @@ public class SearchData implements ISearchData{
         Product product;
         String sqlInstruction;
         if(productType != null){
-            sqlInstruction = "SELECT * FROM product\n" +
-                            "WHERE quantity_in_stock < minimum_quantity_in_stock product.type_id = ?";
+            sqlInstruction = "SELECT * FROM product " +
+                            "WHERE quantity_in_stock < minimum_quantity_in_stock " +
+                            "AND product.type_id = ?;";
         } else {
-            sqlInstruction = "SELECT * FROM product\n" +
-                            "WHERE quantity_in_stock < minimum_quantity_in_stock";
+            sqlInstruction = "SELECT * FROM product " +
+                            "WHERE quantity_in_stock < minimum_quantity_in_stock;";
         }
-
         try {
             PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstruction);
             if(productType != null) {
-
                 statement.setInt(1, productType.getReference());
+
             }
             ResultSet data = statement.executeQuery();
             while (data.next()) {
@@ -144,33 +147,31 @@ public class SearchData implements ISearchData{
         ArrayList<SupplierForAProduct> allSupplierForAProduct = new ArrayList<>();
         String sqlInstruction = "SELECT busi.denomination as busi_name, busi.id as busi_id, supp.price as price, supp.delivery_time as delivery_time, statut.denomination as statut_name FROM supplier_product_details supp " +
                                 "INNER JOIN business_entity busi ON supp.business_entity_ref = busi.id " +
-                                "INNER JOIN statut ON statut.id = busi.statut_id ";
-        if(maxDelayDelivery != null && maxPrice != null){
-            sqlInstruction += "WHERE supp.product_ref = ? AND supp.delivery_time <= ? AND supp.price <= ?";
-        } else {
-            if (maxDelayDelivery != null && maxPrice == null){
-                sqlInstruction += "WHERE supp.product_ref = ? AND supp.delivery_time <= ?";
-            } else {
-                if(maxDelayDelivery == null && maxPrice != null){
-                    sqlInstruction += "WHERE supp.product_ref = ? AND supp.price <= ?";
-                }
-            }
+                                "INNER JOIN statut ON statut.id = busi.statut_id " +
+                                "WHERE supp.product_ref = ? ";
+        if (maxDelayDelivery != null) {
+            sqlInstruction += " AND supp.delivery_time <= ?";
         }
+        if (maxPrice != null) {
+            sqlInstruction += " AND supp.price <= ?";
+        }
+        sqlInstruction += ';';
+
         try{
             PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstruction);
-            if(maxDelayDelivery != null && maxPrice != null){
-                statement.setInt(1, maxDelayDelivery);
-                statement.setDouble(2, maxPrice);
-            } else {
-                if(maxDelayDelivery != null && maxPrice == null){
-                    statement.setInt(1, maxDelayDelivery);
-                } else {
-                    if(maxDelayDelivery == null && maxPrice!= null){
-                        statement.setDouble(1, maxPrice);
-                    }
+            statement.setString(1, product.getReference());
+
+            if (maxDelayDelivery != null) {
+                statement.setInt(2, maxDelayDelivery);
+                if (maxPrice != null) {
+                    statement.setDouble(3, maxPrice);
                 }
+            } else if (maxPrice != null) {
+                statement.setDouble(2, maxPrice);
             }
+
             ResultSet data = statement.executeQuery();
+
             while (data.next()) {
                 allSupplierForAProduct.add(new SupplierForAProduct(data.getString("busi_name"), data.getString("busi_id"),
                         data.getString("statut_name"), data.getDouble("price"), data.getInt("delivery_time")));

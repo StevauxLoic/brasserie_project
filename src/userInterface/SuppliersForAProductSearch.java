@@ -116,12 +116,12 @@ public class SuppliersForAProductSearch extends JPanel {
 
         try {
             foundSuppliers = shopController.getAllSupplierForAProduct(selectedProduct,
-                    (Integer) (maximumDeliveryDaysCheckBox.isSelected()?maximumDeliveryDaysSpinner.getValue():null),
-                    (double) (maximumPriceCheckBox.isSelected()?maximumPriceSlider.getValue():null));
+                    (maximumDeliveryDaysCheckBox.isSelected()?(Integer) maximumDeliveryDaysSpinner.getValue():null),
+                    (maximumPriceCheckBox.isSelected()?Double.valueOf(maximumPriceSlider.getValue()):null));
 
             if (foundSuppliers.size() == 0) {
-                JOptionPane.showMessageDialog(null, "aucun produits en rupture de stock trouvé",
-                        "aucun produits", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "aucun fournisseur qui vend ce produit n'a été trouvé",
+                        "aucun fournisseur", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 AllSuppliersForAProductModel allSuppliersForAProductModel = new AllSuppliersForAProductModel(foundSuppliers);
                 JTable foundSuppliersTable = new JTable(allSuppliersForAProductModel);

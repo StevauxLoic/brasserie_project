@@ -131,6 +131,9 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
                     JScrollPane adressesScrollPane = new JScrollPane(adressesTable);
 
                     this.add(adressesScrollPane, BorderLayout.CENTER);
+
+                    this.repaint();
+                    this.revalidate();
                 } else {
                     JOptionPane.showMessageDialog(null, "aucunes adresse n'a été trouvée",
                             "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
