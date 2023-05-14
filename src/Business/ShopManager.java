@@ -17,7 +17,7 @@ public class ShopManager {
     private CloseDataAccessConnection closeDataAccessConnectionManager;
 
 
-    public ShopManager() throws CreateConnectionException {
+    public ShopManager() {
         this.productDataManager = new ProductData();
         this.businessEntityDataManager = new BusinessEntityData();
         this.searchDataManager = new SearchData();

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ShopController {
     private ShopManager shopManager;
 
-    public ShopController() throws CreateConnectionException {
+    public ShopController() {
         this.shopManager = new ShopManager();
     }
 

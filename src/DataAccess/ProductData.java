@@ -75,7 +75,6 @@ public class ProductData implements  IProductData{
         try {
             PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sql);
             ResultSet data = statement.executeQuery();
-            String VATNumber, siteName;
 
             while (data.next()) {
                 product = new Product(data.getString("id"), data.getInt("type_id"), data.getString("tag"), data.getDouble("vat"), data.getInt("minimum_quantity_in_stock"),
@@ -123,10 +122,11 @@ public class ProductData implements  IProductData{
         String [] sqlInstructions = new String[]{
                 "DELETE FROM details_line WHERE product_id = ?;",
                 "DELETE FROM additional_restocking WHERE product_id = ?;",
-                "DELETE FROM details_line WHERE product_id = ?;"
+                "DELETE FROM supplier_product_details WHERE product_ref = ?;",
+                "DELETE FROM product WHERE id = ?"
         };
         try{
-            for(int i = 0; i < 3; i ++){
+            for(int i = 0; i < 4; i ++){
                 PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstructions[i]);
                 statement.setString(1, productToDelete.getReference());
                 statement.executeUpdate();

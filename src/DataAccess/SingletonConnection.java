@@ -15,7 +15,7 @@ public class SingletonConnection {
     public static Connection getUniqueConnection() throws CreateConnectionException {
         if(uniqueConnection == null){
             try {
-                uniqueConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop_db", "root", "admin") ;
+                uniqueConnection = DriverManager.getConnection( "jdbc:mysql://localhost:3306/shop_db", "root", "admin") ;
             } catch (SQLException exception) {
                 throw new CreateConnectionException();
             }
