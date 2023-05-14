@@ -132,8 +132,7 @@ public class FindProductPanel extends JPanel {
     private void displayModifyForm() {
         this.removeAll();
         this.add(new ProductModifyingForm(getSelectedAProduct()));
-        this.revalidate();
-        this.repaint();
+        refreshPanel();
     }
 
     private void deleteProducts() {
@@ -144,6 +143,7 @@ public class FindProductPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "le produit a bien été supprimé",
                         "succès de la supression", JOptionPane.INFORMATION_MESSAGE);
                 productsList.remove(firstProductSelectedIndex);
+                refreshPanel();
 
             } catch (DeleteExeption exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
@@ -174,7 +174,13 @@ public class FindProductPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "erreur de conexion aux données", JOptionPane.ERROR_MESSAGE);
             }
+            refreshPanel();
         }
+    }
+
+    private void refreshPanel() {
+        this.repaint();
+        this.revalidate();
     }
 
     private class ButtonListener implements ActionListener {
