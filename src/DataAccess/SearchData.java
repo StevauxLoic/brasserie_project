@@ -104,4 +104,43 @@ public class SearchData implements ISearchData{
         }
         return allAdressesOfABusinessEntity;
     }
+
+    ////// here are the methods to help the employee to see wich supplier is better for a particular product when it's out of minimum stock
+    /// first methods that return an array of pruduct out of minimum stocks depends o the type or not
+    public ArrayList<Product> getAllProductOutOfMinimumStock (Integer productType) throws SelectExeption{
+        ArrayList<Product> allProductOutOfMinimuStock = new ArrayList<>();
+        Product product;
+        String sqlInstruction;
+        if(productType != null){
+            sqlInstruction = "SELECT * FROM product\n" +
+                    "WHERE quantity_in_stock < minimum_quantity_in_stock product.type_id = ?";
+        } else {
+            sqlInstruction = "SELECT * FROM product\n" +
+                    "WHERE quantity_in_stock < minimum_quantity_in_stock";
+        }
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlInstruction);
+            if(productType != null) {
+
+                statement.setInt(1, productType);
+            }
+            ResultSet data = statement.executeQuery();
+            while (data.next()) {
+                product = new Product(data.getString("id"), data.getInt("type_id"), data.getString("tag"), data.getDouble("vat"), data.getInt("minimum_quantity_in_stock"),
+                        data.getBoolean("is_sparkling"), data.getDate("launching_date").toLocalDate(), data.getDouble("price"), data.getDouble("alcohol_level"),
+                        data.getInt("quantity_in_stock"));
+                String description = data.getString("description_of_the_product");
+                if(!data.wasNull()){
+                    product.setDescription(description);
+                }
+                allProductOutOfMinimuStock.add(product);
+            }
+        }
+        catch (SQLException exception){
+            String message = "Erreur lors de l'obtention des produit ayant une quantité inférieur a la quantité minmum a avoir";
+            throw new SelectExeption(message);
+        }
+        return allProductOutOfMinimuStock;
+    }
 }

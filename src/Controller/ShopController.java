@@ -63,4 +63,8 @@ public class ShopController {
         return shopManager.getAllAdressesOfABusinessEntity(businessEntityId);
     }
 
+    public ArrayList<Product> getAllProductOutOfMinimumStock (Integer productType) throws SelectExeption{
+        return shopManager.getAllProductOutOfMinimumStock(productType);
+    }
+
 }
