@@ -3,6 +3,7 @@ package DataAccess;
 import model.*;
 import model.Exeptions.*;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,17 +12,17 @@ import java.util.ArrayList;
 // TODO qd on crée c'est qu'avec les truc obligatoire
 
 public class ProductData implements  IProductData{
-    private Connection connection;
 
-    public ProductData() throws CreateConnectionException {
-        this.connection = SingletonConnection.getUniqueConnection();
+    public ProductData() {
+
     }
 
-    public void createProduct(Product productToCreate) throws CreateExeption {
-        String sql = "INSERT INTO product (id, type_id, tag, vat, quantity_in_stock, minimum_quantity_in_stock, is_sparkling, alcohol_level, launching_date, price, description_of_the_product) " +
+    public void createProduct(Product productToCreate) throws CreateExeption, CreateConnectionException {
+        String sql = "INSERT INTO product (id, type_id, tag, vat, quantity_in_stock, minimum_quantity_in_stock, is_sparkling, " +
+                "alcohol_level, launching_date, price, description_of_the_product) " +
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         try{
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sql);
             statement.setString(1, productToCreate.getReference());
             statement.setInt(2, productToCreate.getTypeReference());
             statement.setString(3, productToCreate.getName());
@@ -37,19 +38,18 @@ public class ProductData implements  IProductData{
             }
             statement.executeUpdate();
         } catch (SQLException exception){
-            String message = "Erreur lors de la crétaion du produit";
-            throw new CreateExeption(message);
+            throw new CreateExeption(exception.getMessage());
         }
 
     }
 
 
-    public Product getOneProduct(String referenceOfTheProduct) throws SelectExeption {
+    public Product getOneProduct(String referenceOfTheProduct) throws SelectExeption, CreateConnectionException {
         String sql = "SELECT id, type_id, tag, vat, quantity_in_stock, is_sparkling, alcohol_level, launching_date, price, description_of_the_product" +
                 "WHERE id = ?";
         Product product;
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sql);
             statement.setString(1, referenceOfTheProduct);
             ResultSet data = statement.executeQuery();
             data.next();
@@ -61,20 +61,19 @@ public class ProductData implements  IProductData{
                 product.setDescription(description);
             }
         } catch (SQLException exception){
-            String message = "Erreur lors de la récupération du produit demandé" + referenceOfTheProduct;
-            throw new SelectExeption(message);
+            throw new SelectExeption(exception.getMessage(), "du produit d'id" + referenceOfTheProduct);
         }
 
         return product;
     }
 
-    public ArrayList<Product> getAllProducts()throws SelectExeption{
+    public ArrayList<Product> getAllProducts()throws SelectExeption, CreateConnectionException{
         ArrayList<Product> products = new ArrayList<>();
         Product product;
         String sql = "SELECT * FROM product";
 
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sql);
             ResultSet data = statement.executeQuery();
             String VATNumber, siteName;
 
@@ -91,18 +90,17 @@ public class ProductData implements  IProductData{
             }
 
         }catch (SQLException exception) {
-            String message = "Erreur lors de la récupération de la liste de produits";
-            throw new SelectExeption(message);
+            throw new SelectExeption(exception.getMessage(), "de la liste de tout les produits");
         }
 
         return products;
     }
 
-    public void updateProduct(Product productToUpdate) throws UpdateExeption {
+    public void updateProduct(Product productToUpdate) throws UpdateExeption, CreateConnectionException {
         String sql = "UPDATE product set (id = ?, type_id = ?, tag = ?, vat = ?, quantity_in_stock = ?, minimum_quantity_in_stock = ?, is_sparkling = ?, alcohol_level = ?, launching_date = ?, price = ?, description_of_the_product = ?)" +
                 "WHERE id = ?";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sql);
             statement.setString(1, productToUpdate.getReference());
             statement.setInt(2, productToUpdate.getTypeReference());
             statement.setString(3, productToUpdate.getName());
@@ -117,12 +115,11 @@ public class ProductData implements  IProductData{
             statement.setString(12, productToUpdate.getReference());
             statement.executeUpdate();
         } catch (SQLException exception) {
-            String message = "Erreur lors de la supprésion du produit d'id = " + productToUpdate.getReference();
-            throw new UpdateExeption(message);
+            throw new UpdateExeption(exception.getMessage());
         }
     }
 
-    public void deleteProduct(Product productToDelete) throws DeleteExeption {
+    public void deleteProduct(Product productToDelete) throws DeleteExeption, CreateConnectionException {
         String [] sqlInstructions = new String[]{
                 "DELETE FROM details_line WHERE product_id = ?;",
                 "DELETE FROM additional_restocking WHERE product_id = ?;",
@@ -130,36 +127,13 @@ public class ProductData implements  IProductData{
         };
         try{
             for(int i = 0; i < 3; i ++){
-                PreparedStatement statement = connection.prepareStatement(sqlInstructions[i]);
+                PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstructions[i]);
                 statement.setString(1, productToDelete.getReference());
                 statement.executeUpdate();
             }
         } catch (SQLException exception){
-            String message = "Erreur lors de la suppresion du produit d'id = " + productToDelete.getReference();
-            throw new DeleteExeption(message);
+            throw new DeleteExeption(exception.getMessage());
         }
     }
 
-    // TODO ne devrais pas être dans une classe de product types ?
-    public ArrayList<ProductType> getAllProductType() throws ProductTypeExeption {
-        ArrayList<ProductType> productTypes = new ArrayList<>();
-        ProductType productType;
-        String sql = "SELECT * FROM product_type" +
-                "WHERE id = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet data = statement.executeQuery();
-
-            while (data.next()) {
-                productType = new ProductType(data.getInt("id"), data.getString("tag"));
-                productTypes.add(productType);
-            }
-
-        }catch (SQLException exception) {
-            String message = "Erreur lors de la récupération de la liste des types de produits";
-            throw new ProductTypeExeption(message);
-        }
-
-        return productTypes;
-    }
 }

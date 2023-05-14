@@ -3,6 +3,7 @@ package DataAccess;
 import model.Adress;
 import model.BusinessEntity;
 import model.Exeptions.CreateConnectionException;
+import model.Exeptions.CreateExeption;
 import model.Exeptions.SelectExeption;
 
 import java.sql.Connection;
@@ -12,18 +13,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BusinessEntityData implements IBusinessEntityData{
-    private Connection connection;
 
-    public BusinessEntityData() throws CreateConnectionException {
-        connection = SingletonConnection.getUniqueConnection();
+    public BusinessEntityData() {
+
     }
 
-    public ArrayList<BusinessEntity> getAllBusinessEntities() throws SelectExeption {
+    public ArrayList<BusinessEntity> getAllBusinessEntities() throws SelectExeption, CreateConnectionException {
         ArrayList<BusinessEntity> businessEntities = new ArrayList<>();
         BusinessEntity businessEntity;
         String sql = "SELECT * FROM business_entity";
         try{
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sql);
             ResultSet data = statement.executeQuery();
 
             while(data.next()){
@@ -31,19 +31,18 @@ public class BusinessEntityData implements IBusinessEntityData{
                 businessEntities.add(businessEntity);
             }
         }catch (SQLException exception){
-            String message = "Erreur lors de la récupération de la liste des business entity";
-            throw new SelectExeption(message);
+            throw new SelectExeption(exception.getMessage(), "de la liste des business entity");
         }
         return businessEntities;
     }
 
-    public ArrayList<Adress> getAllAdressesOfBusinessEntity(BusinessEntity businessEntity) throws SelectExeption{
+    public ArrayList<Adress> getAllAdressesOfBusinessEntity(BusinessEntity businessEntity) throws SelectExeption, CreateConnectionException {
         ArrayList<Adress> adresses = new ArrayList<>();
         Adress adress;
         String sql = "SELECT * FROM adress WHERE id = ?";
 
         try{
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sql);
             statement.setString(1, businessEntity.getReference());
             ResultSet data = statement.executeQuery();
 
@@ -51,8 +50,7 @@ public class BusinessEntityData implements IBusinessEntityData{
                 adress = new Adress(data.getString("id"), data.getString("street"), data.getInt("number_of_the_hours"), data.getString("business_entity_id"), data.getInt("type_id"), data.getString("city_id"));
             }
         }catch (SQLException exception){
-            String message = "Erreur lors de la récupération de la liste des adresse pour la business entity" + businessEntity.getName();
-            throw new SelectExeption(message);
+            throw new SelectExeption(exception.getMessage(), "de la liste des adresse pour la business entity" + businessEntity.getName());
         }
         return adresses;
     }

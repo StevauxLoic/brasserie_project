@@ -15,59 +15,59 @@ public class ShopController {
         this.shopManager = new ShopManager();
     }
 
-    public void closeConnection() throws CloseConnectionException {
+    public void closeConnection() throws CloseConnectionException, CreateConnectionException{
         shopManager.closeConnection();
     }
 
-    public ArrayList<Product> getAllProduct() throws SelectExeption{
+    public ArrayList<Product> getAllProduct() throws SelectExeption, CreateConnectionException{
         return shopManager.getAllProduct();
     }
 
-    public Product getOneProduct(String referenceOfTheProduct) throws SelectExeption{
+    public Product getOneProduct(String referenceOfTheProduct) throws SelectExeption, CreateConnectionException{
         return shopManager.getOneProduct(referenceOfTheProduct);
     }
 
-    public void updateProduct(Product productToUpdate) throws UpdateExeption{
+    public void updateProduct(Product productToUpdate) throws UpdateExeption, CreateConnectionException{
         shopManager.updateProduct(productToUpdate);
     }
 
-    public void deleteProduct(Product productToDelete) throws DeleteExeption{
+    public void deleteProduct(Product productToDelete) throws DeleteExeption, CreateConnectionException{
         shopManager.deleteProduct(productToDelete);
     }
 
-    public ArrayList<ProductType> getAllProductType() throws ProductTypeExeption{
+    public ArrayList<ProductType> getAllProductType() throws ProductTypeExeption, CreateConnectionException{
         return shopManager.getAllProductType();
     }
 
-    public void createProduct(Product productToCreate) throws CreateExeption{
+    public void createProduct(Product productToCreate) throws CreateExeption, CreateConnectionException{
         shopManager.createProduct(productToCreate);
     }
 
-    public ArrayList<BusinessEntity> getAllBusinessEntities() throws SelectExeption{
+    public ArrayList<BusinessEntity> getAllBusinessEntities() throws SelectExeption, CreateConnectionException{
         return shopManager.getAllBusinessEntities();
     }
 
-    public ArrayList<Adress> getAllAdressesOfBusinessEntity(BusinessEntity businessEntity) throws SelectExeption{
+    public ArrayList<Adress> getAllAdressesOfBusinessEntity(BusinessEntity businessEntity) throws SelectExeption, CreateConnectionException{
         return shopManager.getAllAdressesOfBusinessEntity(businessEntity);
     }
 
-    public ArrayList<ProductSoldInADelay> getAllProductSoldInADelay(LocalDate startingDate, LocalDate endingDate, int productType) throws SelectExeption{
+    public ArrayList<ProductSoldInADelay> getAllProductSoldInADelay(LocalDate startingDate, LocalDate endingDate, int productType) throws SelectExeption,CreateConnectionException{
         return shopManager.getAllProductSoldInADelay(startingDate, endingDate, productType);
     }
 
-    public ArrayList<ProductSupplementDueToEvent> getAllProductSupplementDueToEvent(LocalDate startingDate, LocalDate endingDate) throws SelectExeption{
+    public ArrayList<ProductSupplementDueToEvent> getAllProductSupplementDueToEvent(LocalDate startingDate, LocalDate endingDate) throws SelectExeption,CreateConnectionException{
         return shopManager.getAllProductSupplementDueToEvent(startingDate, endingDate);
     }
 
-    public ArrayList<BusinessEntityAdress> getAllAdressesOfABusinessEntity(String businessEntityId) throws SelectExeption{
+    public ArrayList<BusinessEntityAdress> getAllAdressesOfABusinessEntity(String businessEntityId) throws SelectExeption, CreateConnectionException{
         return shopManager.getAllAdressesOfABusinessEntity(businessEntityId);
     }
 
-    public ArrayList<Product> getAllProductOutOfMinimumStock (Integer productType) throws SelectExeption{
+    public ArrayList<Product> getAllProductOutOfMinimumStock (Integer productType) throws SelectExeption, CreateConnectionException{
         return shopManager.getAllProductOutOfMinimumStock(productType);
     }
 
-    public ArrayList<SupplierForAProduct> getAllSupplierForAProduct(Product product, Integer maxDelayDelivery, Double maxPrice) throws SelectExeption{
+    public ArrayList<SupplierForAProduct> getAllSupplierForAProduct(Product product, Integer maxDelayDelivery, Double maxPrice) throws SelectExeption, CreateConnectionException{
         return shopManager.getAllSupplierForAProduct(product, maxDelayDelivery, maxPrice);
     }
 }
