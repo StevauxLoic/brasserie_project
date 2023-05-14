@@ -81,4 +81,8 @@ public class ShopManager {
         return searchDataManager.getAllProductOutOfMinimumStock(productType);
     }
 
+    public ArrayList<SupplierForAProduct> getAllSupplierForAProduct(Product product, Integer maxDelayDelivery, Double maxPrice) throws SelectExeption{
+        return searchDataManager.getAllSupplierForAProduct(product, maxDelayDelivery, maxPrice);
+    }
+
 }

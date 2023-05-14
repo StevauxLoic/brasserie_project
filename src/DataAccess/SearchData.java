@@ -1,11 +1,8 @@
 package DataAccess;
 
-import model.BusinessEntityAdress;
+import model.*;
 import model.Exeptions.CreateConnectionException;
 import model.Exeptions.SelectExeption;
-import model.Product;
-import model.ProductSoldInADelay;
-import model.ProductSupplementDueToEvent;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -142,5 +139,49 @@ public class SearchData implements ISearchData{
             throw new SelectExeption(message);
         }
         return allProductOutOfMinimuStock;
+    }
+
+    /// this methods return a list of supplier that respect the conditions proposed by the form
+    public ArrayList<SupplierForAProduct> getAllSupplierForAProduct(Product product, Integer maxDelayDelivery, Double maxPrice) throws SelectExeption{
+        ArrayList<SupplierForAProduct> allSupplierForAProduct = new ArrayList<>();
+        String sqlInstruction = "SELECT busi.denomination as busi_name, busi.id as busi_id, supp.price as price, supp.delivery_time as delivery_time, statut.denomination as statut_name FROM supplier_product_details supp " +
+                "INNER JOIN business_entity busi ON supp.business_entity_ref = busi.id " +
+                "INNER JOIN statut ON statut.id = busi.statut_id ";
+        if(maxDelayDelivery != null && maxPrice != null){
+            sqlInstruction += "WHERE supp.product_ref = ? AND supp.delivery_time <= ? AND supp.price <= ?";
+        } else {
+            if (maxDelayDelivery != null && maxPrice == null){
+                sqlInstruction += "WHERE supp.product_ref = ? AND supp.delivery_time <= ?";
+            } else {
+                if(maxDelayDelivery == null && maxPrice != null){
+                    sqlInstruction += "WHERE supp.product_ref = ? AND supp.price <= ?";
+                }
+            }
+        }
+        try{
+            PreparedStatement statement = connection.prepareStatement(sqlInstruction);
+            if(maxDelayDelivery != null && maxPrice != null){
+                statement.setInt(1, maxDelayDelivery);
+                statement.setDouble(2, maxPrice);
+            } else {
+                if(maxDelayDelivery != null && maxPrice == null){
+                    statement.setInt(1, maxDelayDelivery);
+                } else {
+                    if(maxDelayDelivery == null && maxPrice!= null){
+                        statement.setDouble(1, maxPrice);
+                    }
+                }
+            }
+            ResultSet data = statement.executeQuery();
+            while (data.next()) {
+                allSupplierForAProduct.add(new SupplierForAProduct(data.getString("busi_name"), data.getString("busi_id"),
+                        data.getString("statut_name"), data.getDouble("price"), data.getInt("delivery_time")));
+            }
+        }
+        catch (SQLException exception){
+            String message = "Erreur lors de la recolte des fournisseur pour le produit : " + product.getName();
+            throw new SelectExeption(message);
+        }
+        return allSupplierForAProduct;
     }
 }
