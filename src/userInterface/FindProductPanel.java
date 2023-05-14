@@ -143,6 +143,7 @@ public class FindProductPanel extends JPanel {
                 shopController.deleteProduct(productsList.get(firstProductSelectedIndex));
                 JOptionPane.showMessageDialog(null, "le produit a bien été supprimé",
                         "succès de la supression", JOptionPane.INFORMATION_MESSAGE);
+                productsList.remove(firstProductSelectedIndex);
 
             } catch (DeleteExeption exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
@@ -161,6 +162,7 @@ public class FindProductPanel extends JPanel {
                     shopController.deleteProduct(productsList.get(deleteingProductIndex));
                     JOptionPane.showMessageDialog(null, "un produit a bien été supprimé",
                             "succès de la supression", JOptionPane.INFORMATION_MESSAGE);
+                    productsList.remove(deleteingProductIndex);
 
                 }
                 JOptionPane.showMessageDialog(null, "tout les produits ont bien été supprimé",
