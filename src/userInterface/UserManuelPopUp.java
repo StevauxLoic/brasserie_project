@@ -126,7 +126,8 @@ public class UserManuelPopUp extends PopUp {
                                             "<br>si c'est le cas, la page une fois chargée affichera un message qui explique " +
                                             "<br>qu'elle n'a pas put charger</p></html>");
 
-        searchProductLabel = new JLabel("<html><p>Ce sous-menu vous permet d'accéder à la même fonctionnalité que le sous menu 'Trouver/Modifier/supprimer'" +
+        searchProductLabel = new JLabel("<html><p>Ce sous-menu vous permet d'accéder à la même fonctionnalité" +
+                                            "<br>que le sous menu 'Trouver/Modifier/supprimer'" +
                                             "ce sous-menu équivalent se trouvedans le menu 'Produit'" +
                                             "<br>ce sous-menu permet en premier lieu de voir tout les produits enregistrés" +
                                             "<br>vous pourrez y selectionner un ou plusieurs produit puis cliquer sur un bouton 'suprimer'" +
