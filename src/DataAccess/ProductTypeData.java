@@ -1,7 +1,7 @@
 package DataAccess;
 
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.ProductTypeExeption;
+import model.Exeptions.SelectException;
 import model.ProductType;
 
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ public class ProductTypeData {
 
     }
 
-    public ArrayList<ProductType> getAllProductType() throws ProductTypeExeption, CreateConnectionException {
+    public ArrayList<ProductType> getAllProductType() throws SelectException, CreateConnectionException {
         ArrayList<ProductType> productTypes = new ArrayList<>();
         ProductType productType;
         String sql = "SELECT * FROM product_type" +
@@ -30,7 +30,7 @@ public class ProductTypeData {
             }
 
         }catch (SQLException exception) {
-            throw new ProductTypeExeption(exception.getMessage());
+            throw new SelectException(exception.getMessage(), "la liste des types de produits");
         }
 
         return productTypes;

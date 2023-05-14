@@ -1,6 +1,9 @@
 package userInterface;
 
+import Controller.ShopController;
 import model.*;
+import model.Exeptions.CreateConnectionException;
+import model.Exeptions.SelectException;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -12,6 +15,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,7 +26,7 @@ import java.util.Date;
  * <br>
  * the fields have a listener that check if the value is valid, if it is not, the user will be notified and the value reset
 **/
-public abstract class ProductCreatingAndModifingForm extends JPanel {
+public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
     private JLabel nameLabel,
                     referenceLabel,
                     productTypeLabel,
@@ -53,106 +57,128 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
 
     private Date launchingDateSelected;
 
-    public ProductCreatingAndModifingForm() {
+    private ShopController shopController;
+    private ArrayList<ProductType> productTypesList;
+
+    public ProductCreatingAndModifingFormTemplate() {
         this.setLayout(new BorderLayout());
 
-        // panels
-        formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(12,2, 10, 10));
+        this.shopController = new ShopController();
 
-        buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new FlowLayout());
+        try {
+            // panels
+            formPanel = new JPanel();
+            formPanel.setLayout(new GridLayout(12,2, 10, 10));
 
-        //listeners
-        TextFieldListener textFieldListener = new TextFieldListener();
-        ChecboxListener checboxListener = new ChecboxListener();
-        SpinnerListener spinnerListener = new SpinnerListener();
+            buttonsPanel = new JPanel();
+            buttonsPanel.setLayout(new FlowLayout());
 
-        // modules
-        nameLabel = new JLabel("nom");
-        nameTextField = new JTextField();
-        nameTextField.addActionListener(textFieldListener);
-        formPanel.add(nameLabel);
-        formPanel.add(nameTextField);
+            //listeners
+            TextFieldListener textFieldListener = new TextFieldListener();
+            ChecboxListener checboxListener = new ChecboxListener();
+            SpinnerListener spinnerListener = new SpinnerListener();
 
-        referenceLabel = new JLabel("référence");
-        referenceTextField = new JTextField();
-        referenceTextField.addActionListener(textFieldListener);
-        formPanel.add(referenceLabel);
-        formPanel.add(referenceTextField);
+            // modules
+            nameLabel = new JLabel("nom");
+            nameTextField = new JTextField();
+            nameTextField.addActionListener(textFieldListener);
+            formPanel.add(nameLabel);
+            formPanel.add(nameTextField);
 
-        productTypeLabel = new JLabel("type de product");
-        // TODO get the types list
-        productTypeComboBox = new JComboBox(new String[]{"spiritueu", "bière", "soda", "whisky"});
-        formPanel.add(productTypeLabel);
-        formPanel.add(productTypeComboBox);
+            referenceLabel = new JLabel("référence");
+            referenceTextField = new JTextField();
+            referenceTextField.addActionListener(textFieldListener);
+            formPanel.add(referenceLabel);
+            formPanel.add(referenceTextField);
 
-        vatLabel = new JLabel("TVA");
-        vatTextField = new JTextField();
-        vatTextField.addActionListener(textFieldListener);
-        formPanel.add(vatLabel);
-        formPanel.add(vatTextField);
+            productTypeLabel = new JLabel("type de produit");
+            productTypesList = shopController.getAllProductType();
+            String [] productTypesNamesList = new String[productTypesList.size()];
+            for (int iProductType = 0; iProductType < productTypesList.size(); iProductType++) {
+                productTypesNamesList[iProductType] = productTypesList.get(iProductType).getLabel()
+                                                    + '(' + productTypesList.get(iProductType).getReference();
+            }
+            productTypeComboBox = new JComboBox(productTypesNamesList);
+            formPanel.add(productTypeLabel);
+            formPanel.add(productTypeComboBox);
 
-        quantityInStockLabel = new JLabel("quantité en stock");
-        quantityInStockSpinner = new JSpinner();
-        quantityInStockSpinner.addChangeListener(spinnerListener);
-        formPanel.add(quantityInStockLabel);
-        formPanel.add(quantityInStockSpinner);
+            vatLabel = new JLabel("TVA");
+            vatTextField = new JTextField();
+            vatTextField.addActionListener(textFieldListener);
+            formPanel.add(vatLabel);
+            formPanel.add(vatTextField);
 
-        minimumQuantityInStockLabel = new JLabel("quantité minimum en stock");
-        minimumQuantityInStockSpinner = new JSpinner();
-        minimumQuantityInStockSpinner.addChangeListener(spinnerListener);
-        formPanel.add(minimumQuantityInStockLabel);
-        formPanel.add(minimumQuantityInStockSpinner);
+            quantityInStockLabel = new JLabel("quantité en stock");
+            quantityInStockSpinner = new JSpinner();
+            quantityInStockSpinner.addChangeListener(spinnerListener);
+            formPanel.add(quantityInStockLabel);
+            formPanel.add(quantityInStockSpinner);
 
-        sparklingLabel = new JLabel("est pétillant");
-        isSparklingCheckBox = new JCheckBox("oui");
-        formPanel.add(sparklingLabel);
-        formPanel.add(isSparklingCheckBox);
+            minimumQuantityInStockLabel = new JLabel("quantité minimum en stock");
+            minimumQuantityInStockSpinner = new JSpinner();
+            minimumQuantityInStockSpinner.addChangeListener(spinnerListener);
+            formPanel.add(minimumQuantityInStockLabel);
+            formPanel.add(minimumQuantityInStockSpinner);
 
-        hasAlcoholCheckBoxLabel = new JLabel("contient de l'alcool");
-        hasAlcoholCheckBox = new JCheckBox("oui");
-        hasAlcoholCheckBox.addItemListener(checboxListener);
-        formPanel.add(hasAlcoholCheckBoxLabel);
-        formPanel.add(hasAlcoholCheckBox);
+            sparklingLabel = new JLabel("est pétillant");
+            isSparklingCheckBox = new JCheckBox("oui");
+            formPanel.add(sparklingLabel);
+            formPanel.add(isSparklingCheckBox);
 
-        alcoholLevelLabel = new JLabel("niveau d'alcool");
-        alcoholLevelTextField = new JTextField();
-        alcoholLevelTextField.setEnabled(false);
-        alcoholLevelTextField.addActionListener(textFieldListener);
-        formPanel.add(alcoholLevelLabel);
-        formPanel.add(alcoholLevelTextField);
+            hasAlcoholCheckBoxLabel = new JLabel("contient de l'alcool");
+            hasAlcoholCheckBox = new JCheckBox("oui");
+            hasAlcoholCheckBox.addItemListener(checboxListener);
+            formPanel.add(hasAlcoholCheckBoxLabel);
+            formPanel.add(hasAlcoholCheckBox);
 
-        priceLabel = new JLabel("prix HTVA (en magasin)");
-        priceTextField = new JTextField();
-        priceTextField.addActionListener(textFieldListener);
-        formPanel.add(priceLabel);
-        formPanel.add(priceTextField);
+            alcoholLevelLabel = new JLabel("niveau d'alcool");
+            alcoholLevelTextField = new JTextField();
+            alcoholLevelTextField.setEnabled(false);
+            alcoholLevelTextField.addActionListener(textFieldListener);
+            formPanel.add(alcoholLevelLabel);
+            formPanel.add(alcoholLevelTextField);
 
-        launchingDateLabel = new JLabel("date de lancement");
-        launchingDateSelected = new Date();
-        launchingDateSpinner = new JSpinner(new SpinnerDateModel(launchingDateSelected, null, null, Calendar.YEAR));
-        JSpinner.DateEditor launchingDateEditor = new JSpinner.DateEditor(launchingDateSpinner,"dd/MM/yyyy");
-        launchingDateSpinner.setEditor(launchingDateEditor);
-        formPanel.add(launchingDateLabel);
-        formPanel.add(launchingDateSpinner);
+            priceLabel = new JLabel("prix HTVA (en magasin)");
+            priceTextField = new JTextField();
+            priceTextField.addActionListener(textFieldListener);
+            formPanel.add(priceLabel);
+            formPanel.add(priceTextField);
 
-        descriptionLabel = new JLabel("description");
-        descriptionTextField = new JTextField();
-        descriptionTextField.addActionListener(textFieldListener);
-        formPanel.add(descriptionLabel);
-        formPanel.add(descriptionTextField);
+            launchingDateLabel = new JLabel("date de lancement");
+            launchingDateSelected = new Date();
+            launchingDateSpinner = new JSpinner(new SpinnerDateModel(launchingDateSelected, null, null, Calendar.YEAR));
+            JSpinner.DateEditor launchingDateEditor = new JSpinner.DateEditor(launchingDateSpinner,"dd/MM/yyyy");
+            launchingDateSpinner.setEditor(launchingDateEditor);
+            formPanel.add(launchingDateLabel);
+            formPanel.add(launchingDateSpinner);
 
-        // fill the panel and display it
-        fillButtonsPanel(buttonsPanel);
+            descriptionLabel = new JLabel("description");
+            descriptionTextField = new JTextField();
+            descriptionTextField.addActionListener(textFieldListener);
+            formPanel.add(descriptionLabel);
+            formPanel.add(descriptionTextField);
 
-        this.add(formPanel, BorderLayout.CENTER);
-        this.add(buttonsPanel, BorderLayout.SOUTH);
+            // fill the panel and display it
+            fillButtonsPanel(buttonsPanel);
+
+            this.add(formPanel, BorderLayout.CENTER);
+            this.add(buttonsPanel, BorderLayout.SOUTH);
+        } catch (SelectException exception) {
+            showErrorMessageAndPanel("<html><p>la recherche des types de produits n'a pas été possible," +
+                            "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
+                            "<br>erreur : " + exception.getMessage() + "</p></html>",
+                    "erreur : " + exception.getMessage());
+
+        } catch (CreateConnectionException exception) {
+            showErrorMessageAndPanel("<html><p>la connection aux données n'a pas pu être établie" +
+                            "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
+                            "<br>erreur : " + exception.getMessage()+ "</p></html>",
+                    "erreur : " + exception.getMessage());
+        }
 
         this.setVisible(true);
     }
 
-    public abstract void fillButtonsPanel(JPanel buttonsPanel);
 
     // getters
     public JCheckBox getIsSparklingCheckBox() {
@@ -205,6 +231,25 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
 
     public Date getLaunchingDateSelected() {
         return ((Date) getLaunchingDateSpinner().getValue());
+    }
+
+    public ShopController getShopController() {
+        return shopController;
+    }
+
+    // other methods
+    public abstract void fillButtonsPanel(JPanel buttonsPanel);
+
+    /**
+     * do a JOptionPane.showMessageDialog() to show the error or problem
+     * and add an error JLabel on the panel
+     * @param message : the message in the panel
+     * @param optionPaneMessage : the message in the JOptionPane.showMessageDialog()
+     **/
+    private void showErrorMessageAndPanel(String message, String optionPaneMessage) {
+        JLabel errorLabel = new JLabel(message);
+        this.add(errorLabel, BorderLayout.CENTER);
+        JOptionPane.showMessageDialog(null, optionPaneMessage, "problème pour la recherche", JOptionPane.WARNING_MESSAGE);
     }
 
     // input validity tests
@@ -304,7 +349,7 @@ public abstract class ProductCreatingAndModifingForm extends JPanel {
         @Override
         public void itemStateChanged(ItemEvent event) {
             boolean hasAlcohol = event.getStateChange() == ItemEvent.SELECTED;
-            ProductCreatingAndModifingForm.this.getAlcoholLevelTextField().setEnabled(hasAlcohol);
+            ProductCreatingAndModifingFormTemplate.this.getAlcoholLevelTextField().setEnabled(hasAlcohol);
         }
     }
 

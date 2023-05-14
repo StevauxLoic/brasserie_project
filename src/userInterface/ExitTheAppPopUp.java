@@ -53,16 +53,18 @@ public class ExitTheAppPopUp extends PopUp {
             Object source = event.getSource();
             if (source == cancelButton) {
                 ExitTheAppPopUp.this.dispose();
-            } else if(source == exitButton) {   // could be just a 'if' instead of an 'if else'
+            } else {
                 try {
                     ShopController shopController = new ShopController();
                     shopController.closeConnection();
+                    System.exit(0);
                 } catch (CreateConnectionException  exceptionEvent) {
-                    // TODO on écrit qq chose ici ?
+                    JOptionPane.showMessageDialog(null, "erreur" + exceptionEvent.getMessage(),
+                            "erreur de l'ouverture de la conexion", JOptionPane.ERROR_MESSAGE);
                 } catch (CloseConnectionException exceptionEvent) {
-                    JOptionPane.showMessageDialog(null, "la fermeture de la connection aux données a échoué", "fermeture de la connection", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "erreur" + exceptionEvent.getMessage(),
+                            "erreur de la fermeture de la conexion", JOptionPane.ERROR_MESSAGE);
                 }
-                System.exit(0);
             }
         }
     }

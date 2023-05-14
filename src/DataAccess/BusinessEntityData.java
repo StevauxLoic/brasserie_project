@@ -3,10 +3,8 @@ package DataAccess;
 import model.Adress;
 import model.BusinessEntity;
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.CreateExeption;
-import model.Exeptions.SelectExeption;
+import model.Exeptions.SelectException;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +16,7 @@ public class BusinessEntityData implements IBusinessEntityData{
 
     }
 
-    public ArrayList<BusinessEntity> getAllBusinessEntities() throws SelectExeption, CreateConnectionException {
+    public ArrayList<BusinessEntity> getAllBusinessEntities() throws SelectException, CreateConnectionException {
         ArrayList<BusinessEntity> businessEntities = new ArrayList<>();
         BusinessEntity businessEntity;
         String sql = "SELECT * FROM business_entity";
@@ -31,12 +29,12 @@ public class BusinessEntityData implements IBusinessEntityData{
                 businessEntities.add(businessEntity);
             }
         }catch (SQLException exception){
-            throw new SelectExeption(exception.getMessage(), "de la liste des business entity");
+            throw new SelectException(exception.getMessage(), "la liste des business entity");
         }
         return businessEntities;
     }
 
-    public ArrayList<Adress> getAllAdressesOfBusinessEntity(BusinessEntity businessEntity) throws SelectExeption, CreateConnectionException {
+    public ArrayList<Adress> getAllAdressesOfBusinessEntity(BusinessEntity businessEntity) throws SelectException, CreateConnectionException {
         ArrayList<Adress> adresses = new ArrayList<>();
         Adress adress;
         String sql = "SELECT * FROM adress WHERE id = ?";
@@ -50,7 +48,7 @@ public class BusinessEntityData implements IBusinessEntityData{
                 adress = new Adress(data.getString("id"), data.getString("street"), data.getInt("number_of_the_hours"), data.getString("business_entity_id"), data.getInt("type_id"), data.getString("city_id"));
             }
         }catch (SQLException exception){
-            throw new SelectExeption(exception.getMessage(), "de la liste des adresse pour la business entity" + businessEntity.getName());
+            throw new SelectException(exception.getMessage(), "la liste des adresse pour la business entity" + businessEntity.getName());
         }
         return adresses;
     }

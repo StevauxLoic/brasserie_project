@@ -1,48 +1,59 @@
 package userInterface;
 
 import model.*;
+import model.Exeptions.CreateConnectionException;
+import model.Exeptions.CreateException;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ProductCreationPanel extends ProductCreatingAndModifingForm {
+public class ProductCreationPanel extends ProductCreatingAndModifingFormTemplate {
 
-    private JButton creatButton;
+    private JButton createButton;
 
-    //TODO c'est utile ce constructeur ? car il est là mais peut être useless
     public ProductCreationPanel() {
         super();
     }
 
     @Override
     public void fillButtonsPanel(JPanel buttonsPanel) {
-        this.creatButton = new JButton("créer");
-        creatButton.addActionListener(new ButtonListener());
-        buttonsPanel.add(creatButton);
+        this.createButton = new JButton("créer");
+        createButton.addActionListener(new ButtonListener());
+        buttonsPanel.add(createButton);
     }
 
     private void createProduct(Product productToCreate) {
-        // TODO create product in the data base
-        // si erreur JOptionPane
-        JOptionPane.showMessageDialog(null, "création de l'objet en db", "création de produit", JOptionPane.INFORMATION_MESSAGE);
+        try {
+            getShopController().createProduct(productToCreate);
+            JOptionPane.showMessageDialog(null, "l'objet a été créé",
+                    "création effectuée", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (CreateConnectionException exception) {
+            JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+                    "erreur de creation de la connexion au données", JOptionPane.ERROR_MESSAGE);
+
+        } catch (CreateException exception) {
+            JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+                    "erreur de creation du produit", JOptionPane.ERROR_MESSAGE);
+
+        }
     }
 
     private class ButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            if (isFormValid()) {
+            ProductCreationPanel thisPanel =ProductCreationPanel.this;
 
-                try {
-                    Product productToCreate = readForm();
-                    // TODO créer
-                    JOptionPane.showMessageDialog(null, "objet créé", "erreur", JOptionPane.INFORMATION_MESSAGE);
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(null, exception.getMessage(), "erreur", JOptionPane.ERROR_MESSAGE);
-                }
+            if (isFormValid()) {
+                Product productToCreate = thisPanel.readForm();
+                thisPanel.createProduct(productToCreate);
+
             } else {
-                JOptionPane.showMessageDialog(null, "Le formulaire doit être correctement rempli pour être validé", "formulaire mal remplis", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Le formulaire doit être correctement rempli pour être validé",
+                        "formulaire mal remplis", JOptionPane.WARNING_MESSAGE);
             }
         }
     }

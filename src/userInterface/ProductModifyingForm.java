@@ -1,5 +1,8 @@
 package userInterface;
 
+import model.Exeptions.CreateConnectionException;
+import model.Exeptions.CreateException;
+import model.Exeptions.UpdateException;
 import model.Product;
 
 import javax.swing.*;
@@ -7,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
-public class ProductModifyingForm extends ProductCreatingAndModifingForm{
+public class ProductModifyingForm extends ProductCreatingAndModifingFormTemplate {
 
     private JButton modifyButton;
     private Product productToModify;
@@ -80,24 +83,31 @@ public class ProductModifyingForm extends ProductCreatingAndModifingForm{
         buttonsPanel.add(modifyButton);
     }
 
-    private void modifyProduct(Product productToModify, Product modifiedProduct) {
-        // TODO updating the product in the database
-        // si erreur JOptionPane
-        JOptionPane.showMessageDialog(null, "modification (mise à jour) de l'objet en db", "modification du produit", JOptionPane.INFORMATION_MESSAGE);
+    private void modifyProduct(Product modifiedProduct) {
+        try {
+            getShopController().updateProduct(modifiedProduct);
+            JOptionPane.showMessageDialog(null, "objet modifié",
+                    "produit modifié avec succès", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (UpdateException exception) {
+            JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+                    "erreur de la modification du produit", JOptionPane.ERROR_MESSAGE);
+
+        } catch (CreateConnectionException exception) {
+            JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+                    "erreur de creation de la connexion au données", JOptionPane.ERROR_MESSAGE);
+
+        }
     }
 
     private class ButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent event) {
+            ProductModifyingForm thisPanel = ProductModifyingForm.this;
             if (isFormValid()) {
-                try {
-                    Product productToModify = readForm();
-                    // TODO modif product
-                    JOptionPane.showMessageDialog(null, "objet modifié", "erreur", JOptionPane.INFORMATION_MESSAGE);
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(null, exception.getMessage(), "erreur", JOptionPane.ERROR_MESSAGE);
-                }
+                Product modifiedProduct = thisPanel.readForm();
+                thisPanel.modifyProduct(modifiedProduct);
             } else {
                 JOptionPane.showMessageDialog(null, "Le formulaire doit être correctement rempli pour être validé", "formulaire mal remplis", JOptionPane.WARNING_MESSAGE);
             }

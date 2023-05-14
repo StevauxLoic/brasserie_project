@@ -3,8 +3,8 @@ package userInterface;
 import Controller.ShopController;
 import model.*;
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.DeleteExeption;
-import model.Exeptions.SelectExeption;
+import model.Exeptions.DeleteException;
+import model.Exeptions.SelectException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -98,14 +98,14 @@ public class FindProductPanel extends JPanel {
 
         } catch (CreateConnectionException exception) {
             showErrorMessageAndPanel("<html><p>la connection aux données n'a pas pu être établie" +
-                    "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
-                    "message d'erreur : <br>" +
-                    exception.getMessage()+ "</p></html>",
-                    "la connection aux données n'a pas pu être établie");
-        } catch (SelectExeption exception) {
+                                "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
+                                "<br>erreur : " + exception.getMessage()+ "</p></html>",
+                    "erreur : " + exception.getMessage());
+        } catch (SelectException exception) {
             showErrorMessageAndPanel("<html><p>la recherche d'un produit n'a pas été possible," +
-                    "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application</p></html>",
-                    "la recherche d'un produit n'a pas été possible");
+                                "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
+                                "<br>erreur : " + exception.getMessage() + "</p></html>",
+                    "erreur : " + exception.getMessage());
         }
 
         this.setVisible(true);
@@ -145,7 +145,7 @@ public class FindProductPanel extends JPanel {
                 productsList.remove(firstProductSelectedIndex);
                 refreshPanel();
 
-            } catch (DeleteExeption exception) {
+            } catch (DeleteException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "erreur de supression d'un produit", JOptionPane.ERROR_MESSAGE);
 
@@ -171,7 +171,7 @@ public class FindProductPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "tout les produits ont bien été supprimé",
                         "succès des supressions", JOptionPane.INFORMATION_MESSAGE);
 
-            } catch (DeleteExeption exception) {
+            } catch (DeleteException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "erreur de supression d'un produit", JOptionPane.ERROR_MESSAGE);
             } catch (CreateConnectionException exception) {

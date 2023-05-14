@@ -41,10 +41,12 @@ public class MainWindow extends JFrame {
                 try {
                     ShopController shopController = new ShopController();
                     shopController.closeConnection();
-                } catch (CreateConnectionException  event) {
-                    // TODO on écrit qq chose ici ?
-                } catch (CloseConnectionException event) {
-                    JOptionPane.showMessageDialog(null, "la fermeture de la connection aux données a échoué", "fermeture de la connection", JOptionPane.ERROR_MESSAGE);
+                } catch (CreateConnectionException  exception) {
+                    JOptionPane.showMessageDialog(null, "erreur" + exception.getMessage(),
+                            "erreur de l'ouverture de la conexion", JOptionPane.ERROR_MESSAGE);
+                } catch (CloseConnectionException exception) {
+                    JOptionPane.showMessageDialog(null, "erreur" + exception.getMessage(),
+                            "erreur de la fermeture de la conexion", JOptionPane.ERROR_MESSAGE);
                 }
                 System.exit(0);
             }
@@ -156,7 +158,6 @@ public class MainWindow extends JFrame {
                 JPanel panelToDisplay = null;
                 if(source == searchProductMenuItem || source == findProductMenuItem) { // les deux mènenet au même endroit (une recherche de produit)
                     panelToDisplay = new FindProductPanel();
-                    // TODO il est la ton problème car ton jpannel c'est censé etre un jtable ...
                 } else if(source == searchProductTypeOnDelayAMenuItem) {
                     panelToDisplay = new ProductSoldOnDelaySearchPanel();
                 } else if(source == searchProductSupplementsDueToEventMenuItem) {

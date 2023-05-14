@@ -1,6 +1,10 @@
 package userInterface;
 
+import Controller.ShopController;
+import model.Exeptions.CreateConnectionException;
+import model.Exeptions.SelectException;
 import model.ProductSoldInADelay;
+import model.ProductType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +17,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ProductSoldOnDelaySearchPanel extends JPanel {
+
+    private ShopController shopController;
+
     private JComboBox productTypeComboBox;
     private JSpinner delayBeginingSpinner,
                         delayEndSpinner;
@@ -27,60 +34,80 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
     private Date delayBeginingDateSelected,
                     delayEndDateSelected;
 
+    private ArrayList<ProductType> productTypesList;
+
     public ProductSoldOnDelaySearchPanel() {
         this.setLayout(new BorderLayout());
 
-        // panels
-        titlePanel = new JPanel();
-        titlePanel.setLayout(new FlowLayout());
+        this.shopController = new ShopController();
 
-        formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(3,2));
+        try {
+            // panels
+            titlePanel = new JPanel();
+            titlePanel.setLayout(new FlowLayout());
 
-        buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new FlowLayout());
+            formPanel = new JPanel();
+            formPanel.setLayout(new GridLayout(3, 2));
 
-        // listener
-        ButtonListener buttonListener = new ButtonListener();
+            buttonsPanel = new JPanel();
+            buttonsPanel.setLayout(new FlowLayout());
 
-        // modules
-        titleLabel = new JLabel("Recherche de produit vendu dans un certain délai");
-        titlePanel.add(titleLabel);
+            // listener
+            ButtonListener buttonListener = new ButtonListener();
+
+            // modules
+            titleLabel = new JLabel("Recherche de produit vendu dans un certain délai");
+            titlePanel.add(titleLabel);
+
+            productTypeLabel = new JLabel("type de produit");
+            productTypesList = shopController.getAllProductType();
+            String[] productTypesNamesList = new String[productTypesList.size()];
+            for (int iProductType = 0; iProductType < productTypesList.size(); iProductType++) {
+                productTypesNamesList[iProductType] = productTypesList.get(iProductType).getLabel()
+                        + '(' + productTypesList.get(iProductType).getReference();
+            }
+            productTypeComboBox = new JComboBox(productTypesNamesList);
+            formPanel.add(productTypeLabel);
+            formPanel.add(productTypeComboBox);
+
+            delayBeginingLabel = new JLabel("date de début de la recherche");
+            delayBeginingDateSelected = new Date();
+            delayBeginingSpinner = new JSpinner(new SpinnerDateModel(delayBeginingDateSelected, null, null, Calendar.YEAR));
+            JSpinner.DateEditor delayBeginingEditor = new JSpinner.DateEditor(delayBeginingSpinner, "dd/MM/yyyy");
+            delayBeginingSpinner.setEditor(delayBeginingEditor);
+            formPanel.add(delayBeginingLabel);
+            formPanel.add(delayBeginingSpinner);
+
+            delayEndLabel = new JLabel("date de fin de la recherche");
+            delayEndSpinner = new JSpinner();
+            delayEndDateSelected = new Date();
+            delayEndSpinner = new JSpinner(new SpinnerDateModel(delayEndDateSelected, null, null, Calendar.YEAR));
+            JSpinner.DateEditor delayEndEditor = new JSpinner.DateEditor(delayEndSpinner, "dd/MM/yyyy");
+            delayEndSpinner.setEditor(delayEndEditor);
+            formPanel.add(delayEndLabel);
+            formPanel.add(delayEndSpinner);
 
 
-        productTypeLabel = new JLabel("type de produit");
-        // TODO get the types list
-        productTypeComboBox = new JComboBox(new String[]{"spiritueu", "bière", "soda", "whisky"});
-        productTypeComboBox.setSelectedItem(null);
-        formPanel.add(productTypeLabel);
-        formPanel.add(productTypeComboBox);
+            searchButton = new JButton("chercher");
+            searchButton.addActionListener(buttonListener);
+            buttonsPanel.add(searchButton);
 
-        delayBeginingLabel = new JLabel("date de début de la recherche");
-        delayBeginingDateSelected = new Date();
-        delayBeginingSpinner = new JSpinner(new SpinnerDateModel(delayBeginingDateSelected, null,null, Calendar.YEAR));
-        JSpinner.DateEditor delayBeginingEditor = new JSpinner.DateEditor(delayBeginingSpinner,"dd/MM/yyyy");
-        delayBeginingSpinner.setEditor(delayBeginingEditor);
-        formPanel.add(delayBeginingLabel);
-        formPanel.add(delayBeginingSpinner);
-
-        delayEndLabel = new JLabel("date de fin de la recherche");
-        delayEndSpinner = new JSpinner();
-        delayEndDateSelected = new Date();
-        delayEndSpinner = new JSpinner(new SpinnerDateModel(delayEndDateSelected, null, null, Calendar.YEAR));
-        JSpinner.DateEditor delayEndEditor = new JSpinner.DateEditor(delayEndSpinner,"dd/MM/yyyy");
-        delayEndSpinner.setEditor(delayEndEditor);
-        formPanel.add(delayEndLabel);
-        formPanel.add(delayEndSpinner);
-
-
-        searchButton = new JButton("chercher");
-        searchButton.addActionListener(buttonListener);
-        buttonsPanel.add(searchButton);
-
-        // fill the panel and display it
-        this.add(titlePanel, BorderLayout.NORTH);
-        this.add(formPanel, BorderLayout.CENTER);
-        this.add(buttonsPanel, BorderLayout.SOUTH);
+            // fill the panel and display it
+            this.add(titlePanel, BorderLayout.NORTH);
+            this.add(formPanel, BorderLayout.CENTER);
+            this.add(buttonsPanel, BorderLayout.SOUTH);
+        } catch (SelectException exception) {
+            showErrorMessageAndPanel("<html><p>la recherche des types de produits n'a pas été possible," +
+                            "<br>les types de produits sont nécéssaire pour modifier ou créer un produit" +
+                            "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
+                            "<br>erreur : " + exception.getMessage() + "</p></html>",
+                    "erreur : " + exception.getMessage());
+        } catch (CreateConnectionException exception) {
+            showErrorMessageAndPanel("<html><p>la connection aux données n'a pas pu être établie" +
+                            "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
+                            "<br>erreur : " + exception.getMessage()+ "</p></html>",
+                    "erreur : " + exception.getMessage());
+        }
 
         this.setVisible(true);
     }
@@ -116,23 +143,49 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
 
     private void search() {
         if (isFormValid()) {
-            // TODO recherche et afficher dans le JTable
-            ArrayList<ProductSoldInADelay> productTypesSoldList = new ArrayList<ProductSoldInADelay>();
-            if (!productTypesSoldList.isEmpty()) {
-                this.removeAll();
+            try {
+                ArrayList<ProductSoldInADelay> productTypesSoldList = shopController.getAllProductSoldInADelay(
+                                                    getDelayBeginingDate(), getDelayEndDate(),
+                                                    productTypesList.get(productTypeComboBox.getSelectedIndex()));
 
-                AllProductsSoldInADelayModel allProductSoldInADelayModel = new AllProductsSoldInADelayModel(productTypesSoldList);
-                JTable productsTable = new JTable(allProductSoldInADelayModel);
-                productsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                ListSelectionModel listSelect = productsTable.getSelectionModel();
+                if (!productTypesSoldList.isEmpty()) {
+                    this.removeAll();
 
-                JScrollPane productTypesScrollPane = new JScrollPane(productsTable);
+                    AllProductsSoldInADelayModel allProductSoldInADelayModel = new AllProductsSoldInADelayModel(productTypesSoldList);
+                    JTable productsTable = new JTable(allProductSoldInADelayModel);
+                    productsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-                this.add(productTypesScrollPane, BorderLayout.CENTER);
-            } else {
-                JOptionPane.showMessageDialog(null, "aucunes vente n'a été trouvée dans ce délai", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
+                    JScrollPane productTypesScrollPane = new JScrollPane(productsTable);
+
+                    this.add(productTypesScrollPane, BorderLayout.CENTER);
+                } else {
+                    JOptionPane.showMessageDialog(null, "aucunes vente n'a été trouvée dans ce délai", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (SelectException exception) {
+                showErrorMessageAndPanel("<html><p>la recherche des types de produits n'a pas été possible," +
+                                "<br>les types de produits sont nécéssaire pour modifier ou créer un produit" +
+                                "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
+                                "<br>erreur : " + exception.getMessage() + "</p></html>",
+                        "erreur : " + exception.getMessage());
+            } catch (CreateConnectionException exception) {
+                showErrorMessageAndPanel("<html><p>la connection aux données n'a pas pu être établie" +
+                                "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
+                                "<br>erreur : " + exception.getMessage()+ "</p></html>",
+                        "erreur : " + exception.getMessage());
             }
         }
+    }
+
+    /**
+     * do a JOptionPane.showMessageDialog() to show the error or problem
+     * and add an error JLabel on the panel
+     * @param message : the message in the panel
+     * @param optionPaneMessage : the message in the JOptionPane.showMessageDialog()
+     **/
+    private void showErrorMessageAndPanel(String message, String optionPaneMessage) {
+        JLabel errorLabel = new JLabel(message);
+        this.add(errorLabel, BorderLayout.CENTER);
+        JOptionPane.showMessageDialog(null, optionPaneMessage, "problème pour la recherche", JOptionPane.WARNING_MESSAGE);
     }
 
     private class ButtonListener implements ActionListener {

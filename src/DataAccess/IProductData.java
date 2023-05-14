@@ -3,13 +3,12 @@ package DataAccess;
 import model.*;
 import model.Exeptions.*;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface IProductData {
-    void createProduct(Product productToCreate) throws CreateExeption, CreateConnectionException;
-    Product getOneProduct(String referenceOfTheProduct) throws SelectExeption,CreateConnectionException;
-    ArrayList<Product> getAllProducts() throws SelectExeption, CreateConnectionException;
-    void updateProduct(Product productToUpdate) throws UpdateExeption, CreateConnectionException;
-    void deleteProduct(Product productToDelete) throws DeleteExeption,CreateConnectionException;
+    void createProduct(Product productToCreate) throws CreateException, CreateConnectionException;
+    Product getOneProduct(String referenceOfTheProduct) throws SelectException,CreateConnectionException;
+    ArrayList<Product> getAllProducts() throws SelectException, CreateConnectionException;
+    void updateProduct(Product productToUpdate) throws UpdateException, CreateConnectionException;
+    void deleteProduct(Product productToDelete) throws DeleteException,CreateConnectionException;
 }
