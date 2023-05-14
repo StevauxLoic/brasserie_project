@@ -1,10 +1,7 @@
 package DataAccess;
 
-import model.Exeptions.CloseConnectionException;
 import model.Exeptions.CreateConnectionException;
 
-import javax.imageio.IIOException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,6 +12,7 @@ public class SingletonConnection {
     public static Connection getUniqueConnection() throws CreateConnectionException {
         if(uniqueConnection == null){
             try {
+                // insert the good user and password to be able to connect to the data base
                 uniqueConnection = DriverManager.getConnection( "jdbc:mysql://localhost:3306/shop_db", "root", "admin") ;
             } catch (SQLException exception) {
                 throw new CreateConnectionException();
