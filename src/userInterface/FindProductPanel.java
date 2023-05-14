@@ -91,11 +91,9 @@ public class FindProductPanel extends JPanel {
                 this.add(tablePanel, BorderLayout.CENTER);
 
             } else {    // no products found
-                showErrorMessageAndPanel("<html><p>aucun produit n'a été trouvé,<br>" +
-                        "veuillez reselectionner le menu si vous voulez réessayer<br>" +
-                        "peut-être qu'il n' y a juste aucun produits enregistré<br>" +
-                        "dans la base de données</p></html>",
-                        "aucun produit n'a été trouvé, veuillez reselectionner le menu si vous voulez réessayer");
+                showErrorMessageAndPanel("<html><p>aucun produit enregistré n'a été trouvé<br>" +
+                                                "créez des produits si vous vouler qu'ils s'affichent ici</p></html>",
+                        "aucun produit n'a été trouvé");
             }
 
         } catch (CreateConnectionException exception) {
@@ -120,9 +118,9 @@ public class FindProductPanel extends JPanel {
     * @param optionPaneMessage : the message in the JOptionPane.showMessageDialog()
     **/
     private void showErrorMessageAndPanel(String message, String optionPaneMessage) {
-        JOptionPane.showMessageDialog(null, optionPaneMessage, "problème pour la recherche", JOptionPane.WARNING_MESSAGE);
         JLabel errorLabel = new JLabel(message);
         this.add(errorLabel, BorderLayout.CENTER);
+        JOptionPane.showMessageDialog(null, optionPaneMessage, "problème pour la recherche", JOptionPane.WARNING_MESSAGE);
     }
 
     private Product getSelectedAProduct(){
@@ -137,6 +135,8 @@ public class FindProductPanel extends JPanel {
 
     private void deleteProducts() {
         int firstProductSelectedIndex = listSelect.getMinSelectionIndex();
+
+        // one delete
         if (listSelect.getMinSelectionIndex() == listSelect.getMaxSelectionIndex()) {
             try {
                 shopController.deleteProduct(productsList.get(firstProductSelectedIndex));
@@ -154,22 +154,26 @@ public class FindProductPanel extends JPanel {
                         "erreur de conexion aux données", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            int lasstProductSelectedIndex = listSelect.getMaxSelectionIndex();
+            // multiple deletes
+            int selectedProductsAmount = listSelect.getSelectedItemsCount();
             int deleteingProductIndex = firstProductSelectedIndex;
             // will stop deleting if one throw an error
             try {
-                while (deleteingProductIndex <= lasstProductSelectedIndex) {
+                for (int iProduct = 0; iProduct < selectedProductsAmount; iProduct++) {
+
                     shopController.deleteProduct(productsList.get(deleteingProductIndex));
-                    JOptionPane.showMessageDialog(null, "un produit a bien été supprimé",
-                            "succès de la supression", JOptionPane.INFORMATION_MESSAGE);
-                    productsList.remove(deleteingProductIndex);
+                    JOptionPane.showMessageDialog(null, "un produit a bien été supprimé, "
+                                    + (selectedProductsAmount - iProduct) + " restants",
+                            "succès de la supression" , JOptionPane.INFORMATION_MESSAGE);
+                    productsList.remove(productsList.get(deleteingProductIndex));
 
                 }
                 JOptionPane.showMessageDialog(null, "tout les produits ont bien été supprimé",
                         "succès des supressions", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (DeleteExeption exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(), "erreur de supression d'un produit", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, exception.getMessage(),
+                        "erreur de supression d'un produit", JOptionPane.ERROR_MESSAGE);
             } catch (CreateConnectionException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "erreur de conexion aux données", JOptionPane.ERROR_MESSAGE);
