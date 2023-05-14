@@ -60,8 +60,4 @@ public class AllProductSupplementsDueToEventModel extends AbstractTableModel {
         };
         return columnClass;
     }
-
-    public ProductSupplementDueToEvent getObject(int rowIndex) {
-        return this.contents.get(rowIndex);
-    }
 }

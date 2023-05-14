@@ -52,8 +52,4 @@ public class AllProductsSoldInADelayModel extends AbstractTableModel {
         };
         return columnClass;
     }
-
-    public ProductSoldInADelay getObject(int rowIndex) {
-        return this.contents.get(rowIndex);
-    }
 }

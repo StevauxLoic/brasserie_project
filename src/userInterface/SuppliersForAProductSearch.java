@@ -4,6 +4,8 @@ import model.Product;
 import model.SupplierForAProduct;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +45,7 @@ public class SuppliersForAProductSearch extends JPanel {
         // listeners
         ButtonListener buttonListener = new ButtonListener();
         ChecboxListener checboxListener = new ChecboxListener();
+        SliderListener sliderListener = new SliderListener();
 
         // panles
         titlePanel = new JPanel(new BorderLayout());
@@ -62,17 +65,15 @@ public class SuppliersForAProductSearch extends JPanel {
         formPanel.add(maximumPriceCheckBoxLabel);
         formPanel.add(maximumPriceCheckBox);
 
-        maximumPriceSliderLabel = new JLabel("prix maximum du fournisseur pour ce produit : ");
-        maximumPriceSlider = new JSlider(0,365, 50);
+        maximumPriceSliderLabel = new JLabel("prix maximum du fournisseur pour ce produit");
+        maximumPriceSlider = new JSlider(0,1000, 10);
         // slider : visual options
         maximumPriceSlider.setPaintTicks(true);   // displays the dots (thin and thinks)
         maximumPriceSlider.setPaintLabels(true);  // displays the numbers on the big dots
-        maximumPriceSlider.setMajorTickSpacing(30); // thick dots
-        maximumPriceSlider.setMinorTickSpacing(7);  // thin dots
-
-        // TODO afficher le nombre de jours
-
+        maximumPriceSlider.setMajorTickSpacing(100); // thick dots
+        maximumPriceSlider.setMinorTickSpacing(10);  // thin dots
         maximumPriceSlider.setEnabled(false);
+        maximumPriceSlider.addChangeListener(sliderListener);
         formPanel.add(maximumPriceSliderLabel);
         formPanel.add(maximumPriceSlider);
 
@@ -102,8 +103,8 @@ public class SuppliersForAProductSearch extends JPanel {
     }
 
     public boolean isFormValid() {
-        if ((int) maximumDeliveryDaysSpinner.getValue() <= 0) {
-            JOptionPane.showMessageDialog(null, "si vous sélectionné un délai maximum pour la livraison, il doit être supérieur à 0", "erreur de nombres de jours pour livraison", JOptionPane.WARNING_MESSAGE);
+        if (maximumDeliveryDaysCheckBox.isSelected() && (int) maximumDeliveryDaysSpinner.getValue() <= 0) {
+            JOptionPane.showMessageDialog(null, "si vous sélectionnez un délai maximum pour la livraison, il doit être supérieur à 0", "erreur de nombres de jours pour livraison", JOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
@@ -184,6 +185,15 @@ public class SuppliersForAProductSearch extends JPanel {
             if (thisPanel.isFormValid()) {
                 thisPanel.searchSuppliers();
             }
+        }
+    }
+
+    private class SliderListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent event) {
+            SuppliersForAProductSearch thisPanel = SuppliersForAProductSearch.this;
+            thisPanel.maximumPriceSliderLabel.setText("prix maximum du fournisseur pour ce produit : " + thisPanel.maximumPriceSlider.getValue() + "€");
+
         }
     }
 }

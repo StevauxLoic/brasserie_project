@@ -1,6 +1,8 @@
 package userInterface;
 
+import Controller.ShopController;
 import model.*;
+import model.Exeptions.CreateConnectionException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +31,9 @@ public class FindProductPanel extends JPanel {
     private ButtonListener buttonListener;
     private AllProductsModel allProductModel;
     private ListSelectionModel listSelect;
+    private ArrayList<Product> productsList;
+
+    private ShopController shopController;
 
 
     // TODO a supprimer quand on en aura plus besoin pour les tests
@@ -41,98 +46,121 @@ public class FindProductPanel extends JPanel {
     public FindProductPanel() {
         this.setLayout(new BorderLayout());
 
-        //Panel
-        titlePanel = new JPanel();
-        titlePanel.setLayout(new FlowLayout());
+        try {
+            this.shopController = new ShopController();
 
-        tablePanel = new JPanel();
-        tablePanel.setLayout(new BorderLayout());
+            //Panel
+            titlePanel = new JPanel();
+            titlePanel.setLayout(new FlowLayout());
 
-        buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new FlowLayout());
+            tablePanel = new JPanel();
+            tablePanel.setLayout(new BorderLayout());
 
-        // JTables and scrollPane
-        // TODO à supprimer la liste d'exemple
-        ArrayList<Product> productsList = new ArrayList<Product>();
-        productsList.add(testProduct);
-        productsList.add(secondTestProduct);
+            buttonsPanel = new JPanel();
+            buttonsPanel.setLayout(new FlowLayout());
 
-        // if no table ==> the table and buttons are replace by JLabel that
-        // explain the fact that there is not any product found
+            // JTables and scrollPane
+            // TODO à supprimer la liste d'exemple
+            productsList = new ArrayList<Product>();
+            productsList.add(testProduct);
+            productsList.add(secondTestProduct);
 
-        if (!productsList.isEmpty()) {
-            allProductModel = new AllProductsModel(productsList);
-            productsTable = new JTable(allProductModel);
-            productsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listSelect = productsTable.getSelectionModel();
+            // if no table ==> the table and buttons are replace by JLabel that
+            // explain the fact that there is not any product found
 
-            productsScrollPane = new JScrollPane(productsTable);
-            tablePanel.add(productsScrollPane, BorderLayout.CENTER);
+            if (!productsList.isEmpty()) {
+                allProductModel = new AllProductsModel(productsList);
+                productsTable = new JTable(allProductModel);
+                productsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+                listSelect = productsTable.getSelectionModel();
 
-            // button Listener
-            buttonListener = new ButtonListener();
+                productsScrollPane = new JScrollPane(productsTable);
+                tablePanel.add(productsScrollPane, BorderLayout.CENTER);
 
-            // buttons
-            deleteButton = new JButton("Suprimer");
-            deleteButton.addActionListener(buttonListener);
-            buttonsPanel.add(deleteButton);
+                // button Listener
+                buttonListener = new ButtonListener();
 
-            modifyButton = new JButton("Modifier");
-            modifyButton.addActionListener(buttonListener);
-            buttonsPanel.add(modifyButton);
+                // buttons
+                deleteButton = new JButton("Suprimer");
+                deleteButton.addActionListener(buttonListener);
+                buttonsPanel.add(deleteButton);
 
-            // labels
-            titleLabel = new JLabel("Table des poduits à sélectionner");
-            titlePanel.add(titleLabel);
+                modifyButton = new JButton("Modifier");
+                modifyButton.addActionListener(buttonListener);
+                buttonsPanel.add(modifyButton);
 
-            // add the button pannel
+                // labels
+                titleLabel = new JLabel("Table des poduits à sélectionner");
+                titlePanel.add(titleLabel);
 
-            this.add(buttonsPanel, BorderLayout.SOUTH);
-            this.add(tablePanel, BorderLayout.CENTER);
+                // add the button pannel
 
-        } else {
-            titleLabel = new JLabel("<html><p>aucun produit n'a été trouvé,<br>" +
-                                        "veuillez reselectionner le menu si vous voulez réessayer<br>" +
-                                        "peut-être qu'il n' y a juste aucun produits enregistré<br>" +
-                                        "dans la base de données</p></html>");
-            titlePanel.add(titleLabel);
-            JOptionPane.showMessageDialog(null, "aucun produit n'a été trouvé, veuillez reselectionner le menu si vous voulez réessayer", "pas de rpoduit trouvé", JOptionPane.INFORMATION_MESSAGE);
+                this.add(buttonsPanel, BorderLayout.SOUTH);
+                this.add(tablePanel, BorderLayout.CENTER);
+
+            } else {
+                titleLabel = new JLabel("<html><p>aucun produit n'a été trouvé,<br>" +
+                        "veuillez reselectionner le menu si vous voulez réessayer<br>" +
+                        "peut-être qu'il n' y a juste aucun produits enregistré<br>" +
+                        "dans la base de données</p></html>");
+                titlePanel.add(titleLabel);
+                JOptionPane.showMessageDialog(null, "aucun produit n'a été trouvé, veuillez reselectionner le menu si vous voulez réessayer", "pas de rpoduit trouvé", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+            // Panels filling
+            this.add(titlePanel, BorderLayout.NORTH);
+
+        } catch (CreateConnectionException e) {
+            JOptionPane.showMessageDialog(null, "la création de la connection d'accès aux données a échoué", "erreur de création de connection", JOptionPane.ERROR_MESSAGE);
+
+            JLabel errorLabel = new JLabel("<html><p>la recherche d'un produit n'a pas été possible," +
+                                            "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application</p></html>");
+            this.add(errorLabel, BorderLayout.CENTER);
         }
 
-        // Panels filling
-        this.add(titlePanel, BorderLayout.NORTH);
 
         this.setVisible(true);
     }
 
+    private Product getSelectedAProduct(){
+        return productsList.get(listSelect.getMinSelectionIndex());
+    }
 
-    private void displayModifyForm(Product selectedProduct) {
+    private void displayModifyForm() {
         this.removeAll();
-        this.add(new ProductModifyingForm(selectedProduct));
+        this.add(new ProductModifyingForm(getSelectedAProduct()));
         this.revalidate();
         this.repaint();
+    }
+
+    private void deleteProducts() {
+        if (listSelect.getMinSelectionIndex() == listSelect.getMaxSelectionIndex()) {
+            // TODO del un produit
+        } else {
+            // TODO del des produits
+        }
     }
 
     private class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
-            FindProductPanel thisFindProductPanel = FindProductPanel.this;
-            int firstSelectedRow = thisFindProductPanel.listSelect.getMinSelectionIndex();
+            FindProductPanel thisPanel = FindProductPanel.this;
+            int firstSelectedRow = thisPanel.listSelect.getMinSelectionIndex();
 
             if (firstSelectedRow == -1) {
                 JOptionPane.showMessageDialog(null, "Veuillez d'abord séléctionner un/des produit(s) (un seul pour 'modifier')", "erreur de sélection", JOptionPane.WARNING_MESSAGE);
             } else {
                 Object source = event.getSource();
                  if (source == deleteButton){
-                    // TODO supression
+                    thisPanel.deleteProducts();
                     JOptionPane.showMessageDialog(null, "Suppression du/des produit(s) ", "suppression produit(s)", JOptionPane.INFORMATION_MESSAGE);
                 } else if (source == modifyButton) {
-                    int lastSelected = thisFindProductPanel.listSelect.getMaxSelectionIndex();
+                    int lastSelected = thisPanel.listSelect.getMaxSelectionIndex();
 
                     if (lastSelected != firstSelectedRow) {
-                        JOptionPane.showMessageDialog(null, "Veuillez un seul élément doit être séléctionné pour être modifié", "erreur de sélection", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Un seul élément doit être séléctionné pour être modifié", "erreur de sélection", JOptionPane.WARNING_MESSAGE);
                     } else {
-                        thisFindProductPanel.displayModifyForm(thisFindProductPanel.allProductModel.getObject(firstSelectedRow));
+                        thisPanel.displayModifyForm();
                     }
                 }
             }

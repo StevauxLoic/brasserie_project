@@ -1,5 +1,6 @@
 package DataAccess;
 
+import model.Exeptions.CreateConnectionException;
 import model.Exeptions.SelectExeption;
 import model.Product;
 import model.ProductSoldInADelay;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class SearchData implements ISearchData{
     private Connection connection;
 
-    public SearchData(){
+    public SearchData() throws CreateConnectionException {
         this.connection = SingletonConnection.getUniqueConnection();
     }
 

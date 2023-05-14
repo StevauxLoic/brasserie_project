@@ -39,6 +39,7 @@ public class ProductOutOfStockSearchPanel extends JPanel {
     private JLabel productTypeCheckBoxLabel,
                     productTypeComboBoxLabel,
                     titleLabel;
+    private ArrayList <Product> foundProducts;
 
     // usefull here to be called in a function laterbut not in the constructor
     private AllProductsModel allfoundProductsModel;
@@ -115,7 +116,6 @@ public class ProductOutOfStockSearchPanel extends JPanel {
     }
 
     private void searchProducts() {
-        ArrayList <Product> foundProducts;
         if (byProductTypeCheckBox.isSelected()) {
             // TODO search products in a type
         } else {
@@ -126,7 +126,7 @@ public class ProductOutOfStockSearchPanel extends JPanel {
         foundProducts.add(testProduct);
         foundProducts.add(secondTestProduct);
 
-        if (foundProducts.size() == 0) {
+        if (foundProducts!= null && foundProducts.size() == 0) {
             JOptionPane.showMessageDialog(null, "aucun produits en rupture de stock trouvé", "aucun produits", JOptionPane.INFORMATION_MESSAGE);
         } else {
             allfoundProductsModel = new AllProductsModel(foundProducts);
@@ -150,7 +150,7 @@ public class ProductOutOfStockSearchPanel extends JPanel {
 
     private void searchSuppliers() {
         if (listSelect.getMinSelectionIndex() != -1) {
-            Product selectedProduct = allfoundProductsModel.getObject(listSelect.getMinSelectionIndex());
+            Product selectedProduct = foundProducts.get(listSelect.getMinSelectionIndex());
             this.removeAll();
             this.add(new SuppliersForAProductSearch(selectedProduct));
             this.revalidate();

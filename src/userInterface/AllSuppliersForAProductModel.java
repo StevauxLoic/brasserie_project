@@ -60,10 +60,5 @@ public class AllSuppliersForAProductModel extends AbstractTableModel {
         };
         return columnClass;
     }
-
-
-    public SupplierForAProduct getObject(int rowIndex) {
-        return this.contents.get(rowIndex);
-    }
 }
 

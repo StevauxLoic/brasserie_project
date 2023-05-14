@@ -1,5 +1,9 @@
 package userInterface;
 
+import Controller.ShopController;
+import model.Exeptions.CloseConnectionException;
+import model.Exeptions.CreateConnectionException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -50,6 +54,14 @@ public class ExitTheAppPopUp extends PopUp {
             if (source == cancelButton) {
                 ExitTheAppPopUp.this.dispose();
             } else if(source == exitButton) {   // could be just a 'if' instead of an 'if else'
+                try {
+                    ShopController shopController = new ShopController();
+                    shopController.closeConnection();
+                } catch (CreateConnectionException  exceptionEvent) {
+                    // TODO on écrit qq chose ici ?
+                } catch (CloseConnectionException exceptionEvent) {
+                    JOptionPane.showMessageDialog(null, "la fermeture de la connection aux données a échoué", "fermeture de la connection", JOptionPane.ERROR_MESSAGE);
+                }
                 System.exit(0);
             }
         }

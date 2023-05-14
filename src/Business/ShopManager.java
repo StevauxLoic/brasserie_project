@@ -3,9 +3,11 @@ package Business;
 import DataAccess.BusinessEntityData;
 import DataAccess.ProductData;
 import DataAccess.SearchData;
+import DataAccess.SingletonConnection;
 import model.*;
 import model.Exeptions.*;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -14,10 +16,21 @@ public class ShopManager {
     private BusinessEntityData businessEntityDataManager;
     private SearchData searchDataManager;
 
-    public ShopManager(){
+    public ShopManager() throws CreateConnectionException {
         this.productDataManager = new ProductData();
         this.businessEntityDataManager = new BusinessEntityData();
         this.searchDataManager = new SearchData();
+    }
+
+
+    public void closeConnection() throws CloseConnectionException {
+        try {
+            SingletonConnection.getUniqueConnection().close();
+        } catch (SQLException event) {
+            throw new CloseConnectionException("la fermeture de la connexion d'accès aux données");
+        } catch (CreateConnectionException event) {
+
+        }
     }
 
     public ArrayList<Product> getAllProduct() throws SelectExeption{

@@ -1,5 +1,9 @@
 package userInterface;
 
+import Controller.ShopController;
+import model.Exeptions.CloseConnectionException;
+import model.Exeptions.CreateConnectionException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -34,7 +38,14 @@ public class MainWindow extends JFrame {
 
         this.addWindowListener( new WindowAdapter() {
             public void windowClosing ( WindowEvent closingWindowEvent ) {
-                // TODO faire la fermeture de la connection
+                try {
+                    ShopController shopController = new ShopController();
+                    shopController.closeConnection();
+                } catch (CreateConnectionException  event) {
+                    // TODO on écrit qq chose ici ?
+                } catch (CloseConnectionException event) {
+                    JOptionPane.showMessageDialog(null, "la fermeture de la connection aux données a échoué", "fermeture de la connection", JOptionPane.ERROR_MESSAGE);
+                }
                 System.exit(0);
             }
         });

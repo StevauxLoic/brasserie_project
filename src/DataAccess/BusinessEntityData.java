@@ -2,6 +2,7 @@ package DataAccess;
 
 import model.Adress;
 import model.BusinessEntity;
+import model.Exeptions.CreateConnectionException;
 import model.Exeptions.SelectExeption;
 
 import java.sql.Connection;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 public class BusinessEntityData implements IBusinessEntityData{
     private Connection connection;
 
-    public BusinessEntityData(){
+    public BusinessEntityData() throws CreateConnectionException {
         connection = SingletonConnection.getUniqueConnection();
     }
 

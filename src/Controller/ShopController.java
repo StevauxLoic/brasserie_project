@@ -11,8 +11,12 @@ import java.util.ArrayList;
 public class ShopController {
     private ShopManager shopManager;
 
-    public ShopController(){
+    public ShopController() throws CreateConnectionException {
         this.shopManager = new ShopManager();
+    }
+
+    public void closeConnection() throws CloseConnectionException {
+        shopManager.closeConnection();
     }
 
     public ArrayList<Product> getAllProduct() throws SelectExeption{

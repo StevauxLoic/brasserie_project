@@ -131,7 +131,7 @@ CREATE TABLE shop_db.document
 	CONSTRAINT delivery_adress_fk FOREIGN KEY (delivery_adress_id) REFERENCES adress(id)
 );
 
-	CREATE TABLE shop_db.details_line
+CREATE TABLE shop_db.details_line
 (
 	price DECIMAL(7,2),
 	quantity INT NOT NULL,
@@ -145,25 +145,10 @@ CREATE TABLE shop_db.document
 	CONSTRAINT details_line_pk PRIMARY KEY (product_id, document_id) 
 	);
     
-	CREATE TABLE shop_db.supplier_product_details
+CREATE TABLE shop_db.supplier_product_details
 (
 	price DECIMAL(7,2) NOT NULL,
     delivery_time INT NOT NULL,
     product_ref VARCHAR(10) NOT NULL,
     business_entity_ref VARCHAR(10) NOT NULL
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

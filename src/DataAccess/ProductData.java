@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ProductData implements  IProductData{
     private Connection connection;
 
-    public ProductData(){
+    public ProductData() throws CreateConnectionException {
         this.connection = SingletonConnection.getUniqueConnection();
     }
 
@@ -140,6 +140,7 @@ public class ProductData implements  IProductData{
         }
     }
 
+    // TODO ne devrais pas être dans une classe de product types ?
     public ArrayList<ProductType> getAllProductType() throws ProductTypeExeption {
         ArrayList<ProductType> productTypes = new ArrayList<>();
         ProductType productType;

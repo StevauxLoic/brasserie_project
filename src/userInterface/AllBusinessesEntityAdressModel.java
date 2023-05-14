@@ -60,12 +60,4 @@ public class AllBusinessesEntityAdressModel extends AbstractTableModel {
         return columnClass;
     }
 
-    /**
-     * getObject() return the object at the given rowIndex
-     * @param rowIndex the index of the row
-     * @return type : BusinessEntityAdress <br> businessEntityAdress at the givent row
-     **/
-    public BusinessEntityAdress getObject(int rowIndex) {
-        return this.contents.get(rowIndex);
-    }
 }
