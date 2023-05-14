@@ -1,6 +1,10 @@
 package userInterface;
 
+import Controller.ShopController;
+import model.BusinessEntity;
 import model.BusinessEntityAdress;
+import model.Exeptions.CreateConnectionException;
+import model.Exeptions.SelectExeption;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,45 +20,65 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
                     formPanel,
                     buttonsPanel;
     private JButton searchButton;
+    private ArrayList<BusinessEntity> businessEntitiesList;
+    private String [] businessEntitiesNamesList;
+
+    private ShopController shopController;
 
 
     public BusinessEntityAdressSearchPanel() {
         this.setLayout(new BorderLayout());
 
-        // panels
-        titlePanel = new JPanel();
-        titlePanel.setLayout(new FlowLayout());
+        this.shopController = new ShopController();
 
-        formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(1,2));
+        // try if the access to the businessEntities work,
+        // if not display the error in the panel and a JOPtionPane.showMessageDialog()
+        try {
+            // panels
+            titlePanel = new JPanel();
+            titlePanel.setLayout(new FlowLayout());
 
-        buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new FlowLayout());
+            formPanel = new JPanel();
+            formPanel.setLayout(new GridLayout(1,2));
 
-        // listener
-        ButtonListener buttonListener = new ButtonListener();
+            buttonsPanel = new JPanel();
+            buttonsPanel.setLayout(new FlowLayout());
 
-        // modules
-        titleLabel = new JLabel("Recherche des adresses d’une personne/entreprise");
-        titlePanel.add(titleLabel);
+            // listener
+            ButtonListener buttonListener = new ButtonListener();
 
-
-        businessEntityLabel = new JLabel("personne/entreprise");
-        // TODO get the types list
-        businessEntityComboBox = new JComboBox(new String[]{"Mike", "Célain & Co.", "Mardi gras enterprise", "solidaris forever"});
-        businessEntityComboBox.setSelectedItem(null);
-        formPanel.add(businessEntityLabel);
-        formPanel.add(businessEntityComboBox);
+            // modules
+            titleLabel = new JLabel("Recherche des adresses d’une personne/entreprise");
+            titlePanel.add(titleLabel);
 
 
-        searchButton = new JButton("chercher");
-        searchButton.addActionListener(buttonListener);
-        buttonsPanel.add(searchButton);
+            businessEntityLabel = new JLabel("personne/entreprise");
+            businessEntitiesList = shopController.getAllBusinessEntities();
+            // create an array that contains the names and reference (in a String) for the JComboBox
+            businessEntitiesNamesList = new String[businessEntitiesList.size()];
+            for (int iBusinessEntity = 0; iBusinessEntity < businessEntitiesList.size(); iBusinessEntity++) {
+                businessEntitiesNamesList[iBusinessEntity] = businessEntitiesList.get(iBusinessEntity).getName()
+                        + '(' + businessEntitiesList.get(iBusinessEntity).getReference() + ')';
+            }
+            businessEntityComboBox = new JComboBox(businessEntitiesNamesList);
+            businessEntityComboBox.setSelectedItem(null);
+            formPanel.add(businessEntityLabel);
+            formPanel.add(businessEntityComboBox);
 
-        // fill the panel and display it
-        this.add(titlePanel, BorderLayout.NORTH);
-        this.add(formPanel, BorderLayout.CENTER);
-        this.add(buttonsPanel, BorderLayout.SOUTH);
+
+            searchButton = new JButton("chercher");
+            searchButton.addActionListener(buttonListener);
+            buttonsPanel.add(searchButton);
+
+            // fill the panel and display it
+            this.add(titlePanel, BorderLayout.NORTH);
+            this.add(formPanel, BorderLayout.CENTER);
+            this.add(buttonsPanel, BorderLayout.SOUTH);
+        } catch (SelectExeption e) {
+            e.printStackTrace();
+        } catch (CreateConnectionException e) {
+            e.printStackTrace();
+        }
 
         this.setVisible(true);
     }

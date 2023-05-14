@@ -47,7 +47,7 @@ public class AllProductsModel extends AbstractTableModel {
         switch (columnIndex) {
             case 0 : return product.getReference();
             case 1 : return product.getName();
-            case 2 : return product.getReference();
+            case 2 : return product.getTypeReference();
             case 3 : return product.getVat();
             case 4 : return product.getQuantityInStock();
             case 5 : return product.getMinimumQuantityInStock();
