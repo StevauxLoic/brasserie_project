@@ -59,4 +59,8 @@ public class ShopController {
         return shopManager.getAllProductSupplementDueToEvent(startingDate, endingDate);
     }
 
+    public ArrayList<BusinessEntityAdress> getAllAdressesOfABusinessEntity(String businessEntityId) throws SelectExeption{
+        return shopManager.getAllAdressesOfABusinessEntity(businessEntityId);
+    }
+
 }

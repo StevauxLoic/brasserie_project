@@ -1,5 +1,6 @@
 package DataAccess;
 
+import model.BusinessEntityAdress;
 import model.Exeptions.CreateConnectionException;
 import model.Exeptions.SelectExeption;
 import model.Product;
@@ -58,7 +59,7 @@ public class SearchData implements ISearchData{
                 "INNER JOIN product prod ON addi.product_id = prod.id " +
                 "INNER JOIN product_type prod_ty ON prod_ty.id = prod.type_id " +
                 "WHERE (fest.date_of_the_event > ? AND fest.date_of_the_event < ?) " +
-                "GROUP BY fest.tag";
+                "ORDER BY fest.tag, prod_ty.id";
         try{
             PreparedStatement statement = connection.prepareStatement(sqlInstruction);
             statement.setDate(1, java.sql.Date.valueOf(startingDate));
@@ -78,34 +79,29 @@ public class SearchData implements ISearchData{
         return allProductSupplementDueToEvent;
     }
 
-    /*
-    public ArrayList<Product> getProductsWithAdditionalRestockingInADelay(LocalDate startingDate, LocalDate endingDate) throws SelectExeption{
-        ArrayList<Product> productsWithAdditionalRestockingInADelay = new ArrayList<>();
-        Product product;
-        String sqlInstruction = "";
-
+    //////
+    public ArrayList<BusinessEntityAdress> getAllAdressesOfABusinessEntity(String businessEntityId) throws SelectExeption{
+        ArrayList<BusinessEntityAdress> allAdressesOfABusinessEntity = new ArrayList<>();
+        String sqlInstruction = "SELECT coun.tag as country_name, cit.zip_code as zip_code, cit.tag as city_name, adre.street as adress_street, adre.number_of_the_house as adress_number FROM adress adre " +
+                "INNER JOIN business_entity busi ON adre.business_entity_id = busi.id " +
+                "INNER JOIN adress_type adre_ty ON adre.type_id = adre_ty.id " +
+                "INNER JOIN city cit ON adre.city_id = cit.id " +
+                "INNER JOIN country coun ON cit.country_id = coun.id " +
+                "WHERE busi.id = ? " +
+                "ORDER BY coun.tag, city.tag";
         try{
             PreparedStatement statement = connection.prepareStatement(sqlInstruction);
+            statement.setString(1, businessEntityId);
             ResultSet data = statement.executeQuery();
             while (data.next()) {
-                product = new Product(data.getString("id"), data.getInt("type_id"), data.getString("tag"), data.getDouble("vat"), data.getInt("minimum_quantity_in_stock"),
-                        data.getBoolean("is_sparkling"), data.getDate("launching_date").toLocalDate(), data.getDouble("price"), data.getDouble("alcohol_level"),
-                        data.getInt("quantity_in_stock")) ;
-                String description = data.getString("description_of_the_product");
-                if(!data.wasNull()){
-                    product.setDescription(description);
-                }
-
-                productsWithAdditionalRestockingInADelay.add(product);
+                allAdressesOfABusinessEntity.add(new BusinessEntityAdress(data.getString("country_name"), data.getString("city_name"), data.getString("adress_street"),
+                        data.getInt("zip_code"), data.getInt("adress_number")));
             }
         }
         catch (SQLException exception){
-            String message = "Erreur lors de la selection des produit avec un restock supplémentaire lros de certains evenement \n" +
-                    "de la date : " + startingDate.toString() + "\n" +
-                    "a la date : " + endingDate.toString();
+            String message = "Erreur lors de l'obtention des adresses de l'entité business nommée : "; //TODO mettre le nom de la business entity
             throw new SelectExeption(message);
         }
-        return productsWithAdditionalRestockingInADelay;
+        return allAdressesOfABusinessEntity;
     }
-     */
 }
