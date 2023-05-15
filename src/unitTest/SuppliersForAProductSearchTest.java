@@ -22,7 +22,7 @@ class SuppliersForAProductSearchTest {
     }
 
     @Test
-    public void getmissingProductsAmount() {
-        assertEquals(0, searchPanel.getmissingProductsAmount());
+    public void getMissingProductsAmount() {
+        assertEquals(0, searchPanel.getMissingProductsAmount());
     }
 }

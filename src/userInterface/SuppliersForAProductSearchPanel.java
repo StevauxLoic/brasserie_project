@@ -57,7 +57,7 @@ public class SuppliersForAProductSearchPanel extends JPanel {
 
         // modules
         titleLabel = new JLabel("<html><p>recherche de fournisseur(s) pour " + selectedProduct.getName() +
-                                    "<br>il manque actuelement au moins " + getmissingProductsAmount() + "produtis</p></html>");
+                                    "<br>il manque actuelement au moins " + getMissingProductsAmount() + "produtis</p></html>");
         titlePanel.add(titleLabel);
 
 
@@ -104,7 +104,7 @@ public class SuppliersForAProductSearchPanel extends JPanel {
         this.setVisible(true);
     }
 
-    public int getmissingProductsAmount() {
+    public int getMissingProductsAmount() {
         int difference = selectedProduct.getMinimumQuantityInStock() - selectedProduct.getQuantityInStock();
         if (difference > 0) {
             return difference;
