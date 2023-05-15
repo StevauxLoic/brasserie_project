@@ -16,13 +16,13 @@ public class AllProductsModel extends AbstractTableModel {
         columnNames.add("référence");
         columnNames.add("nom");
         columnNames.add("type de référence");
-        columnNames.add("TVA");
+        columnNames.add("TVA (en %)");
         columnNames.add("quantité en stock");
         columnNames.add("quantité min. en stock");
         columnNames.add("est pétillant");
-        columnNames.add("niveau d'alcool");
+        columnNames.add("niveau d'alcool (en %)");
         columnNames.add("date de lancement");
-        columnNames.add("prix (HTVA)");
+        columnNames.add("prix (HTVA) (en €)");
         columnNames.add("description");
         setContents(products);
     }

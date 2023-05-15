@@ -13,7 +13,7 @@ public class AllProductsSoldInADelayModel extends AbstractTableModel {
         columnNames = new ArrayList<>();
         columnNames.add("nom du produit");
         columnNames.add("quantité venude");
-        columnNames.add("prix de revient");
+        columnNames.add("prix de revient (en €)");
         setContents(contents);
     }
 

@@ -22,10 +22,6 @@ public class ShopController {
         return shopManager.getAllProduct();
     }
 
-    public Product getOneProduct(String referenceOfTheProduct) throws SelectException, CreateConnectionException{
-        return shopManager.getOneProduct(referenceOfTheProduct);
-    }
-
     public void updateProduct(Product productToUpdate) throws UpdateException, CreateConnectionException{
         shopManager.updateProduct(productToUpdate);
     }

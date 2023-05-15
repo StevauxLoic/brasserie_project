@@ -5,12 +5,12 @@ import model.Exeptions.CreateConnectionException;
 
 import java.sql.SQLException;
 
-public class CloseDataAccessConnection {
+public class CloseDataAccessConnection implements ICloseDataConnection {
     public CloseDataAccessConnection(){
 
     }
 
-    public static void closeConnection() throws CloseConnectionException, CreateConnectionException {
+    public void closeConnection() throws CloseConnectionException, CreateConnectionException {
         try {
             SingletonConnection.closeConnection();
         } catch (SQLException exception) {

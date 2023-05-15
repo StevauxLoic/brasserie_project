@@ -1,7 +1,5 @@
 package userInterface;
 
-import javax.swing.*;
-
 public class BottlesAnimationThread extends Thread {
     private WelcomePanel panel;
 

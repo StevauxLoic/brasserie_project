@@ -12,7 +12,7 @@ public class ShopManager {
     private IBusinessEntityData businessEntityDataManager;
     private ISearchData searchDataManager;
     private IProductTypeData productTypeDataManager;
-    private CloseDataAccessConnection closeDataAccessConnectionManager;
+    private ICloseDataConnection closeDataAccessConnectionManager;
 
 
     public ShopManager() {
@@ -29,10 +29,6 @@ public class ShopManager {
 
     public ArrayList<Product> getAllProduct() throws SelectException, CreateConnectionException{
         return productDataManager.getAllProducts();
-    }
-
-    public Product getOneProduct(String referenceOfTheProduct) throws SelectException, CreateConnectionException{
-        return productDataManager.getOneProduct(referenceOfTheProduct);
     }
 
     public void updateProduct(Product productToUpdate) throws UpdateException, CreateConnectionException {

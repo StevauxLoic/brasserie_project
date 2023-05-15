@@ -3,8 +3,6 @@ package userInterface;
 import model.SupplierForAProduct;
 
 import javax.swing.table.AbstractTableModel;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 
 public class AllSuppliersForAProductModel extends AbstractTableModel {
@@ -15,8 +13,8 @@ public class AllSuppliersForAProductModel extends AbstractTableModel {
         columnNames = new ArrayList<>();
         columnNames.add("fournisseur");
         columnNames.add("référence du fournisseur");
-        columnNames.add("prix du produit");
-        columnNames.add("délai de livraison");
+        columnNames.add("prix du produit (en €)");
+        columnNames.add("délai de livraison (en jours)");
         columnNames.add("statut du fournisseur");
         setContents(contents);
     }

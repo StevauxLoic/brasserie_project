@@ -67,12 +67,12 @@ public class SuppliersForAProductSearch extends JPanel {
         formPanel.add(maximumPriceCheckBox);
 
         maximumPriceSliderLabel = new JLabel("prix maximum du fournisseur pour ce produit");
-        maximumPriceSlider = new JSlider(0,1000, 10);
+        maximumPriceSlider = new JSlider(0,100, 10);
         // slider : visual options
         maximumPriceSlider.setPaintTicks(true);   // displays the dots (thin and thinks)
         maximumPriceSlider.setPaintLabels(true);  // displays the numbers on the big dots
-        maximumPriceSlider.setMajorTickSpacing(100); // thick dots
-        maximumPriceSlider.setMinorTickSpacing(10);  // thin dots
+        maximumPriceSlider.setMajorTickSpacing(10); // thick dots
+        maximumPriceSlider.setMinorTickSpacing(2);  // thin dots
         maximumPriceSlider.setEnabled(false);
         maximumPriceSlider.addChangeListener(sliderListener);
         formPanel.add(maximumPriceSliderLabel);

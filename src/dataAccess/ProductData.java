@@ -43,30 +43,6 @@ public class ProductData implements  IProductData{
 
     }
 
-
-    public Product getOneProduct(String referenceOfTheProduct) throws SelectException, CreateConnectionException {
-        String sql = "SELECT id, type_id, tag, vat, quantity_in_stock, is_sparkling, alcohol_level, launching_date, price, description_of_the_product" +
-                "WHERE id = ?";
-        Product product;
-        try {
-            PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sql);
-            statement.setString(1, referenceOfTheProduct);
-            ResultSet data = statement.executeQuery();
-            data.next();
-            product = new Product(data.getString("id"), data.getInt("type_id"), data.getString("tag"), data.getDouble("vat"), data.getInt("minimum_quantity_in_stock"),
-                    data.getBoolean("is_sparkling"), data.getDate("launching_date").toLocalDate(), data.getDouble("price"), data.getDouble("alcohol_level"),
-                    data.getInt("quantity_in_stock")) ;
-            String description = data.getString("description_of_the_product");
-            if(!data.wasNull()){
-                product.setDescription(description);
-            }
-        } catch (SQLException exception){
-            throw new SelectException(exception.getMessage(), "du produit d'id" + referenceOfTheProduct);
-        }
-
-        return product;
-    }
-
     public ArrayList<Product> getAllProducts()throws SelectException, CreateConnectionException{
         ArrayList<Product> products = new ArrayList<>();
         Product product;
