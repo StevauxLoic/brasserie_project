@@ -160,6 +160,10 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
                     JScrollPane productTypesScrollPane = new JScrollPane(productsTable);
 
                     this.add(productTypesScrollPane, BorderLayout.CENTER);
+
+                    // refresh panel
+                    this.repaint();
+                    this.revalidate();
                 } else {
                     JOptionPane.showMessageDialog(null, "aucunes vente n'a été trouvée dans ce délai", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
                 }

@@ -20,16 +20,14 @@ public class SearchData implements ISearchData{
     ////// search the count of one product type in a delay
     public ArrayList<ProductSoldInADelay> getAllProductSoldInADelay(LocalDate startingDate, LocalDate endingDate, ProductType productType) throws SelectException, CreateConnectionException{
         ArrayList<ProductSoldInADelay> allProductsSoldInADelay = new ArrayList<>();
-        String sqlInstruction = "SELECT prod.tag, det.quantity, det.price*det.quantity as cost_price " +
-                                "FROM details_line det " +
+        String sqlInstruction = "SELECT prod.tag, SUM(det.quantity) AS quantities, SUM(det.price * det.quantity) AS cost_price FROM details_line det " +
                                 "INNER JOIN document doc ON doc.id = det.document_id " +
                                 "INNER JOIN document_type d_type ON d_type.id = doc.document_type_id " +
                                 "INNER JOIN product prod ON prod.id = det.product_id " +
                                 "INNER JOIN product_type p_type ON p_type.id = prod.type_id " +
-                                "WHERE doc.creation_date > ? " +
-                                "AND doc.creation_date < ? " +
-                                "AND doc.id = 1 " +
-                                "AND p_type.id = ?;";
+                                "WHERE doc.creation_date >= ? AND doc.creation_date <= ? " +
+                                "AND d_type.id = 1 AND p_type.id = ? " +
+                                "GROUP BY prod.tag;";
         try{
             PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstruction);
             statement.setDate(1, java.sql.Date.valueOf(startingDate));
@@ -37,7 +35,7 @@ public class SearchData implements ISearchData{
             statement.setInt(3, productType.getReference());
             ResultSet data = statement.executeQuery();
             while (data.next()) {
-                allProductsSoldInADelay.add(new ProductSoldInADelay(data.getString("tag"), data.getDouble("cost_price"), data.getInt("quantity")));
+                allProductsSoldInADelay.add(new ProductSoldInADelay(data.getString("tag"), data.getDouble("cost_price"), data.getInt("quantities")));
             }
         }
         catch (SQLException exception){
@@ -49,7 +47,8 @@ public class SearchData implements ISearchData{
     ////// search of product with a Additional Restocking due to a certain event
     public ArrayList<ProductSupplementDueToEvent> getAllProductSupplementDueToEvent(LocalDate startingDate, LocalDate endingDate) throws SelectException, CreateConnectionException{
         ArrayList<ProductSupplementDueToEvent> allProductSupplementDueToEvent = new ArrayList<>();
-        String sqlInstruction = "SELECT addi.amount as amount, fest.tag as fest, prod.tag as prod, prod.minimum_quantity_in_stock as qtt, prod.id as pro_id, prod_ty.tag as prod_type FROM additional_restocking addi " +
+        String sqlInstruction = "SELECT addi.amount AS amount, fest.tag AS fest, prod.tag AS prod, prod.minimum_quantity_in_stock AS " +
+                                "qtt, prod.id AS pro_id, prod_ty.tag AS prod_type FROM additional_restocking addi " +
                                 "INNER JOIN festivity fest ON addi.festivity_id = fest.id " +
                                 "INNER JOIN product prod ON addi.product_id = prod.id " +
                                 "INNER JOIN product_type prod_ty ON prod_ty.id = prod.type_id " +
@@ -75,9 +74,9 @@ public class SearchData implements ISearchData{
 
     public ArrayList<BusinessEntityAdress> getAllAdressesOfABusinessEntity(BusinessEntity businessEntity) throws SelectException, CreateConnectionException{
         ArrayList<BusinessEntityAdress> allAdressesOfABusinessEntity = new ArrayList<>();
-        String sqlInstruction = "SELECT coun.tag as country_name, cit.zip_code as zip_code, " +
-                                "cit.tag as city_name, adre.street as adress_street, " +
-                                "adre.number_of_the_house as adress_number " +
+        String sqlInstruction = "SELECT coun.tag AS country_name, cit.zip_code AS zip_code, " +
+                                "cit.tag AS city_name, adre.street AS adress_street, " +
+                                "adre.number_of_the_house AS adress_number " +
                                 "FROM adress adre " +
                                 "INNER JOIN business_entity busi ON adre.business_entity_id = busi.id " +
                                 "INNER JOIN adress_type adre_ty ON adre.type_id = adre_ty.id " +
@@ -145,7 +144,7 @@ public class SearchData implements ISearchData{
     /// this methods return a list of supplier that respect the conditions proposed by the form
     public ArrayList<SupplierForAProduct> getAllSupplierForAProduct(Product product, Integer maxDelayDelivery, Double maxPrice) throws SelectException, CreateConnectionException{
         ArrayList<SupplierForAProduct> allSupplierForAProduct = new ArrayList<>();
-        String sqlInstruction = "SELECT busi.denomination as busi_name, busi.id as busi_id, supp.price as price, supp.delivery_time as delivery_time, statut.denomination as statut_name FROM supplier_product_details supp " +
+        String sqlInstruction = "SELECT busi.denomination AS busi_name, busi.id AS busi_id, supp.price AS price, supp.delivery_time AS delivery_time, statut.denomination AS statut_name FROM supplier_product_details supp " +
                                 "INNER JOIN business_entity busi ON supp.business_entity_ref = busi.id " +
                                 "INNER JOIN statut ON statut.id = busi.statut_id " +
                                 "WHERE supp.product_ref = ? ";
