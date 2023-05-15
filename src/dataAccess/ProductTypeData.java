@@ -1,4 +1,4 @@
-package DataAccess;
+package dataAccess;
 
 import model.Exeptions.CreateConnectionException;
 import model.Exeptions.SelectException;

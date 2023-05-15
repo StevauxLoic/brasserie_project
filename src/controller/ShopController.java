@@ -1,6 +1,6 @@
-package Controller;
+package controller;
 
-import Business.ShopManager;
+import business.ShopManager;
 import model.*;
 import model.Exeptions.*;
 

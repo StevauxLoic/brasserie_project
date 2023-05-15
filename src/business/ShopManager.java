@@ -1,6 +1,6 @@
-package Business;
+package business;
 
-import DataAccess.*;
+import dataAccess.*;
 import model.*;
 import model.Exeptions.*;
 

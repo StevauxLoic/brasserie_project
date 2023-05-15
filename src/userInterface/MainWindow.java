@@ -1,6 +1,6 @@
 package userInterface;
 
-import Controller.ShopController;
+import controller.ShopController;
 import model.Exeptions.CloseConnectionException;
 import model.Exeptions.CreateConnectionException;
 
