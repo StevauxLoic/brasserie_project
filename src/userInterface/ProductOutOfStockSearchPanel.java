@@ -174,7 +174,7 @@ public class ProductOutOfStockSearchPanel extends JPanel {
         if (listSelect.getMinSelectionIndex() != -1) {
             Product selectedProduct = foundProducts.get(listSelect.getMinSelectionIndex());
             this.removeAll();
-            this.add(new SuppliersForAProductSearch(selectedProduct));
+            this.add(new SuppliersForAProductSearchPanel(selectedProduct));
             this.revalidate();
             this.repaint();
         } else {

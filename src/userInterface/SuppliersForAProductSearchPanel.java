@@ -16,7 +16,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-public class SuppliersForAProductSearch extends JPanel {
+public class SuppliersForAProductSearchPanel extends JPanel {
 
     private ShopController shopController;
 
@@ -37,7 +37,7 @@ public class SuppliersForAProductSearch extends JPanel {
     private Product selectedProduct;
 
 
-    public SuppliersForAProductSearch(Product selectedProduct) {
+    public SuppliersForAProductSearchPanel(Product selectedProduct) {
         this.setLayout(new BorderLayout());
 
         this.selectedProduct = selectedProduct;
@@ -56,7 +56,8 @@ public class SuppliersForAProductSearch extends JPanel {
         buttonsPanel = new JPanel(new BorderLayout());
 
         // modules
-        titleLabel = new JLabel("recherche de fournisseur(s) pour " + selectedProduct.getName());
+        titleLabel = new JLabel("<html><p>recherche de fournisseur(s) pour " + selectedProduct.getName() +
+                                    "<br>il manque actuelement au moins " + getmissingProductsAmount() + "produtis</p></html>");
         titlePanel.add(titleLabel);
 
 
@@ -101,6 +102,15 @@ public class SuppliersForAProductSearch extends JPanel {
         this.add(buttonsPanel, BorderLayout.SOUTH);
 
         this.setVisible(true);
+    }
+
+    public int getmissingProductsAmount() {
+        int difference = selectedProduct.getMinimumQuantityInStock() - selectedProduct.getQuantityInStock();
+        if (difference > 0) {
+            return difference;
+        } else {
+            return 0;
+        }
     }
 
     public boolean isFormValid() {
@@ -156,7 +166,7 @@ public class SuppliersForAProductSearch extends JPanel {
         public void itemStateChanged(ItemEvent event) {
             boolean isBoxSelected = event.getStateChange() == ItemEvent.SELECTED;
             Object source = event.getSource();
-            SuppliersForAProductSearch thisPanel = SuppliersForAProductSearch.this;
+            SuppliersForAProductSearchPanel thisPanel = SuppliersForAProductSearchPanel.this;
 
             if (source == thisPanel.maximumDeliveryDaysCheckBox){
                 thisPanel.maximumDeliveryDaysSpinner.setEnabled(isBoxSelected);
@@ -166,25 +176,10 @@ public class SuppliersForAProductSearch extends JPanel {
         }
     }
 
-    private class CheckBoxListener implements ItemListener {
-
-        @Override
-        public void itemStateChanged(ItemEvent event) {
-            boolean isSelected = event.getStateChange() == ItemEvent.SELECTED;
-            SuppliersForAProductSearch thisPanel = SuppliersForAProductSearch.this;
-            Object source = event.getSource();
-            if (source == thisPanel.maximumDeliveryDaysCheckBox) {
-                thisPanel.maximumDeliveryDaysSpinner.setEnabled(isSelected);
-            } else {
-                thisPanel.maximumPriceSlider.setEnabled(isSelected);
-            }
-        }
-    }
-
     private class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
-            SuppliersForAProductSearch thisPanel = SuppliersForAProductSearch.this;
+            SuppliersForAProductSearchPanel thisPanel = SuppliersForAProductSearchPanel.this;
             if (thisPanel.isFormValid()) {
                 thisPanel.searchSuppliers();
             }
@@ -194,7 +189,7 @@ public class SuppliersForAProductSearch extends JPanel {
     private class SliderListener implements ChangeListener {
         @Override
         public void stateChanged(ChangeEvent event) {
-            SuppliersForAProductSearch thisPanel = SuppliersForAProductSearch.this;
+            SuppliersForAProductSearchPanel thisPanel = SuppliersForAProductSearchPanel.this;
             thisPanel.maximumPriceSliderLabel.setText("prix maximum du fournisseur pour ce produit : " + thisPanel.maximumPriceSlider.getValue() + "€");
 
         }

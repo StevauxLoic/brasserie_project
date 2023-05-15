@@ -3,6 +3,7 @@ package dataAccess;
 import model.*;
 import model.Exeptions.CreateConnectionException;
 import model.Exeptions.SelectException;
+import model.Exeptions.SupplierForAProductException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -177,6 +178,8 @@ public class SearchData implements ISearchData{
             }
         }
         catch (SQLException exception){
+            throw new SelectException(exception.getMessage(), "fournisseurs pour le produit : " + product.getName());
+        } catch (SupplierForAProductException exception) {
             throw new SelectException(exception.getMessage(), "fournisseurs pour le produit : " + product.getName());
         }
         return allSupplierForAProduct;

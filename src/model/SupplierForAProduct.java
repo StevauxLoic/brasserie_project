@@ -1,11 +1,13 @@
 package model;
 
+import model.Exeptions.SupplierForAProductException;
+
 public class SupplierForAProduct {
     private String name, reference ,status;
     private double productPrice;
     private int deliveryDelayDays;
 
-    public SupplierForAProduct(String name, String reference, String status, double productPrice, int deliveryDelayDays) {
+    public SupplierForAProduct(String name, String reference, String status, double productPrice, int deliveryDelayDays) throws SupplierForAProductException {
         setName(name);
         setReference(reference);
         setStatus(status);
@@ -13,16 +15,28 @@ public class SupplierForAProduct {
         setDeliveryDelayDays(deliveryDelayDays);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name) throws SupplierForAProductException {
+        if (name != null) {
+            this.name = name;
+        } else {
+            throw new SupplierForAProductException("le nom donné est null");
+        }
     }
 
-    public void setReference(String reference) {
-        this.reference = reference;
+    public void setReference(String reference) throws SupplierForAProductException {
+        if (reference != null) {
+            this.reference = reference;
+        } else {
+            throw new SupplierForAProductException("la référence donné est null");
+        }
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(String status) throws SupplierForAProductException {
+        if (status != null) {
+            this.status = status;
+        } else {
+            throw new SupplierForAProductException("le status donné est null");
+        }
     }
 
     public void setProductPrice(double productPrice) {
