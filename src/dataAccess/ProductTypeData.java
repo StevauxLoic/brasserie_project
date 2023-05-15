@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ProductTypeData {
+public class ProductTypeData implements IProductTypeData {
 
     public ProductTypeData(){
 

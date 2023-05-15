@@ -8,10 +8,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ShopManager {
-    private ProductData productDataManager;
-    private BusinessEntityData businessEntityDataManager;
-    private SearchData searchDataManager;
-    private ProductTypeData productTypeDataManager;
+    private IProductData productDataManager;
+    private IBusinessEntityData businessEntityDataManager;
+    private ISearchData searchDataManager;
+    private IProductTypeData productTypeDataManager;
     private CloseDataAccessConnection closeDataAccessConnectionManager;
 
 
