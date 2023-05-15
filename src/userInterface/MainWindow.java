@@ -42,10 +42,12 @@ public class MainWindow extends JFrame {
                     ShopController shopController = new ShopController();
                     shopController.closeConnection();
                 } catch (CreateConnectionException  exception) {
-                    JOptionPane.showMessageDialog(null, "erreur" + exception.getMessage(),
+                    JOptionPane.showMessageDialog(null,
+                            "erreur" + exception.getMessage(),
                             "erreur de l'ouverture de la conexion", JOptionPane.ERROR_MESSAGE);
                 } catch (CloseConnectionException exception) {
-                    JOptionPane.showMessageDialog(null, "erreur" + exception.getMessage(),
+                    JOptionPane.showMessageDialog(null,
+                            "erreur" + exception.getMessage(),
                             "erreur de la fermeture de la conexion", JOptionPane.ERROR_MESSAGE);
                 }
                 System.exit(0);

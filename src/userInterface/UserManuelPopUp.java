@@ -151,15 +151,66 @@ public class UserManuelPopUp extends PopUp {
                                                         "<br>si c'est le cas, la page une fois chargée affichera un message qui explique " +
                                                         "<br>qu'elle n'a pas put charger</p></html>");
 
-        searchProductSupplementDueToEventLabel = new JLabel("<html><p>infos rechercher/produit supp du à un evnet</p></html>");
+        searchProductSupplementDueToEventLabel = new JLabel("<html><p>Ce sous-menu permet de Trouver tous les produits (et leur status)" +
+                                                                "<br>qui ont un réassort supplémentaire lié à un évènement entre deux dates données" +
+                                                                "<br>vous y trouverez un formulaire comportant deux entrées de dates" +
+                                                                "<br>une pour le début de la recherche et une pour la fin, lorsque vous cliquez sur" +
+                                                                "<br>le bouton de recherche, une liste des prosduits demandant un réassort s'afficheront" +
+                                                                "<br>seul ceux qui sont lié à un évênement qui se déroule entre les deux dates seront affiché" +
+                                                                "<br><br>si une érreur survient lorsque la page doit charger, vous en serez averti" +
+                                                                "<br>si c'est le cas, la page une fois chargée affichera un message qui explique " +
+                                                                "<br>qu'elle n'a pas put charger</p></html>");
 
-        searchAdressLabel = new JLabel("<html><p>infos rechercher/adresse</p></html>");
+        searchAdressLabel = new JLabel("<html><p>Ce sous-menu permet de Trouver toutes les adresses d'une personne ou" +
+                                            "<br>d'une entrerpsie" +
+                                            "<br>Ce sous-menu vous donnera a ccès à une formulaire dans lequel, vous selectionnez" +
+                                            "<br>une personne/entreprise et lorsque vous lancez la recherche, un tableau apparaîtra" +
+                                            "<br>dans ce tableau, vous pourrez retrouver les différentes adresse de la personne/entreprise" +
+                                            "<br>que vous avez selectionné" +
+                                            "<br><br>si une érreur survient lorsque la page doit charger, vous en serez averti" +
+                                            "<br>si c'est le cas, la page une fois chargée affichera un message qui explique " +
+                                            "<br>qu'elle n'a pas put charger</p></html>");
 
-        searchProductOutOfStockLabel = new JLabel("<html><p>infos rechercher/ produit hors stock</p></html>");
+        searchProductOutOfStockLabel = new JLabel("<html><p>Ce sous-menu permet d'accéder à une tâche métier" +
+                                                        "<br>Le but de cette tâche sera de vous aider à connaître les produits dont le stock est" +
+                                                        "<br>insuffisant et de proposer des fournisseurs pour acheter ces produits" +
+                                                        "<br>ette tâche s’effectuera en deux étapes." +
+                                                        "<br>Lors de la première étape, vous aurez un formulaire dans lequel vous pourrez decider ou non" +
+                                                        "<br>de rechercher uniquement les produit d'un certain type" +
+                                                        "<br>Si vous sélectionnez cette option et un type de produit, la recherche ne se fera que sur celui-ci" +
+                                                        "<br>Sinon, elle seffectura sur tout les produits enregistré, peu importe son type" +
+                                                        "<br>lorsque vous cliquez sur le boutton de recherche, un tableau avec les produit dont le " +
+                                                        "<br>stock actuel est insufisant s'affichera, vous pourrez y selectionner un produit et clicer sur" +
+                                                        "<br>le bouton de recherche, celà lancera la deuxième étape, la recherche des fournisseurs pour ce produit" +
+                                                        "<br>vous aurez accès à un formulaire dans le quel vous pouvez décider d'insiquer un prix ou un" +
+                                                        "<br>délai de livraison maximum" +
+                                                        "<br>vous pouvez faire une recherche en utilisant 1 des deux options, les deux ou aucunes" +
+                                                        "<br>lorsque vous cliquez sur le bouton de recherche, un tableau avec les fournisseur s'affichera" +
+                                                        "<br>vous pourrez également y retrouver le prix auquel ce fournisseur le vend et le délai de livraison" +
+                                                        "<br><br>si une érreur survient lorsque la page doit charger, vous en serez averti" +
+                                                        "<br>si c'est le cas, la page une fois chargée affichera un message qui explique " +
+                                                        "<br>qu'elle n'a pas put charger</p></html>");
 
-        newProductLabel = new JLabel("<html><p>infos nouveau produit</p></html>");
+        newProductLabel = new JLabel("<html><p>Ce sous-menu vous permet de créer un nouveau porduit" +
+                                            "<br>vous y retrouverez un formulaire avec différents champs" +
+                                            "<br>remplissez ces champ puis cliquez sur le bouton de création pour" +
+                                            "<br>créer un produit avec les informations que vous avez entrées" +
+                                            "<br>seul le dernier champs (description) n'est pas nécéssairement rempli pour" +
+                                            "<br>pouvoir créer un produit" +
+                                            "<br><br>si une érreur survient lorsque la page doit charger, vous en serez averti" +
+                                            "<br>si c'est le cas, la page une fois chargée affichera un message qui explique " +
+                                            "<br>qu'elle n'a pas put charger</p></html>");
 
-        findProductLabel = new JLabel("<html><p>infos trouver produit</p></html>");
+        findProductLabel = new JLabel("<html><p>Ce sous-menu vous permet d'accéder à la même fonctionnalité" +
+                                            "<br>que le sous menu 'Un produit' du menu Recherche" +
+                                            "ce sous-menu équivalent se trouvedans le menu 'Produit'" +
+                                            "<br>ce sous-menu permet en premier lieu de voir tout les produits enregistrés" +
+                                            "<br>vous pourrez y selectionner un ou plusieurs produit puis cliquer sur un bouton 'suprimer'" +
+                                            "<br>ainsi, les produtis selectionné pourront être suprimé" +
+                                            "<br>attention que supprimer un produit peut effacer également d'autres données qui y sont liées" +
+                                            "<br><br>si une érreur survient lorsque la page doit charger, vous en serez averti" +
+                                            "<br>si c'est le cas, la page une fois chargée affichera un message qui explique " +
+                                            "<br>qu'elle n'a pas put charger</p></html>");
 
 
         // fill the array of help messages

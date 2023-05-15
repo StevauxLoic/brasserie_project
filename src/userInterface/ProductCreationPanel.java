@@ -26,15 +26,18 @@ public class ProductCreationPanel extends ProductCreatingAndModifingFormTemplate
     private void createProduct(Product productToCreate) {
         try {
             getShopController().createProduct(productToCreate);
-            JOptionPane.showMessageDialog(null, "l'objet a été créé",
+            JOptionPane.showMessageDialog(null,
+                    "l'objet a été créé",
                     "création effectuée", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (CreateConnectionException exception) {
-            JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+            JOptionPane.showMessageDialog(null,
+                    "erreur : " + exception.getMessage(),
                     "erreur de creation de la connexion au données", JOptionPane.ERROR_MESSAGE);
 
         } catch (CreateException exception) {
-            JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+            JOptionPane.showMessageDialog(null,
+                    "erreur : " + exception.getMessage(),
                     "erreur de creation du produit", JOptionPane.ERROR_MESSAGE);
 
         }

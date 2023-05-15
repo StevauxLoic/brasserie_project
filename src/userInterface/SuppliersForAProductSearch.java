@@ -105,7 +105,9 @@ public class SuppliersForAProductSearch extends JPanel {
 
     public boolean isFormValid() {
         if (maximumDeliveryDaysCheckBox.isSelected() && (int) maximumDeliveryDaysSpinner.getValue() <= 0) {
-            JOptionPane.showMessageDialog(null, "si vous sélectionnez un délai maximum pour la livraison, il doit être supérieur à 0", "erreur de nombres de jours pour livraison", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "si vous sélectionnez un délai maximum pour la livraison, il doit être supérieur à 0",
+                    "erreur de nombres de jours pour livraison", JOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;

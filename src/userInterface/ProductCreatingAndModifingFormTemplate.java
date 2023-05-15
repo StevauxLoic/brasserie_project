@@ -101,6 +101,7 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
                                                     + ')';
             }
             productTypeComboBox = new JComboBox(productTypesNamesList);
+            productTypeComboBox.setSelectedItem(null);
             formPanel.add(productTypeLabel);
             formPanel.add(productTypeComboBox);
 
@@ -251,7 +252,9 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
     private void showErrorMessageAndPanel(String message, String optionPaneMessage) {
         JLabel errorLabel = new JLabel(message);
         this.add(errorLabel, BorderLayout.CENTER);
-        JOptionPane.showMessageDialog(null, optionPaneMessage, "problème pour la recherche", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null,
+                optionPaneMessage,
+                "problème pour la recherche", JOptionPane.ERROR_MESSAGE);
     }
 
     // input validity tests
@@ -260,56 +263,66 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
             double reference = Double.parseDouble(textToVerify);
             return true;
         } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, "l'entrée de la tva et du niveau d'alcool doivent être un nombre (à virgule ou non)", "erreure d'entrée", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "l'entrée de la tva et du niveau d'alcool doivent être un nombre (à virgule ou non)",
+                    "erreure d'entrée", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
     
-    private void showTextFieldError(String message, JTextField textField) {
+    private void showTextFieldInputError(String message, JTextField textField) {
         textField.setText(null);
-        JOptionPane.showMessageDialog(null, message, "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null,
+                message,
+                "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
     }
 
     public boolean isFormValid() {
         if (nameTextField.getText().length() > 180 || nameTextField.getText().length() == 0) {
-            showTextFieldError("le nom doit contenir entre 0 et 180 caractères", nameTextField);
+            showTextFieldInputError("le nom doit contenir entre 0 et 180 caractères", nameTextField);
             return false;
         }
 
         if (referenceTextField.getText().length() > 10 || referenceTextField.getText().length() == 0) {
-            showTextFieldError("la référence doit contenir entre 0 et 10 caractères", referenceTextField);
+            showTextFieldInputError("la référence doit contenir entre 0 et 10 caractères", referenceTextField);
             return false;
         }
 
         if (productTypeComboBox.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "un type de produit doit être choisi", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "un type de produit doit être choisi",
+                    "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
         if (!isValideDouble(vatTextField.getText()) || Double.parseDouble(vatTextField.getText()) > 100 || Double.parseDouble(vatTextField.getText()) < 0) {
-            showTextFieldError("la tva doit être un nombre (à virgule ou non) entre 0 et 100", vatTextField);
+            showTextFieldInputError("la tva doit être un nombre (à virgule ou non) entre 0 et 100", vatTextField);
             return false;
         }
 
         boolean alcoholLevelOrCheckBoxAreValid = !hasAlcoholCheckBox.isSelected() || ((isValideDouble(alcoholLevelTextField.getText()) && Double.parseDouble(alcoholLevelTextField.getText()) <= 100 && Double.parseDouble(alcoholLevelTextField.getText()) > 0));
         if (!alcoholLevelOrCheckBoxAreValid) {
-            showTextFieldError("le taux d'alcool doit être un nombre (à virgule ou non) entre 0 et 100 % (100 compris mais 0 non), si le produit n'est pas alcoolisé, ne coché pas la case qui dit que le produit l'est", alcoholLevelTextField);
+            showTextFieldInputError("le taux d'alcool doit être un nombre (à virgule ou non) entre 0 et 100 % (100 compris mais 0 non), si le produit n'est pas alcoolisé, ne coché pas la case qui dit que le produit l'est", alcoholLevelTextField);
             return false;
         }
 
         if (!isValideDouble(priceTextField.getText()) || Double.parseDouble(priceTextField.getText()) < 0) {
-            showTextFieldError("le prix doit être un nombre (à virgule ou non) non négatif", priceTextField);
+            showTextFieldInputError("le prix doit être un nombre (à virgule ou non) non négatif", priceTextField);
             return false;
         }
 
         if ((int) quantityInStockSpinner.getValue() < 0) {
-            JOptionPane.showMessageDialog(null, "la quantité en stock doit être un nombre entier positif ou nul", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "la quantité en stock doit être un nombre entier positif ou nul",
+                    "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
             quantityInStockSpinner.setValue(0);
             return false;
         }
 
         if ((int) minimumQuantityInStockSpinner.getValue() < 0) {
-                JOptionPane.showMessageDialog(null, "la quantité minimum en stock doit être un nombre entier positif ou nul", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "la quantité minimum en stock doit être un nombre entier positif ou nul",
+                        "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
                 minimumQuantityInStockSpinner.setValue(0);
                 return false;
         }
@@ -360,11 +373,11 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
             String textFieldText = eventSource.getText();
             if(eventSource == nameTextField) {
                 if (textFieldText.length() > 180 || textFieldText.length() == 0) {
-                    showTextFieldError("le nom doit contenir entre 0 et 180 caractères", eventSource);
+                    showTextFieldInputError("le nom doit contenir entre 0 et 180 caractères", eventSource);
                 }
             } else if(eventSource == referenceTextField) {
                 if (textFieldText.length() > 10 || textFieldText.length() == 0) {
-                    showTextFieldError("la référence doit contenir entre 0 et 10 caractères", eventSource);
+                    showTextFieldInputError("la référence doit contenir entre 0 et 10 caractères", eventSource);
                 }
             } else if(eventSource == descriptionTextField) {
                 if (textFieldText.length() < 1) {
@@ -373,15 +386,15 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
             } else {
                 if(eventSource == vatTextField) {
                     if (!isValideDouble(textFieldText) || Double.valueOf(textFieldText) > 100 || Double.valueOf(textFieldText) < 0) {
-                        showTextFieldError("la tva doit être un nombre (à virgule ou non) entre 0 et 100", eventSource);
+                        showTextFieldInputError("la tva doit être un nombre (à virgule ou non) entre 0 et 100", eventSource);
                     }
                 } else if(eventSource == alcoholLevelTextField) {
                     if (!isValideDouble(textFieldText) || Double.valueOf(textFieldText) > 100 || Double.valueOf(textFieldText) <= 0) {
-                        showTextFieldError("le taux d'alcool doit être un nombre (à virgule ou non) entre 0 et 100 % (100 compris mais 0 non), si le produit n'est pas alcoolisé, ne coché pas la case qui dit que le produit l'est", eventSource);
+                        showTextFieldInputError("le taux d'alcool doit être un nombre (à virgule ou non) entre 0 et 100 % (100 compris mais 0 non), si le produit n'est pas alcoolisé, ne coché pas la case qui dit que le produit l'est", eventSource);
                     }
                 } else if(eventSource == priceTextField) {
                     if (!isValideDouble(textFieldText) || Double.valueOf(textFieldText) < 0) {
-                        showTextFieldError("le prix doit être un nombre (à virgule ou non) non négatif", eventSource);
+                        showTextFieldInputError("le prix doit être un nombre (à virgule ou non) non négatif", eventSource);
                     }
                 }
             }
@@ -396,12 +409,16 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
             int spinnerValue = (int) eventSource.getValue();
             if(eventSource == quantityInStockSpinner) {
                 if (spinnerValue < 0) {
-                    JOptionPane.showMessageDialog(null, "la quantité en stock doit être un nombre entier positif ou nul", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "la quantité en stock doit être un nombre entier positif ou nul",
+                            "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
                     quantityInStockSpinner.setValue(0);
                 }
             } else if(eventSource == minimumQuantityInStockSpinner) {
                 if (spinnerValue < 0) {
-                    JOptionPane.showMessageDialog(null, "la quantité minimum en stock doit être un nombre entier positif ou nul", "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "la quantité minimum en stock doit être un nombre entier positif ou nul",
+                            "erreur d'entrée", JOptionPane.WARNING_MESSAGE);
                     minimumQuantityInStockSpinner.setValue(0);
                 }
             }

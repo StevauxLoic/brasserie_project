@@ -99,12 +99,16 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
         LocalDate endingDate = getDelayEndDate();
 
         if (delaybeginingDate.equals(endingDate)) {
-            JOptionPane.showMessageDialog(null, "les deux dates (début et fin) ne peuvent être identique", "erreur de dates", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "les deux dates (début et fin) ne peuvent être identique",
+                    "erreur de dates", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
         if (delaybeginingDate.isAfter(endingDate)) {
-            JOptionPane.showMessageDialog(null, "la date de début doit être avant la date de fin", "erreur de dates", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "la date de début doit être avant la date de fin",
+                    "erreur de dates", JOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
@@ -131,7 +135,9 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
                     this.repaint();
                     this.revalidate();
                 } else {
-                    JOptionPane.showMessageDialog(null, "aucuns produit lié à un évènement dans ce délai n'a été trouvé", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "aucuns produit lié à un évènement dans ce délai n'a été trouvé",
+                            "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (SelectException exception) {
                 JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),

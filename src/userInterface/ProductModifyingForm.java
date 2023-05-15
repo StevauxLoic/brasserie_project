@@ -90,15 +90,18 @@ public class ProductModifyingForm extends ProductCreatingAndModifingFormTemplate
     private void modifyProduct(Product modifiedProduct) {
         try {
             getShopController().updateProduct(modifiedProduct);
-            JOptionPane.showMessageDialog(null, "objet modifié",
+            JOptionPane.showMessageDialog(null,
+                    "objet modifié",
                     "produit modifié avec succès", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (UpdateException exception) {
-            JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+            JOptionPane.showMessageDialog(null,
+                    "erreur : " + exception.getMessage(),
                     "erreur de la modification du produit", JOptionPane.ERROR_MESSAGE);
 
         } catch (CreateConnectionException exception) {
-            JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+            JOptionPane.showMessageDialog(null,
+                    "erreur : " + exception.getMessage(),
                     "erreur de creation de la connexion au données", JOptionPane.ERROR_MESSAGE);
 
         }
@@ -113,7 +116,9 @@ public class ProductModifyingForm extends ProductCreatingAndModifingFormTemplate
                 Product modifiedProduct = thisPanel.readForm();
                 thisPanel.modifyProduct(modifiedProduct);
             } else {
-                JOptionPane.showMessageDialog(null, "Le formulaire doit être correctement rempli pour être validé", "formulaire mal remplis", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Le formulaire doit être correctement rempli pour être validé",
+                        "formulaire mal remplis", JOptionPane.WARNING_MESSAGE);
             }
         }
     }

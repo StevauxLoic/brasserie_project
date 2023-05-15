@@ -124,7 +124,9 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
 
     public boolean isFormValid() {
         if (productTypeComboBox.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "un type d'objet doit être sélectionné", "erreur de type de produit", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "un type d'objet doit être sélectionné",
+                    "erreur de type de produit", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
@@ -132,12 +134,16 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
         LocalDate endingDate = getDelayEndDate();
 
         if (delaybeginingDate.equals(endingDate)) {
-            JOptionPane.showMessageDialog(null, "les deux dates (début et fin) ne peuvent être identique", "erreur de dates", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "les deux dates (début et fin) ne peuvent être identique",
+                    "erreur de dates", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
         if (delaybeginingDate.isAfter(endingDate)) {
-            JOptionPane.showMessageDialog(null, "la date de début doit être avant la date de fin", "erreur de dates", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "la date de début doit être avant la date de fin",
+                    "erreur de dates", JOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
@@ -165,7 +171,9 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
                     this.repaint();
                     this.revalidate();
                 } else {
-                    JOptionPane.showMessageDialog(null, "aucunes vente n'a été trouvée dans ce délai", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "aucunes vente n'a été trouvée dans ce délai",
+                            "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (SelectException exception) {
                 showErrorMessageAndPanel("<html><p>la recherche des types de produits n'a pas été possible," +
@@ -191,7 +199,8 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
     private void showErrorMessageAndPanel(String message, String optionPaneMessage) {
         JLabel errorLabel = new JLabel(message);
         this.add(errorLabel, BorderLayout.CENTER);
-        JOptionPane.showMessageDialog(null, optionPaneMessage, "problème pour la recherche", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, optionPaneMessage,
+                "problème pour la recherche", JOptionPane.ERROR_MESSAGE);
     }
 
     private class ButtonListener implements ActionListener {

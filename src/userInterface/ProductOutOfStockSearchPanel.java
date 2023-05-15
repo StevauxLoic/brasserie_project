@@ -118,7 +118,9 @@ public class ProductOutOfStockSearchPanel extends JPanel {
 
     public boolean isFormValid() {
         if (byProductTypeCheckBox.isSelected() && productTypeComboBox.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "si la case est cochée, un type de produit doit être sélectionné", "erreur de formulaire", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "si la case est cochée, un type de produit doit être sélectionné",
+                    "erreur de formulaire", JOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
@@ -133,7 +135,8 @@ public class ProductOutOfStockSearchPanel extends JPanel {
             }
 
             if (foundProducts != null && foundProducts.size() == 0) {
-                JOptionPane.showMessageDialog(null, "aucun produits en rupture de stock trouvés",
+                JOptionPane.showMessageDialog(null,
+                        "aucun produits en rupture de stock trouvés",
                         "aucun produits", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 allfoundProductsModel = new AllProductsModel(foundProducts);
@@ -175,7 +178,9 @@ public class ProductOutOfStockSearchPanel extends JPanel {
             this.revalidate();
             this.repaint();
         } else {
-            JOptionPane.showMessageDialog(null, "selectionnez un produit pour chercher son/ses fournisseure(s)", "selectionnez un produit", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "selectionnez un produit pour chercher son/ses fournisseure(s)",
+                    "selectionnez un produit", JOptionPane.WARNING_MESSAGE);
         }
 
     }
@@ -190,7 +195,7 @@ public class ProductOutOfStockSearchPanel extends JPanel {
         JLabel errorLabel = new JLabel(message);
         this.add(errorLabel, BorderLayout.CENTER);
         JOptionPane.showMessageDialog(null, optionPaneMessage,
-                "problème pour la recherche", JOptionPane.WARNING_MESSAGE);
+                "problème pour la recherche", JOptionPane.ERROR_MESSAGE);
     }
 
     private class CheckBoxListener implements ItemListener {
