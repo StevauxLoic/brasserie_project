@@ -104,7 +104,7 @@ public class Product {
     }
 
     public void setDescription(String description) {
-        if (description.length() > 0) {
+        if (description != null && description.length() > 0) {
             this.description = description;
         } else {
             this.description = null;
