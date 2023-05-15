@@ -126,6 +126,10 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
                     JScrollPane productsScrollPane = new JScrollPane(productsTable);
 
                     this.add(productsScrollPane, BorderLayout.CENTER);
+
+                    // refresh panel
+                    this.repaint();
+                    this.revalidate();
                 } else {
                     JOptionPane.showMessageDialog(null, "aucuns produit lié à un évènement dans ce délai n'a été trouvé", "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
                 }
