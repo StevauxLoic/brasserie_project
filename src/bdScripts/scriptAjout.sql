@@ -71,6 +71,10 @@ VALUES
     (STR_TO_DATE('19/04/2022','%d/%m/%Y'), null, null, STR_TO_DATE('19/04/2027','%d/%m/%Y'),true, true, STR_TO_DATE('30/04/2022','%d/%m/%Y'), null, null, 3, 'liv_loic'),
     (STR_TO_DATE('25/05/2021','%d/%m/%Y'), 0, STR_TO_DATE('25/06/2021','%d/%m/%Y'), STR_TO_DATE('25/05/2022','%d/%m/%Y'), true, null, null, null, null, 1, null),
     (STR_TO_DATE('10/08/2013','%d/%m/%Y'), 0, STR_TO_DATE('25/09/2013','%d/%m/%Y'), STR_TO_DATE('10/08/2014','%d/%m/%Y'), true, null, null, null, 10, 1, null),
+    (STR_TO_DATE('15/04/2018','%d/%m/%Y'), 0, STR_TO_DATE('15/05/2018','%d/%m/%Y'), STR_TO_DATE('15/04/2019','%d/%m/%Y'), false, null, null, null, null, 1, null),
+    (STR_TO_DATE('19/04/2022','%d/%m/%Y'), null, null, STR_TO_DATE('19/04/2027','%d/%m/%Y'), true, true, STR_TO_DATE('30/04/2022','%d/%m/%Y'), null, null, 3, 'liv_loic'),
+    (STR_TO_DATE('25/05/2021','%d/%m/%Y'), 0, STR_TO_DATE('25/06/2021','%d/%m/%Y'), STR_TO_DATE('25/05/2022','%d/%m/%Y'), true, null, null, null, null, 1, null),
+    (STR_TO_DATE('10/08/2013','%d/%m/%Y'), 0, STR_TO_DATE('25/09/2013','%d/%m/%Y'), STR_TO_DATE('10/08/2014','%d/%m/%Y'), true, null, null, null, 10, 1, null),
     (STR_TO_DATE('15/04/2018','%d/%m/%Y'), 0, STR_TO_DATE('15/05/2018','%d/%m/%Y'), STR_TO_DATE('15/04/2019','%d/%m/%Y'), false, null, null, null, null, 1, null);
 
 
@@ -86,6 +90,19 @@ VALUES
     ('vin1', 4, 'vins rouges', 21, 50, 20, false, 13.5, STR_TO_DATE('01/01/2023', '%d/%m/%Y'), 10.0, 'vins rouges de qualité'),
     ('vin2', 4, 'vins blancs', 21, 30, 10, false, 11.0, STR_TO_DATE('01/01/2023', '%d/%m/%Y'), 8.0, 'vins blancs rafraîchissants'),
     ('biere3', 1, 'bière ambrée 33cl', 21, 60, 30, true, 7.0, STR_TO_DATE('01/01/2023', '%d/%m/%Y'), 3.5, 'bière ambrée aux arômes maltés');
+
+
+INSERT INTO details_line (quantity, price, document_id, product_id, vat)
+VALUES
+    (10, 2.0, 6, 'fant', 21.0),
+    (5, 2.5, 6, 'corn', 21.0),
+    (20, 25.0, 6, 'pek_viol', 21.0),
+    (15, 2.0, 7, 'biere1', 21.0),
+    (8, 2.5, 7, 'corn', 21.0),
+    (12, 3.5, 7, 'biere3', 21.0),
+    (4, 10.0, 8, 'vin1', 21.0),
+    (6, 8.0, 8, 'vin2', 21.0);
+
 
 INSERT INTO additional_restocking(amount, product_id, festivity_id)
 VALUES
