@@ -16,6 +16,7 @@ public class AllBusinessesEntityAdressModel extends AbstractTableModel {
         columnNames.add("ville");
         columnNames.add("numéro");
         columnNames.add("rue");
+        columnNames.add("type d'adresse");
         setContents(contents);
     }
 
@@ -42,6 +43,7 @@ public class AllBusinessesEntityAdressModel extends AbstractTableModel {
             case 2 : return businessEntityAdress.getCity();
             case 3 : return businessEntityAdress.getHouseNumber();
             case 4 : return businessEntityAdress.getStreet();
+            case 5 : return businessEntityAdress.getAdressType();
             default : return null;
         }
     }
@@ -51,7 +53,6 @@ public class AllBusinessesEntityAdressModel extends AbstractTableModel {
 
     public Class getColumnClass(int columnIndex) {
         Class columnClass = switch (columnIndex) {
-            // case 0, 1, 10 -> String.class;    ==> not necessary because it goes in default
             case  1, 3 -> Integer.class;
             default -> String.class;
         };
