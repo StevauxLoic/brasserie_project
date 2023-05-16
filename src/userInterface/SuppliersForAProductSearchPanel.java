@@ -113,6 +113,14 @@ public class SuppliersForAProductSearchPanel extends JPanel {
         }
     }
 
+    public double getAveragePriceForMissingPorducts(ArrayList<SupplierForAProduct> suppliersList) {
+        double sumPrices = 0;
+        for (int iSupplier = 0; iSupplier < suppliersList.size(); iSupplier++) {
+            sumPrices += suppliersList.get(iSupplier).getProductPrice();
+        }
+        return sumPrices/suppliersList.size();
+    }
+
     public boolean isFormValid() {
         if (maximumDeliveryDaysCheckBox.isSelected() && (int) maximumDeliveryDaysSpinner.getValue() <= 0) {
             JOptionPane.showMessageDialog(null,
@@ -135,16 +143,19 @@ public class SuppliersForAProductSearchPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "aucun fournisseur qui vend ce produit n'a été trouvé",
                         "aucun fournisseur", JOptionPane.INFORMATION_MESSAGE);
             } else {
+                formPanel.removeAll();
+                buttonsPanel.removeAll();
+
+                double avergePrices = getAveragePriceForMissingPorducts(foundSuppliers);
+                int missingProductsAmount = getMissingProductsAmount();
+                titleLabel.setText("la moyenne des prix est de : " + avergePrices + "€ pour " + missingProductsAmount + " produits manquants, " +
+                                    "celà fait une moyenne de " + avergePrices*missingProductsAmount + "€ pour touts les produits.");
+
                 AllSuppliersForAProductModel allSuppliersForAProductModel = new AllSuppliersForAProductModel(foundSuppliers);
                 JTable foundSuppliersTable = new JTable(allSuppliersForAProductModel);
                 foundSuppliersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
                 JScrollPane foundSupplierScrollPane = new JScrollPane(foundSuppliersTable);
-
-                formPanel.removeAll();
                 formPanel.add(foundSupplierScrollPane);
-
-                buttonsPanel.removeAll();
 
                 // refresh the panel
                 this.repaint();
