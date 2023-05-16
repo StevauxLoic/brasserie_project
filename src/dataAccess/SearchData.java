@@ -77,7 +77,7 @@ public class SearchData implements ISearchData{
         ArrayList<BusinessEntityAdress> allAdressesOfABusinessEntity = new ArrayList<>();
         String sqlInstruction = "SELECT coun.tag AS country_name, cit.zip_code AS zip_code, " +
                                 "cit.tag AS city_name, adre.street AS adress_street, " +
-                                "adre.number_of_the_house AS adress_number " +
+                                "adre.number_of_the_house AS adress_number, adre_ty.tag AS adress_type_name " +
                                 "FROM adress adre " +
                                 "INNER JOIN business_entity busi ON adre.business_entity_id = busi.id " +
                                 "INNER JOIN adress_type adre_ty ON adre.type_id = adre_ty.id " +
@@ -91,7 +91,7 @@ public class SearchData implements ISearchData{
             ResultSet data = statement.executeQuery();
             while (data.next()) {
                 allAdressesOfABusinessEntity.add(new BusinessEntityAdress(data.getString("country_name"), data.getString("city_name"), data.getString("adress_street"),
-                        data.getInt("zip_code"), data.getInt("adress_number")));
+                        data.getInt("zip_code"), data.getInt("adress_number"), data.getString("adress_type_name")));
             }
         }
         catch (SQLException exception){

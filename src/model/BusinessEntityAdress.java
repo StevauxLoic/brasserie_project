@@ -1,10 +1,10 @@
 package model;
 
 public class BusinessEntityAdress {
-    private String country, city, street;
+    private String country, city, street, typeName;
     private int zipCode, houseNumber;
 
-    public BusinessEntityAdress(String country, String city, String street, int zipCode, int houseNumber) {
+    public BusinessEntityAdress(String country, String city, String street, int zipCode, int houseNumber, String typeName) {
         setCountry(country);
         setCity(city);
         setStreet(street);
@@ -32,6 +32,9 @@ public class BusinessEntityAdress {
         this.houseNumber = houseNumber;
     }
 
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
 
     public String getCountry() {
         return country;
@@ -51,5 +54,9 @@ public class BusinessEntityAdress {
 
     public int getHouseNumber() {
         return houseNumber;
+    }
+
+    public String getTypeName() {
+        return typeName;
     }
 }
