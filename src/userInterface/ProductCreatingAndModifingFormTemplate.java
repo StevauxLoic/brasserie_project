@@ -333,8 +333,9 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
             return false;
         }
 
-        if (!isValideDouble(priceTextField.getText()) || Double.parseDouble(priceTextField.getText()) < 0) {
-            showTextFieldInputError("Le prix doit être un nombre (à virgule ou non) non négatif.", priceTextField);
+        if (!isValideDouble(priceTextField.getText()) || Double.parseDouble(priceTextField.getText()) < 0
+        || Double.parseDouble(priceTextField.getText()) > 9999) {
+            showTextFieldInputError("Le prix doit être un nombre (à virgule ou non) non négatif et inférieur à 9999.", priceTextField);
             return false;
         }
 
@@ -352,6 +353,11 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
                         "Erreur de quantité minimale", JOptionPane.WARNING_MESSAGE);
                 minimumQuantityInStockSpinner.setValue(0);
                 return false;
+        }
+
+        if (descriptionTextField.getText().length() > 100) {
+            showTextFieldInputError("La description est facultative et ne doit pas dépasser 100 caractères.",
+                    descriptionTextField);
         }
 
         // every inputs are good

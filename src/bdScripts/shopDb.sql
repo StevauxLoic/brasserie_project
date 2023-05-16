@@ -39,7 +39,7 @@ CREATE TABLE product
 	is_sparkling BIT NOT NULL,
 	alcohol_level DECIMAL(5,2) NOT NULL,
 	launching_date DATE NOT NULL,
-	price decimal (4,2) NOT NULL,
+	price decimal (6,2) NOT NULL,
 	description_of_the_product VARCHAR(100),
 	CONSTRAINT product_pk PRIMARY KEY (id),
 	CONSTRAINT type_fk FOREIGN KEY (type_id) REFERENCES product_type(id)

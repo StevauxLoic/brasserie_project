@@ -47,7 +47,7 @@ public class UserManuelPopUp extends PopUp {
     private JLabel[] labelsArray;
 
     public UserManuelPopUp() {
-        super("Information de l'application", 1000, 500);
+        super("Information de l'application", 900, 400);
      }
 
     @Override

@@ -199,6 +199,8 @@ public class FindProductPanel extends JPanel {
         try {
             productsList = shopController.getAllProduct();
             allProductModel.setContents(productsList);
+            listSelect.clearSelection();
+
         } catch (CreateConnectionException exception) {
             showErrorMessageAndPanel("<html><p>La conexion aux données n'a pas pu être établie." +
                             "<br>Veuillez réessayer en recliquant sur le menus ou redémarrant l'application." +

@@ -124,7 +124,6 @@ public class ProductData implements  IProductData{
             PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstruction);
             statement.setString(1, productId);
             ResultSet data = statement.executeQuery();
-            data.next();
             return data.next();
         }
         catch (SQLException exception){
