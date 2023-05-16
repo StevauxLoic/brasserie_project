@@ -115,11 +115,7 @@ public class ProductModifyingForm extends ProductCreatingAndModifingFormTemplate
             if (thisPanel.isFormValid()) {
                 Product modifiedProduct = thisPanel.readForm();
                 thisPanel.modifyProduct(modifiedProduct);
-            } else {
-                JOptionPane.showMessageDialog(null,
-                        "Le formulaire doit être correctement rempli pour être validé",
-                        "formulaire mal remplis", JOptionPane.WARNING_MESSAGE);
-            }
+            } // isFormValid will show the errors
         }
     }
 }

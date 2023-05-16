@@ -51,7 +51,7 @@ public class ProductOutOfStockSearchPanel extends JPanel {
             titlePanel.setLayout(new FlowLayout());
 
             formPanel = new JPanel();
-            formPanel.setLayout(new GridLayout(3,2));
+            formPanel.setLayout(new GridLayout(3,2, 10, 10));
 
             tablePanel = new JPanel();
             tablePanel.setLayout(new BorderLayout());
@@ -68,13 +68,15 @@ public class ProductOutOfStockSearchPanel extends JPanel {
             titlePanel.add(titleLabel);
 
 
-            productTypeCheckBoxLabel = new JLabel("rechercher un seul type de produit");
+            productTypeCheckBoxLabel = new JLabel("rechercher un seul type de produit : ");
+            productTypeCheckBoxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             byProductTypeCheckBox = new JCheckBox("oui");
             byProductTypeCheckBox.addItemListener(checboxListener);
             formPanel.add(productTypeCheckBoxLabel);
             formPanel.add(byProductTypeCheckBox);
 
-            productTypeComboBoxLabel = new JLabel("type de produits");
+            productTypeComboBoxLabel = new JLabel("type de produits : ");
+            productTypeComboBoxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             productTypesList = shopController.getAllProductType();
             String [] productTypesNamesList = new String[productTypesList.size()];
             for (int iProductType = 0; iProductType < productTypesList.size(); iProductType++) {
@@ -88,12 +90,12 @@ public class ProductOutOfStockSearchPanel extends JPanel {
             formPanel.add(productTypeComboBoxLabel);
             formPanel.add(productTypeComboBox);
 
-            searcProductshButton = new JButton("rechercher le(s) produit(s)");
+            searcProductshButton = new JButton("rechercher le(s) produit(s) : ");
             searcProductshButton.addActionListener(buttonListener);
             buttonsPanel.add(searcProductshButton);
 
             // second step modules
-            searchSupplierButton = new JButton("rechercher le(s) fournisseur(s)");
+            searchSupplierButton = new JButton("rechercher le(s) fournisseur(s) : ");
             searchSupplierButton.addActionListener(buttonListener);
 
             // add the panels

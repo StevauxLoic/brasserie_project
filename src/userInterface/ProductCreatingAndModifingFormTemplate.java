@@ -79,19 +79,22 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
             SpinnerListener spinnerListener = new SpinnerListener();
 
             // modules
-            nameLabel = new JLabel("nom");
+            nameLabel = new JLabel("nom : ");
+            nameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             nameTextField = new JTextField();
             nameTextField.addActionListener(textFieldListener);
             formPanel.add(nameLabel);
             formPanel.add(nameTextField);
 
-            referenceLabel = new JLabel("référence");
+            referenceLabel = new JLabel("référence : ");
+            referenceLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             referenceTextField = new JTextField();
             referenceTextField.addActionListener(textFieldListener);
             formPanel.add(referenceLabel);
             formPanel.add(referenceTextField);
 
-            productTypeLabel = new JLabel("type de produit");
+            productTypeLabel = new JLabel("type de produit : ");
+            productTypeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             productTypesList = shopController.getAllProductType();
             String [] productTypesNamesList = new String[productTypesList.size()];
             for (int iProductType = 0; iProductType < productTypesList.size(); iProductType++) {
@@ -105,49 +108,57 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
             formPanel.add(productTypeLabel);
             formPanel.add(productTypeComboBox);
 
-            vatLabel = new JLabel("TVA");
+            vatLabel = new JLabel("TVA : ");
+            vatLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             vatTextField = new JTextField();
             vatTextField.addActionListener(textFieldListener);
             formPanel.add(vatLabel);
             formPanel.add(vatTextField);
 
-            quantityInStockLabel = new JLabel("quantité en stock");
+            quantityInStockLabel = new JLabel("quantité en stock : ");
+            quantityInStockLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             quantityInStockSpinner = new JSpinner();
             quantityInStockSpinner.addChangeListener(spinnerListener);
             formPanel.add(quantityInStockLabel);
             formPanel.add(quantityInStockSpinner);
 
-            minimumQuantityInStockLabel = new JLabel("quantité minimum en stock");
+            minimumQuantityInStockLabel = new JLabel("quantité minimum en stock : ");
+            minimumQuantityInStockLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             minimumQuantityInStockSpinner = new JSpinner();
             minimumQuantityInStockSpinner.addChangeListener(spinnerListener);
             formPanel.add(minimumQuantityInStockLabel);
             formPanel.add(minimumQuantityInStockSpinner);
 
-            sparklingLabel = new JLabel("est pétillant");
+            sparklingLabel = new JLabel("est pétillant : ");
+            sparklingLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             isSparklingCheckBox = new JCheckBox("oui");
             formPanel.add(sparklingLabel);
             formPanel.add(isSparklingCheckBox);
 
-            hasAlcoholCheckBoxLabel = new JLabel("contient de l'alcool");
+            hasAlcoholCheckBoxLabel = new JLabel("contient de l'alcool : ");
+            hasAlcoholCheckBoxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             hasAlcoholCheckBox = new JCheckBox("oui");
             hasAlcoholCheckBox.addItemListener(checboxListener);
             formPanel.add(hasAlcoholCheckBoxLabel);
             formPanel.add(hasAlcoholCheckBox);
 
-            alcoholLevelLabel = new JLabel("niveau d'alcool");
+            alcoholLevelLabel = new JLabel("niveau d'alcool : ");
+            alcoholLevelLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             alcoholLevelTextField = new JTextField();
             alcoholLevelTextField.setEnabled(false);
             alcoholLevelTextField.addActionListener(textFieldListener);
             formPanel.add(alcoholLevelLabel);
             formPanel.add(alcoholLevelTextField);
 
-            priceLabel = new JLabel("prix HTVA (en magasin)");
+            priceLabel = new JLabel("prix HTVA (en magasin) : ");
+            priceLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             priceTextField = new JTextField();
             priceTextField.addActionListener(textFieldListener);
             formPanel.add(priceLabel);
             formPanel.add(priceTextField);
 
-            launchingDateLabel = new JLabel("date de lancement");
+            launchingDateLabel = new JLabel("date de lancement : ");
+            launchingDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             launchingDateSelected = new Date();
             launchingDateSpinner = new JSpinner(new SpinnerDateModel(launchingDateSelected, null, null, Calendar.YEAR));
             JSpinner.DateEditor launchingDateEditor = new JSpinner.DateEditor(launchingDateSpinner,"dd/MM/yyyy");
@@ -155,7 +166,8 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
             formPanel.add(launchingDateLabel);
             formPanel.add(launchingDateSpinner);
 
-            descriptionLabel = new JLabel("description");
+            descriptionLabel = new JLabel("description (optionnel) : ");
+            descriptionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             descriptionTextField = new JTextField();
             descriptionTextField.addActionListener(textFieldListener);
             formPanel.add(descriptionLabel);
@@ -264,7 +276,7 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
             return true;
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null,
-                    "l'entrée de la tva et du niveau d'alcool doivent être un nombre (à virgule ou non)",
+                    "l'entrée de la tva et du niveau d'alcool doivent être un nombre (à virgule)",
                     "erreure d'entrée", JOptionPane.ERROR_MESSAGE);
             return false;
         }

@@ -51,7 +51,7 @@ public class SuppliersForAProductSearchPanel extends JPanel {
         // panles
         titlePanel = new JPanel(new BorderLayout());
 
-        formPanel = new JPanel(new GridLayout(4,2));
+        formPanel = new JPanel(new GridLayout(4,2, 10, 10));
 
         buttonsPanel = new JPanel(new BorderLayout());
 
@@ -61,13 +61,15 @@ public class SuppliersForAProductSearchPanel extends JPanel {
         titlePanel.add(titleLabel);
 
 
-        maximumPriceCheckBoxLabel = new JLabel("chercher avec un prix maximum");
+        maximumPriceCheckBoxLabel = new JLabel("chercher avec un prix maximum : ");
+        maximumPriceCheckBoxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         maximumPriceCheckBox = new JCheckBox("oui");
         maximumPriceCheckBox.addItemListener(checboxListener);
         formPanel.add(maximumPriceCheckBoxLabel);
         formPanel.add(maximumPriceCheckBox);
 
-        maximumPriceSliderLabel = new JLabel("prix maximum du fournisseur pour ce produit");
+        maximumPriceSliderLabel = new JLabel("prix maximum du fournisseur pour ce produit : ");
+        maximumPriceSliderLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         maximumPriceSlider = new JSlider(0,100, 10);
         // slider : visual options
         maximumPriceSlider.setPaintTicks(true);   // displays the dots (thin and thinks)
@@ -79,20 +81,22 @@ public class SuppliersForAProductSearchPanel extends JPanel {
         formPanel.add(maximumPriceSliderLabel);
         formPanel.add(maximumPriceSlider);
 
-        maximumDeliveryDaysCheckBoxLabel = new JLabel("chercher avec un délai de livraison maximum");
+        maximumDeliveryDaysCheckBoxLabel = new JLabel("chercher avec un délai de livraison maximum : ");
+        maximumDeliveryDaysCheckBoxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         maximumDeliveryDaysCheckBox = new JCheckBox("oui");
         maximumDeliveryDaysCheckBox.addItemListener(checboxListener);
         formPanel.add(maximumDeliveryDaysCheckBoxLabel);
         formPanel.add(maximumDeliveryDaysCheckBox);
 
-        maximumDeliveryDaysSpinnerLabel = new JLabel("nombre de jour maximum pour être livré");
+        maximumDeliveryDaysSpinnerLabel = new JLabel("nombre de jour maximum pour être livré : ");
+        maximumDeliveryDaysSpinnerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         maximumDeliveryDaysSpinner = new JSpinner();
         maximumDeliveryDaysSpinner.setEnabled(false);
         formPanel.add(maximumDeliveryDaysSpinnerLabel);
         formPanel.add(maximumDeliveryDaysSpinner);
 
 
-        searchSupplierButton = new JButton("chercher le(s) fournisseur(s)");
+        searchSupplierButton = new JButton("chercher le(s) fournisseur(s) : ");
         searchSupplierButton.addActionListener(buttonListener);
         buttonsPanel.add(searchSupplierButton);
 

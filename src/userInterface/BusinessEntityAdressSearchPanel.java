@@ -40,7 +40,7 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
             titlePanel.setLayout(new FlowLayout());
 
             formPanel = new JPanel();
-            formPanel.setLayout(new GridLayout(1,2));
+            formPanel.setLayout(new GridLayout(1,2, 10, 10));
 
             buttonsPanel = new JPanel();
             buttonsPanel.setLayout(new FlowLayout());
@@ -53,7 +53,8 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
             titlePanel.add(titleLabel);
 
 
-            businessEntityLabel = new JLabel("personne/entreprise");
+            businessEntityLabel = new JLabel("personne/entreprise : ");
+            businessEntityLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             businessEntitiesList = shopController.getAllBusinessEntities();
             // create an array that contains the names and reference (in a String) for the JComboBox
             String [] businessEntitiesNamesList = new String[businessEntitiesList.size()];

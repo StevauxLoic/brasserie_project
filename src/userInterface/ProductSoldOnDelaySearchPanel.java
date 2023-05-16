@@ -47,7 +47,7 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
             titlePanel.setLayout(new FlowLayout());
 
             formPanel = new JPanel();
-            formPanel.setLayout(new GridLayout(3, 2));
+            formPanel.setLayout(new GridLayout(3, 2, 10, 10));
 
             buttonsPanel = new JPanel();
             buttonsPanel.setLayout(new FlowLayout());
@@ -59,7 +59,8 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
             titleLabel = new JLabel("Recherche de produit vendu dans un certain délai");
             titlePanel.add(titleLabel);
 
-            productTypeLabel = new JLabel("type de produit");
+            productTypeLabel = new JLabel("type de produit : ");
+            productTypeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             productTypesList = shopController.getAllProductType();
             String[] productTypesNamesList = new String[productTypesList.size()];
             for (int iProductType = 0; iProductType < productTypesList.size(); iProductType++) {
@@ -72,7 +73,8 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
             formPanel.add(productTypeLabel);
             formPanel.add(productTypeComboBox);
 
-            delayBeginingLabel = new JLabel("date de début de la recherche");
+            delayBeginingLabel = new JLabel("date de début de la recherche : ");
+            delayBeginingLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             delayBeginingDateSelected = new Date();
             delayBeginingSpinner = new JSpinner(new SpinnerDateModel(delayBeginingDateSelected, null, null, Calendar.YEAR));
             JSpinner.DateEditor delayBeginingEditor = new JSpinner.DateEditor(delayBeginingSpinner, "dd/MM/yyyy");
@@ -80,7 +82,8 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
             formPanel.add(delayBeginingLabel);
             formPanel.add(delayBeginingSpinner);
 
-            delayEndLabel = new JLabel("date de fin de la recherche");
+            delayEndLabel = new JLabel("date de fin de la recherche : ");
+            delayEndLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             delayEndSpinner = new JSpinner();
             delayEndDateSelected = new Date();
             delayEndSpinner = new JSpinner(new SpinnerDateModel(delayEndDateSelected, null, null, Calendar.YEAR));

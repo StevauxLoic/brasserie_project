@@ -41,7 +41,7 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
         titlePanel.setLayout(new FlowLayout());
 
         formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(2,2));
+        formPanel.setLayout(new GridLayout( 2, 2, 10, 10));
 
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout());
@@ -56,7 +56,8 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
         titlePanel.add(titleLabel);
 
 
-        delayBeginingLabel = new JLabel("date de début de la recherche");
+        delayBeginingLabel = new JLabel("date de début de la recherche : ");
+        delayBeginingLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         delayBeginingDateSelected = new Date();
         delayBeginingSpinner = new JSpinner(new SpinnerDateModel(delayBeginingDateSelected, null,null, Calendar.YEAR));
         JSpinner.DateEditor delayBeginingEditor = new JSpinner.DateEditor(delayBeginingSpinner,"dd/MM/yyyy");
@@ -64,7 +65,8 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
         formPanel.add(delayBeginingLabel);
         formPanel.add(delayBeginingSpinner);
 
-        delayEndLabel = new JLabel("date de fin de la recherche");
+        delayEndLabel = new JLabel("date de fin de la recherche : ");
+        delayEndLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         delayEndSpinner = new JSpinner();
         delayEndDateSelected = new Date();
         delayEndSpinner = new JSpinner(new SpinnerDateModel(delayEndDateSelected, null, null, Calendar.YEAR));
