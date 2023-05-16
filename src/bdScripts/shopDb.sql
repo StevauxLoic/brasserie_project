@@ -153,18 +153,3 @@ CREATE TABLE document
     product_ref VARCHAR(10) NOT NULL,
     business_entity_ref VARCHAR(10) NOT NULL
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
