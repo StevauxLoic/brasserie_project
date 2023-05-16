@@ -15,7 +15,7 @@ public class ProductData implements  IProductData{
 
     }
 
-    public void createProduct(Product productToCreate) throws CreateException, CreateConnectionException {
+    public void createProduct(Product productToCreate) throws CreateDatasException, CreateConnectionException {
         String sql = "INSERT INTO product (id, type_id, tag, vat, quantity_in_stock, minimum_quantity_in_stock, is_sparkling, " +
                 "alcohol_level, launching_date, price, description_of_the_product) " +
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -38,12 +38,12 @@ public class ProductData implements  IProductData{
             }
             statement.executeUpdate();
         } catch (SQLException exception){
-            throw new CreateException(exception.getMessage());
+            throw new CreateDatasException(exception.getMessage());
         }
 
     }
 
-    public ArrayList<Product> getAllProducts()throws SelectException, CreateConnectionException{
+    public ArrayList<Product> getAllProducts()throws GetDatasException, CreateConnectionException{
         ArrayList<Product> products = new ArrayList<>();
         Product product;
         String sql = "SELECT * FROM product";
@@ -65,13 +65,13 @@ public class ProductData implements  IProductData{
             }
 
         }catch (SQLException exception) {
-            throw new SelectException(exception.getMessage(), "la liste de tout les produits");
+            throw new GetDatasException(exception.getMessage(), "la liste de tout les produits");
         }
 
         return products;
     }
 
-    public void updateProduct(Product productToUpdate) throws UpdateException, CreateConnectionException {
+    public void updateProduct(Product productToUpdate) throws ModifyDatasException, CreateConnectionException {
         String sql = "UPDATE product set id = ?, type_id = ?, tag = ?, vat = ?, " +
                     "quantity_in_stock = ?, minimum_quantity_in_stock = ?, is_sparkling = ?, " +
                     "alcohol_level = ?, launching_date = ?, price = ?, description_of_the_product = ? " +
@@ -96,11 +96,11 @@ public class ProductData implements  IProductData{
             statement.setString(12, productToUpdate.getReference());
             statement.executeUpdate();
         } catch (SQLException exception) {
-            throw new UpdateException(exception.getMessage());
+            throw new ModifyDatasException(exception.getMessage());
         }
     }
 
-    public void deleteProduct(Product productToDelete) throws DeleteException, CreateConnectionException {
+    public void deleteProduct(Product productToDelete) throws DeleteDatasException, CreateConnectionException {
         String [] sqlInstructions = new String[]{
                 "DELETE FROM details_line WHERE product_id = ?;",
                 "DELETE FROM additional_restocking WHERE product_id = ?;",
@@ -114,7 +114,7 @@ public class ProductData implements  IProductData{
                 statement.executeUpdate();
             }
         } catch (SQLException exception){
-            throw new DeleteException(exception.getMessage());
+            throw new DeleteDatasException(exception.getMessage());
         }
     }
 

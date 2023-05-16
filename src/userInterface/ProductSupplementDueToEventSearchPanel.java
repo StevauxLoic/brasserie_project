@@ -2,7 +2,7 @@ package userInterface;
 
 import controller.ShopController;
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.SelectException;
+import model.Exeptions.GetDatasException;
 import model.ProductSupplementDueToEvent;
 
 import javax.swing.*;
@@ -139,7 +139,7 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
                             "aucuns produit lié à un évènement dans ce délai n'a été trouvé",
                             "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } catch (SelectException exception) {
+            } catch (GetDatasException exception) {
                 JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
                         "erreur de recherche", JOptionPane.ERROR_MESSAGE);
 

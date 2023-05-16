@@ -2,7 +2,7 @@ package dataAccess;
 
 import model.BusinessEntity;
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.SelectException;
+import model.Exeptions.GetDatasException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +15,7 @@ public class BusinessEntityData implements IBusinessEntityData{
 
     }
 
-    public ArrayList<BusinessEntity> getAllBusinessEntities() throws SelectException, CreateConnectionException {
+    public ArrayList<BusinessEntity> getAllBusinessEntities() throws GetDatasException, CreateConnectionException {
         ArrayList<BusinessEntity> businessEntities = new ArrayList<>();
         BusinessEntity businessEntity;
         String sql = "SELECT * FROM business_entity";
@@ -28,7 +28,7 @@ public class BusinessEntityData implements IBusinessEntityData{
                 businessEntities.add(businessEntity);
             }
         }catch (SQLException exception){
-            throw new SelectException(exception.getMessage(), "la liste des business entity");
+            throw new GetDatasException(exception.getMessage(), "la liste des business entity");
         }
         return businessEntities;
     }

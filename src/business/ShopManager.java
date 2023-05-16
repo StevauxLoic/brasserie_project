@@ -27,51 +27,51 @@ public class ShopManager {
         closeDataAccessConnectionManager.closeConnection();
     }
 
-    public ArrayList<Product> getAllProduct() throws SelectException, CreateConnectionException{
+    public ArrayList<Product> getAllProduct() throws GetDatasException, CreateConnectionException{
         return productDataManager.getAllProducts();
     }
 
-    public void updateProduct(Product productToUpdate) throws UpdateException, CreateConnectionException {
+    public void updateProduct(Product productToUpdate) throws ModifyDatasException, CreateConnectionException {
         productDataManager.updateProduct(productToUpdate);
     }
 
-    public void deleteProduct(Product productToDelete) throws DeleteException, CreateConnectionException {
+    public void deleteProduct(Product productToDelete) throws DeleteDatasException, CreateConnectionException {
         productDataManager.deleteProduct(productToDelete);
     }
 
-    public ArrayList<ProductType> getAllProductType() throws CreateConnectionException, SelectException {
+    public ArrayList<ProductType> getAllProductType() throws CreateConnectionException, GetDatasException {
         return productTypeDataManager.getAllProductType();
     }
 
-    public void createProduct(Product productToCreate) throws CreateException, CreateConnectionException{
+    public void createProduct(Product productToCreate) throws CreateDatasException, CreateConnectionException{
         productDataManager.createProduct(productToCreate);
     }
 
-    public ArrayList<BusinessEntity> getAllBusinessEntities() throws SelectException, CreateConnectionException{
+    public ArrayList<BusinessEntity> getAllBusinessEntities() throws GetDatasException, CreateConnectionException{
         return businessEntityDataManager.getAllBusinessEntities();
     }
 
-    public ArrayList<ProductSoldInADelay> getAllProductSoldInADelay(LocalDate startingDate, LocalDate endingDate, ProductType productType) throws SelectException, CreateConnectionException{
+    public ArrayList<ProductSoldInADelay> getAllProductSoldInADelay(LocalDate startingDate, LocalDate endingDate, ProductType productType) throws GetDatasException, CreateConnectionException{
         return searchDataManager.getAllProductSoldInADelay(startingDate, endingDate, productType);
     }
 
-    public ArrayList<ProductSupplementDueToEvent> getAllProductSupplementDueToEvent(LocalDate startingDate, LocalDate endingDate) throws SelectException, CreateConnectionException{
+    public ArrayList<ProductSupplementDueToEvent> getAllProductSupplementDueToEvent(LocalDate startingDate, LocalDate endingDate) throws GetDatasException, CreateConnectionException{
         return searchDataManager.getAllProductSupplementDueToEvent(startingDate, endingDate);
     }
 
-    public ArrayList<BusinessEntityAdress> getAllAdressesOfABusinessEntity(BusinessEntity businessEntity) throws SelectException, CreateConnectionException{
+    public ArrayList<BusinessEntityAdress> getAllAdressesOfABusinessEntity(BusinessEntity businessEntity) throws GetDatasException, CreateConnectionException{
         return searchDataManager.getAllAdressesOfABusinessEntity(businessEntity);
     }
 
-    public ArrayList<Product> getAllProductOutOfMinimumStock (ProductType productType) throws SelectException, CreateConnectionException{
+    public ArrayList<Product> getAllProductOutOfMinimumStock (ProductType productType) throws GetDatasException, CreateConnectionException{
         return searchDataManager.getAllProductOutOfMinimumStock(productType);
     }
 
-    public ArrayList<Product> getAllProductOutOfMinimumStock () throws SelectException, CreateConnectionException{
+    public ArrayList<Product> getAllProductOutOfMinimumStock () throws GetDatasException, CreateConnectionException{
         return searchDataManager.getAllProductOutOfMinimumStock();
     }
 
-    public ArrayList<SupplierForAProduct> getAllSupplierForAProduct(Product product, Integer maxDelayDelivery, Double maxPrice) throws SelectException, CreateConnectionException{
+    public ArrayList<SupplierForAProduct> getAllSupplierForAProduct(Product product, Integer maxDelayDelivery, Double maxPrice) throws GetDatasException, CreateConnectionException{
         return searchDataManager.getAllSupplierForAProduct(product, maxDelayDelivery, maxPrice);
     }
 

@@ -1,7 +1,7 @@
 package model.Exeptions;
 
-public class CreateException extends Exception{
-    public CreateException(String message){
+public class CreateDatasException extends Exception{
+    public CreateDatasException(String message){
         super("Erreur lors de la création du produit\n" + message);
     }
 

@@ -2,7 +2,7 @@ package userInterface;
 
 import model.*;
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.CreateException;
+import model.Exeptions.CreateDatasException;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -35,7 +35,7 @@ public class ProductCreationPanel extends ProductCreatingAndModifingFormTemplate
                     "erreur : " + exception.getMessage(),
                     "erreur de creation de la connexion au données", JOptionPane.ERROR_MESSAGE);
 
-        } catch (CreateException exception) {
+        } catch (CreateDatasException exception) {
             JOptionPane.showMessageDialog(null,
                     "erreur : " + exception.getMessage(),
                     "erreur de creation du produit", JOptionPane.ERROR_MESSAGE);

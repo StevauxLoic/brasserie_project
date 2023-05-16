@@ -1,7 +1,7 @@
 package userInterface;
 
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.UpdateException;
+import model.Exeptions.ModifyDatasException;
 import model.Product;
 
 import javax.swing.*;
@@ -94,7 +94,7 @@ public class ProductModifyingForm extends ProductCreatingAndModifingFormTemplate
                     "objet modifié",
                     "produit modifié avec succès", JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (UpdateException exception) {
+        } catch (ModifyDatasException exception) {
             JOptionPane.showMessageDialog(null,
                     "erreur : " + exception.getMessage(),
                     "erreur de la modification du produit", JOptionPane.ERROR_MESSAGE);

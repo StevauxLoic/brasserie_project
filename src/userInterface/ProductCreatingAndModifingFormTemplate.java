@@ -3,7 +3,7 @@ package userInterface;
 import controller.ShopController;
 import model.*;
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.SelectException;
+import model.Exeptions.GetDatasException;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -166,7 +166,7 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
 
             this.add(formPanel, BorderLayout.CENTER);
             this.add(buttonsPanel, BorderLayout.SOUTH);
-        } catch (SelectException exception) {
+        } catch (GetDatasException exception) {
             showErrorMessageAndPanel("<html><p>la recherche des types de produits n'a pas été possible," +
                             "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
                             "<br>erreur : " + exception.getMessage() + "</p></html>",

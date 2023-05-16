@@ -2,7 +2,7 @@ package dataAccess;
 
 import model.*;
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.SelectException;
+import model.Exeptions.GetDatasException;
 import model.Exeptions.SupplierForAProductException;
 
 import java.sql.PreparedStatement;
@@ -19,7 +19,7 @@ public class SearchData implements ISearchData{
 
 
     ////// search the count of one product type in a delay
-    public ArrayList<ProductSoldInADelay> getAllProductSoldInADelay(LocalDate startingDate, LocalDate endingDate, ProductType productType) throws SelectException, CreateConnectionException{
+    public ArrayList<ProductSoldInADelay> getAllProductSoldInADelay(LocalDate startingDate, LocalDate endingDate, ProductType productType) throws GetDatasException, CreateConnectionException{
         ArrayList<ProductSoldInADelay> allProductsSoldInADelay = new ArrayList<>();
         String sqlInstruction = "SELECT prod.tag, SUM(det.quantity) AS quantities, SUM(det.price * det.quantity) AS cost_price FROM details_line det " +
                                 "INNER JOIN document doc ON doc.id = det.document_id " +
@@ -40,13 +40,13 @@ public class SearchData implements ISearchData{
             }
         }
         catch (SQLException exception){
-            throw new SelectException(exception.getMessage(), "infos d'un produit vendu \n" + "de la date : " + startingDate.toString() + " a la date " + endingDate.toString());
+            throw new GetDatasException(exception.getMessage(), "infos d'un produit vendu \n" + "de la date : " + startingDate.toString() + " a la date " + endingDate.toString());
         }
         return allProductsSoldInADelay;
         }
 
     ////// search of product with a Additional Restocking due to a certain event
-    public ArrayList<ProductSupplementDueToEvent> getAllProductSupplementDueToEvent(LocalDate startingDate, LocalDate endingDate) throws SelectException, CreateConnectionException{
+    public ArrayList<ProductSupplementDueToEvent> getAllProductSupplementDueToEvent(LocalDate startingDate, LocalDate endingDate) throws GetDatasException, CreateConnectionException{
         ArrayList<ProductSupplementDueToEvent> allProductSupplementDueToEvent = new ArrayList<>();
         String sqlInstruction = "SELECT addi.amount AS amount, fest.tag AS fest, prod.tag AS prod, prod.minimum_quantity_in_stock AS " +
                                 "qtt, prod.id AS pro_id, prod_ty.tag AS prod_type FROM additional_restocking addi " +
@@ -66,14 +66,14 @@ public class SearchData implements ISearchData{
             }
         }
         catch (SQLException exception){
-            throw new SelectException(exception.getMessage(), "la liste des restocks supplémentaire lors de certains evements\n" + "de la date : " + startingDate.toString() + "\n" +
+            throw new GetDatasException(exception.getMessage(), "la liste des restocks supplémentaire lors de certains evements\n" + "de la date : " + startingDate.toString() + "\n" +
                     "à la date : " + endingDate.toString());
         }
         return allProductSupplementDueToEvent;
     }
 
 
-    public ArrayList<BusinessEntityAdress> getAllAdressesOfABusinessEntity(BusinessEntity businessEntity) throws SelectException, CreateConnectionException{
+    public ArrayList<BusinessEntityAdress> getAllAdressesOfABusinessEntity(BusinessEntity businessEntity) throws GetDatasException, CreateConnectionException{
         ArrayList<BusinessEntityAdress> allAdressesOfABusinessEntity = new ArrayList<>();
         String sqlInstruction = "SELECT coun.tag AS country_name, cit.zip_code AS zip_code, " +
                                 "cit.tag AS city_name, adre.street AS adress_street, " +
@@ -95,14 +95,14 @@ public class SearchData implements ISearchData{
             }
         }
         catch (SQLException exception){
-            throw new SelectException(exception.getMessage(), "la liste des adresse de l'entité business");
+            throw new GetDatasException(exception.getMessage(), "la liste des adresse de l'entité business");
         }
         return allAdressesOfABusinessEntity;
     }
 
     ////// here are the methods to help the employee to see wich supplier is better for a particular product when it's out of minimum stock
     /// first methods that return an array of pruduct out of minimum stocks depends o the type or not
-    public ArrayList<Product> getAllProductOutOfMinimumStock (ProductType productType) throws SelectException, CreateConnectionException{
+    public ArrayList<Product> getAllProductOutOfMinimumStock (ProductType productType) throws GetDatasException, CreateConnectionException{
         ArrayList<Product> allProductOutOfMinimuStock = new ArrayList<>();
         Product product;
         String sqlInstruction;
@@ -133,17 +133,17 @@ public class SearchData implements ISearchData{
             }
         }
         catch (SQLException exception){
-            throw new SelectException(exception.getMessage(), "produits ayant une quantité inférieur a la quantité minmum a avoir ");
+            throw new GetDatasException(exception.getMessage(), "produits ayant une quantité inférieur a la quantité minmum a avoir ");
         }
         return allProductOutOfMinimuStock;
     }
 
-    public ArrayList<Product> getAllProductOutOfMinimumStock () throws SelectException, CreateConnectionException {
+    public ArrayList<Product> getAllProductOutOfMinimumStock () throws GetDatasException, CreateConnectionException {
         return getAllProductOutOfMinimumStock((ProductType) null);
     }
 
     /// this methods return a list of supplier that respect the conditions proposed by the form
-    public ArrayList<SupplierForAProduct> getAllSupplierForAProduct(Product product, Integer maxDelayDelivery, Double maxPrice) throws SelectException, CreateConnectionException{
+    public ArrayList<SupplierForAProduct> getAllSupplierForAProduct(Product product, Integer maxDelayDelivery, Double maxPrice) throws GetDatasException, CreateConnectionException{
         ArrayList<SupplierForAProduct> allSupplierForAProduct = new ArrayList<>();
         String sqlInstruction = "SELECT busi.denomination AS busi_name, busi.id AS busi_id, supp.price AS price, supp.delivery_time AS delivery_time, statut.denomination AS statut_name FROM supplier_product_details supp " +
                                 "INNER JOIN business_entity busi ON supp.business_entity_ref = busi.id " +
@@ -178,9 +178,9 @@ public class SearchData implements ISearchData{
             }
         }
         catch (SQLException exception){
-            throw new SelectException(exception.getMessage(), "fournisseurs pour le produit : " + product.getName());
+            throw new GetDatasException(exception.getMessage(), "fournisseurs pour le produit : " + product.getName());
         } catch (SupplierForAProductException exception) {
-            throw new SelectException(exception.getMessage(), "fournisseurs pour le produit : " + product.getName());
+            throw new GetDatasException(exception.getMessage(), "fournisseurs pour le produit : " + product.getName());
         }
         return allSupplierForAProduct;
     }

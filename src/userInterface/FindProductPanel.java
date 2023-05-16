@@ -3,8 +3,8 @@ package userInterface;
 import controller.ShopController;
 import model.*;
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.DeleteException;
-import model.Exeptions.SelectException;
+import model.Exeptions.DeleteDatasException;
+import model.Exeptions.GetDatasException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -101,7 +101,7 @@ public class FindProductPanel extends JPanel {
                                 "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
                                 "<br>erreur : " + exception.getMessage()+ "</p></html>",
                     "erreur : " + exception.getMessage());
-        } catch (SelectException exception) {
+        } catch (GetDatasException exception) {
             showErrorMessageAndPanel("<html><p>la recherche d'un produit n'a pas été possible," +
                                 "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
                                 "<br>erreur : " + exception.getMessage() + "</p></html>",
@@ -145,7 +145,7 @@ public class FindProductPanel extends JPanel {
                 productsList.remove(firstProductSelectedIndex);
                 refreshPanel();
 
-            } catch (DeleteException exception) {
+            } catch (DeleteDatasException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "erreur de supression d'un produit", JOptionPane.ERROR_MESSAGE);
 
@@ -171,7 +171,7 @@ public class FindProductPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "tout les produits ont bien été supprimé",
                         "succès des supressions", JOptionPane.INFORMATION_MESSAGE);
 
-            } catch (DeleteException exception) {
+            } catch (DeleteDatasException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),
                         "erreur de supression d'un produit", JOptionPane.ERROR_MESSAGE);
             } catch (CreateConnectionException exception) {

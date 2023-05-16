@@ -2,7 +2,7 @@ package userInterface;
 
 import controller.ShopController;
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.SelectException;
+import model.Exeptions.GetDatasException;
 import model.Product;
 import model.SupplierForAProduct;
 
@@ -161,7 +161,7 @@ public class SuppliersForAProductSearchPanel extends JPanel {
                 this.repaint();
                 this.revalidate();
             }
-        } catch (SelectException exception) {
+        } catch (GetDatasException exception) {
             JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
                     "erreur de recherche", JOptionPane.ERROR_MESSAGE);
 

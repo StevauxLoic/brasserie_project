@@ -2,7 +2,7 @@ package userInterface;
 
 import controller.ShopController;
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.SelectException;
+import model.Exeptions.GetDatasException;
 import model.Product;
 import model.ProductType;
 
@@ -100,7 +100,7 @@ public class ProductOutOfStockSearchPanel extends JPanel {
             this.add(titleLabel, BorderLayout.NORTH);
             this.add(formPanel, BorderLayout.CENTER);
             this.add(buttonsPanel, BorderLayout.SOUTH);
-        } catch (SelectException exception) {
+        } catch (GetDatasException exception) {
             showErrorMessageAndPanel("<html><p>la recherche des types de produits n'a pas été possible," +
                             "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
                             "<br>erreur : " + exception.getMessage() + "</p></html>",
@@ -156,7 +156,7 @@ public class ProductOutOfStockSearchPanel extends JPanel {
                 this.revalidate();
                 this.repaint();
             }
-        } catch (SelectException exception) {
+        } catch (GetDatasException exception) {
             showErrorMessageAndPanel("<html><p>la recherche des produits n'a pas été possible," +
                             "<br>veuillez réessayer ultérieurment" +
                             "<br>erreur : " + exception.getMessage() + "</p></html>",

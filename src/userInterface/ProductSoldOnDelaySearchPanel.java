@@ -2,7 +2,7 @@ package userInterface;
 
 import controller.ShopController;
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.SelectException;
+import model.Exeptions.GetDatasException;
 import model.ProductSoldInADelay;
 import model.ProductType;
 
@@ -98,7 +98,7 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
             this.add(titlePanel, BorderLayout.NORTH);
             this.add(formPanel, BorderLayout.CENTER);
             this.add(buttonsPanel, BorderLayout.SOUTH);
-        } catch (SelectException exception) {
+        } catch (GetDatasException exception) {
             showErrorMessageAndPanel("<html><p>la recherche des types de produits n'a pas été possible," +
                             "<br>les types de produits sont nécéssaire pour modifier ou créer un produit" +
                             "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
@@ -175,7 +175,7 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
                             "aucunes vente n'a été trouvée dans ce délai",
                             "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } catch (SelectException exception) {
+            } catch (GetDatasException exception) {
                 showErrorMessageAndPanel("<html><p>la recherche des types de produits n'a pas été possible," +
                                 "<br>les types de produits sont nécéssaire pour modifier ou créer un produit" +
                                 "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
