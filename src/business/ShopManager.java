@@ -75,4 +75,12 @@ public class ShopManager {
         return searchDataManager.getAllSupplierForAProduct(product, maxDelayDelivery, maxPrice);
     }
 
+    public boolean productIdAlreayExist(Product productToVerify) throws GetDatasException, CreateConnectionException{
+        return productDataManager.productIdAlreayExist(productToVerify);
+    }
+
+    public boolean productHasLinksWithOthersDatas(Product product) throws GetDatasException, CreateConnectionException{
+        return productDataManager.productHasLinksWithOthersDatas(product);
+    }
+
 }

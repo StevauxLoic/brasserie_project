@@ -66,4 +66,12 @@ public class ShopController {
     public ArrayList<SupplierForAProduct> getAllSupplierForAProduct(Product product, Integer maxDelayDelivery, Double maxPrice) throws GetDatasException, CreateConnectionException{
         return shopManager.getAllSupplierForAProduct(product, maxDelayDelivery, maxPrice);
     }
+
+    public boolean productIdAlreayExist(Product productToVerify) throws GetDatasException, CreateConnectionException{
+        return shopManager.productIdAlreayExist(productToVerify);
+    }
+
+    public boolean productHasLinksWithOthersDatas(Product product) throws GetDatasException, CreateConnectionException{
+        return shopManager.productHasLinksWithOthersDatas(product);
+    }
 }

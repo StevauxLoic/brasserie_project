@@ -108,7 +108,7 @@ public class ProductData implements  IProductData{
                 "DELETE FROM product WHERE id = ?"
         };
         try{
-            for(int i = 0; i < 4; i ++){
+            for(int i = 0; i < sqlInstructions.length; i ++){
                 PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstructions[i]);
                 statement.setString(1, productToDelete.getReference());
                 statement.executeUpdate();
@@ -118,4 +118,41 @@ public class ProductData implements  IProductData{
         }
     }
 
+    public boolean productIdAlreayExist(Product productToVerify) throws GetDatasException, CreateConnectionException{
+        String sqlInstruction = "SELECT id FROM product WHERE id = ?";
+        try{
+            PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstruction);
+            statement.setString(1, productToVerify.getReference());
+            ResultSet data = statement.executeQuery();
+            data.next();
+            return !data.wasNull();
+        }
+        catch (SQLException exception){
+            throw new GetDatasException("", "");
+        }
+    }
+
+    public boolean productHasLinksWithOthersDatas(Product product) throws GetDatasException, CreateConnectionException{
+        String sqlInstructions [] = new String[] {
+                "SELECT * FROM details_line WHERE details_line.product_id = ?",
+                "SELECT * FROM additional_restocking WHERE additional_restocking.product_id = ?",
+                "SELECT * FROM supplier_product_details WHERE supplier_product_details.product_ref = ?"
+        };
+
+        try{
+            for(int i = 0; i < sqlInstructions.length; i++){
+                PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstructions[i]);
+                statement.setString(1, product.getReference());
+                ResultSet data = statement.executeQuery();
+                data.next();
+                if(!data.wasNull()){
+                    return true;
+                }
+            }
+            return false;
+        } catch (SQLException exception){
+            throw new GetDatasException("", "");
+        }
+
+    }
 }
