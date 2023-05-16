@@ -118,14 +118,14 @@ public class ProductData implements  IProductData{
         }
     }
 
-    public boolean productIdAlreayExist(Product productToVerify) throws GetDatasException, CreateConnectionException{
-        String sqlInstruction = "SELECT id FROM product WHERE id = ?";
+    public boolean productIdAlreayExist(String productId) throws GetDatasException, CreateConnectionException{
+        String sqlInstruction = "SELECT id FROM product WHERE id = ?;";
         try{
             PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstruction);
-            statement.setString(1, productToVerify.getReference());
+            statement.setString(1, productId);
             ResultSet data = statement.executeQuery();
             data.next();
-            return !data.wasNull();
+            return data.next();
         }
         catch (SQLException exception){
             throw new GetDatasException("", "");
@@ -136,18 +136,19 @@ public class ProductData implements  IProductData{
         String sqlInstructions [] = new String[] {
                 "SELECT * FROM details_line WHERE details_line.product_id = ?",
                 "SELECT * FROM additional_restocking WHERE additional_restocking.product_id = ?",
-                "SELECT * FROM supplier_product_details WHERE supplier_product_details.product_ref = ?"
+                "SELECT * FROM supplier_product_details WHERE supplier_product_details.product_ref = ?;"
         };
 
         try{
-            for(int i = 0; i < sqlInstructions.length; i++){
-                PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstructions[i]);
+            int iSelect = 0;
+            while(iSelect < sqlInstructions.length){
+                PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstructions[iSelect]);
                 statement.setString(1, product.getReference());
                 ResultSet data = statement.executeQuery();
-                data.next();
-                if(!data.wasNull()){
+                if(data.next()){
                     return true;
                 }
+                iSelect++;
             }
             return false;
         } catch (SQLException exception){

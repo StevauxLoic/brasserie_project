@@ -4,6 +4,7 @@ import controller.ShopController;
 import model.Exeptions.CreateConnectionException;
 import model.Exeptions.GetDatasException;
 import model.ProductSupplementDueToEvent;
+import userInterface.tableModels.AllProductSupplementsDueToEventModel;
 
 import javax.swing.*;
 import java.awt.*;

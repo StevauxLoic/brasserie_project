@@ -5,6 +5,7 @@ import model.BusinessEntity;
 import model.BusinessEntityAdress;
 import model.Exeptions.CreateConnectionException;
 import model.Exeptions.GetDatasException;
+import userInterface.tableModels.AllBusinessesEntityAdressModel;
 
 import javax.swing.*;
 import java.awt.*;

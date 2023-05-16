@@ -1,10 +1,11 @@
-package userInterface;
+package userInterface.searchs;
 
 import controller.ShopController;
 import model.Exeptions.CreateConnectionException;
 import model.Exeptions.GetDatasException;
 import model.Product;
 import model.SupplierForAProduct;
+import userInterface.tableModels.AllSuppliersForAProductModel;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

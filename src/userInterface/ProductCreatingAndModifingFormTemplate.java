@@ -282,7 +282,7 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
         }
     }
     
-    private void showTextFieldInputError(String message, JTextField textField) {
+    public void showTextFieldInputError(String message, JTextField textField) {
         textField.setText(null);
         JOptionPane.showMessageDialog(null,
                 message,

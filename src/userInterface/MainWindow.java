@@ -3,6 +3,8 @@ package userInterface;
 import controller.ShopController;
 import model.Exeptions.CloseConnectionException;
 import model.Exeptions.CreateConnectionException;
+import userInterface.searchs.ProductOutOfStockSearchPanel;
+import userInterface.searchs.ProductSoldOnDelaySearchPanel;
 
 import javax.swing.*;
 import java.awt.*;

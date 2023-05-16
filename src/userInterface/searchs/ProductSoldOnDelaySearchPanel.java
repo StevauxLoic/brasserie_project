@@ -1,10 +1,11 @@
-package userInterface;
+package userInterface.searchs;
 
 import controller.ShopController;
 import model.Exeptions.CreateConnectionException;
 import model.Exeptions.GetDatasException;
 import model.ProductSoldInADelay;
 import model.ProductType;
+import userInterface.tableModels.AllProductsSoldInADelayModel;
 
 import javax.swing.*;
 import java.awt.*;

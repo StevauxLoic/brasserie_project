@@ -5,7 +5,7 @@ import model.Product;
 import model.SupplierForAProduct;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import userInterface.SuppliersForAProductSearchPanel;
+import userInterface.searchs.SuppliersForAProductSearchPanel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

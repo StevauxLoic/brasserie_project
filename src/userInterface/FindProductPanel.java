@@ -5,6 +5,7 @@ import model.*;
 import model.Exeptions.CreateConnectionException;
 import model.Exeptions.DeleteDatasException;
 import model.Exeptions.GetDatasException;
+import userInterface.tableModels.AllProductsModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -120,7 +121,8 @@ public class FindProductPanel extends JPanel {
     private void showErrorMessageAndPanel(String message, String optionPaneMessage) {
         JLabel errorLabel = new JLabel(message);
         this.add(errorLabel, BorderLayout.CENTER);
-        JOptionPane.showMessageDialog(null, optionPaneMessage, "problème pour la recherche", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, optionPaneMessage,
+                "problème pour la recherche", JOptionPane.WARNING_MESSAGE);
     }
 
     private Product getSelectedAProduct(){
@@ -130,59 +132,79 @@ public class FindProductPanel extends JPanel {
     private void displayModifyForm() {
         this.removeAll();
         this.add(new ProductModifyingForm(getSelectedAProduct()));
-        refreshPanel();
+        refreshPanelAndProductList();
+    }
+
+    private void deleteAProduct(Product productToDelete) {
+        try{
+            if (shopController.productHasLinksWithOthersDatas(productToDelete)) {
+                int answer = JOptionPane.showConfirmDialog(null,
+                        "La supression du produit " + productToDelete.getName() + " suprime également" +
+                                "d'autres infos (ligne de détails et/ou détails du produit avec le fournisseur)\n" +
+                                "si vous cliquez 'ok', elles seront également suprimées sinon, cliquez 'cancel' pour annuler",
+                            "supression", JOptionPane.OK_CANCEL_OPTION);
+
+                if (answer == JOptionPane.YES_OPTION) {
+                    shopController.deleteProduct(productToDelete);
+                    JOptionPane.showMessageDialog(null, "le produit a bien été supprimé",
+                            "succès de la supression", JOptionPane.INFORMATION_MESSAGE);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "la supression a été annulée",
+                            "annulation de la supression", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+
+            } else {
+                shopController.deleteProduct(productToDelete);
+                JOptionPane.showMessageDialog(null, "le produit a bien été supprimé",
+                        "succès de la supression", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (DeleteDatasException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(),
+                    "erreur de supression d'un produit", JOptionPane.ERROR_MESSAGE);
+
+        } catch (CreateConnectionException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(),
+                    "erreur de conexion aux données", JOptionPane.ERROR_MESSAGE);
+        } catch (GetDatasException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(),
+                    "erreur de réqupération des infos du produit", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void deleteProducts() {
         int firstProductSelectedIndex = listSelect.getMinSelectionIndex();
-
         // one delete
         if (listSelect.getMinSelectionIndex() == listSelect.getMaxSelectionIndex()) {
-            try {
-                shopController.deleteProduct(productsList.get(firstProductSelectedIndex));
-                JOptionPane.showMessageDialog(null, "le produit a bien été supprimé",
-                        "succès de la supression", JOptionPane.INFORMATION_MESSAGE);
-                productsList.remove(firstProductSelectedIndex);
-                refreshPanel();
+            deleteAProduct(productsList.get(firstProductSelectedIndex));
 
-            } catch (DeleteDatasException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(),
-                        "erreur de supression d'un produit", JOptionPane.ERROR_MESSAGE);
-
-            } catch (CreateConnectionException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(),
-                        "erreur de conexion aux données", JOptionPane.ERROR_MESSAGE);
-            }
         } else {
             // multiple deletes
             int selectedProductsAmount = listSelect.getSelectedItemsCount();
-            int deleteingProductIndex = firstProductSelectedIndex;
             // will stop deleting if one throw an error
-            try {
-                for (int iProduct = 0; iProduct < selectedProductsAmount; iProduct++) {
-
-                    shopController.deleteProduct(productsList.get(deleteingProductIndex));
-                    JOptionPane.showMessageDialog(null, "un produit a bien été supprimé, "
-                                    + (selectedProductsAmount - iProduct) + " restants",
-                            "succès de la supression" , JOptionPane.INFORMATION_MESSAGE);
-                    productsList.remove(productsList.get(deleteingProductIndex));
-
-                }
-                JOptionPane.showMessageDialog(null, "tout les produits ont bien été supprimé",
-                        "succès des supressions", JOptionPane.INFORMATION_MESSAGE);
-
-            } catch (DeleteDatasException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(),
-                        "erreur de supression d'un produit", JOptionPane.ERROR_MESSAGE);
-            } catch (CreateConnectionException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(),
-                        "erreur de conexion aux données", JOptionPane.ERROR_MESSAGE);
+            for (int iProduct = 0; iProduct < selectedProductsAmount; iProduct++) {
+                deleteAProduct(productsList.get(iProduct + firstProductSelectedIndex));
             }
-            refreshPanel();
         }
+        refreshPanelAndProductList();
     }
 
-    private void refreshPanel() {
+    private void refreshPanelAndProductList() {
+        try {
+            productsList = shopController.getAllProduct();
+            allProductModel.setContents(productsList);
+        } catch (CreateConnectionException exception) {
+            showErrorMessageAndPanel("<html><p>la connection aux données n'a pas pu être établie" +
+                            "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
+                            "<br>erreur : " + exception.getMessage()+ "</p></html>",
+                    "erreur : " + exception.getMessage());
+        } catch (GetDatasException exception) {
+            showErrorMessageAndPanel("<html><p>la recherche d'un produit n'a pas été possible," +
+                            "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
+                            "<br>erreur : " + exception.getMessage() + "</p></html>",
+                    "erreur : " + exception.getMessage());
+        }
         this.repaint();
         this.revalidate();
     }

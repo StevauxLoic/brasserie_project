@@ -3,6 +3,7 @@ package userInterface;
 import model.*;
 import model.Exeptions.CreateConnectionException;
 import model.Exeptions.CreateDatasException;
+import model.Exeptions.GetDatasException;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -10,15 +11,13 @@ import java.awt.event.ActionListener;
 
 public class ProductCreationPanel extends ProductCreatingAndModifingFormTemplate {
 
-    private JButton createButton;
-
     public ProductCreationPanel() {
         super();
     }
 
     @Override
     public void fillButtonsPanel(JPanel buttonsPanel) {
-        this.createButton = new JButton("créer");
+        JButton createButton = new JButton("créer");
         createButton.addActionListener(new ButtonListener());
         buttonsPanel.add(createButton);
     }
@@ -43,11 +42,36 @@ public class ProductCreationPanel extends ProductCreatingAndModifingFormTemplate
         }
     }
 
+    @Override
+    public boolean isFormValid() {
+        if(super.isFormValid()) {
+            try {
+                if (getShopController().productIdAlreayExist(getReferenceTextField().getText())) {
+                    showTextFieldInputError("la référence est déjà utilisée par un autre produit", getReferenceTextField());
+                    return false;
+                } else {
+                    // every inputs are ok
+                    return true;
+                }
+
+            }  catch (GetDatasException exception) {
+                JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+                        "erreur de recherche", JOptionPane.ERROR_MESSAGE);
+
+            } catch (CreateConnectionException exception) {
+                JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
+                        "erreur de connexion aux données", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        return false;
+    }
+
     private class ButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            ProductCreationPanel thisPanel =ProductCreationPanel.this;
+            ProductCreationPanel thisPanel = ProductCreationPanel.this;
 
             if (isFormValid()) {
                 Product productToCreate = thisPanel.readForm();
