@@ -43,7 +43,7 @@ public class AllBusinessesEntityAdressModel extends AbstractTableModel {
             case 2 : return businessEntityAdress.getCity();
             case 3 : return businessEntityAdress.getHouseNumber();
             case 4 : return businessEntityAdress.getStreet();
-            case 5 : return businessEntityAdress.getAdressType();
+            case 5 : return businessEntityAdress.getTypeName();
             default : return null;
         }
     }
