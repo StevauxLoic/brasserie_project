@@ -42,9 +42,6 @@ public class ShopController {
         return shopManager.getAllBusinessEntities();
     }
 
-    public ArrayList<Adress> getAllAdressesOfBusinessEntity(BusinessEntity businessEntity) throws SelectException, CreateConnectionException{
-        return shopManager.getAllAdressesOfBusinessEntity(businessEntity);
-    }
 
     public ArrayList<ProductSoldInADelay> getAllProductSoldInADelay(LocalDate startingDate, LocalDate endingDate, ProductType productType) throws SelectException,CreateConnectionException{
         return shopManager.getAllProductSoldInADelay(startingDate, endingDate, productType);

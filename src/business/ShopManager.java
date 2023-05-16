@@ -51,10 +51,6 @@ public class ShopManager {
         return businessEntityDataManager.getAllBusinessEntities();
     }
 
-    public ArrayList<Adress> getAllAdressesOfBusinessEntity(BusinessEntity businessEntity) throws SelectException, CreateConnectionException{
-        return businessEntityDataManager.getAllAdressesOfBusinessEntity(businessEntity);
-    }
-
     public ArrayList<ProductSoldInADelay> getAllProductSoldInADelay(LocalDate startingDate, LocalDate endingDate, ProductType productType) throws SelectException, CreateConnectionException{
         return searchDataManager.getAllProductSoldInADelay(startingDate, endingDate, productType);
     }

@@ -1,6 +1,5 @@
 package dataAccess;
 
-import model.Adress;
 import model.BusinessEntity;
 import model.Exeptions.CreateConnectionException;
 import model.Exeptions.SelectException;
@@ -34,22 +33,5 @@ public class BusinessEntityData implements IBusinessEntityData{
         return businessEntities;
     }
 
-    public ArrayList<Adress> getAllAdressesOfBusinessEntity(BusinessEntity businessEntity) throws SelectException, CreateConnectionException {
-        ArrayList<Adress> adresses = new ArrayList<>();
-        Adress adress;
-        String sql = "SELECT * FROM adress WHERE id = ?";
 
-        try{
-            PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sql);
-            statement.setString(1, businessEntity.getReference());
-            ResultSet data = statement.executeQuery();
-
-            while(data.next()){
-                adress = new Adress(data.getString("id"), data.getString("street"), data.getInt("number_of_the_hours"), data.getString("business_entity_id"), data.getInt("type_id"), data.getString("city_id"));
-            }
-        }catch (SQLException exception){
-            throw new SelectException(exception.getMessage(), "la liste des adresse pour la business entity" + businessEntity.getName());
-        }
-        return adresses;
-    }
 }
