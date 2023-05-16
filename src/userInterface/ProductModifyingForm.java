@@ -91,18 +91,16 @@ public class ProductModifyingForm extends ProductCreatingAndModifingFormTemplate
         try {
             getShopController().updateProduct(modifiedProduct);
             JOptionPane.showMessageDialog(null,
-                    "objet modifié",
-                    "produit modifié avec succès", JOptionPane.INFORMATION_MESSAGE);
+                    "Les informations du produit ont été modifiées",
+                    "Produit modifié avec succès", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (ModifyDatasException exception) {
-            JOptionPane.showMessageDialog(null,
-                    "erreur : " + exception.getMessage(),
-                    "erreur de la modification du produit", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(),
+                    "Erreur de la modification du produit", JOptionPane.ERROR_MESSAGE);
 
         } catch (CreateConnectionException exception) {
-            JOptionPane.showMessageDialog(null,
-                    "erreur : " + exception.getMessage(),
-                    "erreur de creation de la connexion au données", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(),
+                    "Erreur de creation de la connexion aux données", JOptionPane.ERROR_MESSAGE);
 
         }
     }

@@ -65,18 +65,19 @@ public class ProductOutOfStockSearchPanel extends JPanel {
             CheckBoxListener checboxListener = new CheckBoxListener();
 
             // modules for the first search
-            titleLabel = new JLabel("recherche des produits en ruptures dans le stock et leurs fournisseurs");
+            titleLabel = new JLabel("<html><p>Recherche des produits en ruptures dans le stock et leurs fournisseurs" +
+                                    "<br>Remplissez le formulaire et cliquez sur le bouton</p><html>");
             titlePanel.add(titleLabel);
 
 
-            productTypeCheckBoxLabel = new JLabel("rechercher un seul type de produit : ");
+            productTypeCheckBoxLabel = new JLabel("Rechercher dans un seul type de produit : ");
             productTypeCheckBoxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            byProductTypeCheckBox = new JCheckBox("oui");
+            byProductTypeCheckBox = new JCheckBox("Oui");
             byProductTypeCheckBox.addItemListener(checboxListener);
             formPanel.add(productTypeCheckBoxLabel);
             formPanel.add(byProductTypeCheckBox);
 
-            productTypeComboBoxLabel = new JLabel("type de produits : ");
+            productTypeComboBoxLabel = new JLabel("Type de produits : ");
             productTypeComboBoxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             productTypesList = shopController.getAllProductType();
             String [] productTypesNamesList = new String[productTypesList.size()];
@@ -91,28 +92,28 @@ public class ProductOutOfStockSearchPanel extends JPanel {
             formPanel.add(productTypeComboBoxLabel);
             formPanel.add(productTypeComboBox);
 
-            searcProductshButton = new JButton("rechercher le(s) produit(s) : ");
+            searcProductshButton = new JButton("Rechercher le(s) produit(s) : ");
             searcProductshButton.addActionListener(buttonListener);
             buttonsPanel.add(searcProductshButton);
 
             // second step modules
-            searchSupplierButton = new JButton("rechercher le(s) fournisseur(s) : ");
+            searchSupplierButton = new JButton("Rechercher le(s) fournisseur(s) : ");
             searchSupplierButton.addActionListener(buttonListener);
 
             // add the panels
-            this.add(titleLabel, BorderLayout.NORTH);
+            this.add(titlePanel, BorderLayout.NORTH);
             this.add(formPanel, BorderLayout.CENTER);
             this.add(buttonsPanel, BorderLayout.SOUTH);
         } catch (GetDatasException exception) {
-            showErrorMessageAndPanel("<html><p>la recherche des types de produits n'a pas été possible," +
+            showErrorMessageAndPanel("<html><p>La recherche des types de produits n'a pas été possible," +
                             "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
-                            "<br>erreur : " + exception.getMessage() + "</p></html>",
+                            "<br>Message d'erreur : " + exception.getMessage() + "</p></html>",
                     "erreur : " + exception.getMessage());
 
         } catch (CreateConnectionException exception) {
-            showErrorMessageAndPanel("<html><p>la connection aux données n'a pas pu être établie" +
+            showErrorMessageAndPanel("<html><p>La connection aux données n'a pas pu être établie" +
                             "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
-                            "<br>erreur : " + exception.getMessage()+ "</p></html>",
+                            "<br>Message d'erreur : " + exception.getMessage()+ "</p></html>",
                     "erreur : " + exception.getMessage());
         }
 
@@ -139,8 +140,10 @@ public class ProductOutOfStockSearchPanel extends JPanel {
 
             if (foundProducts != null && foundProducts.size() == 0) {
                 JOptionPane.showMessageDialog(null,
-                        "aucun produits en rupture de stock trouvés",
-                        "aucun produits", JOptionPane.INFORMATION_MESSAGE);
+                        "Il n'y aucun produit en rupture" + (byProductTypeCheckBox.isSelected()?
+                                "parmis les produits du type sélectionné.":
+                                "parmis tout les produits enregistrés."),
+                        "Aucun produits", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 allfoundProductsModel = new AllProductsModel(foundProducts);
                 JTable foundProductsTable = new JTable(allfoundProductsModel);
@@ -148,6 +151,8 @@ public class ProductOutOfStockSearchPanel extends JPanel {
                 listSelect = foundProductsTable.getSelectionModel();
 
                 JScrollPane foundProductScrollPane = new JScrollPane(foundProductsTable);
+
+                titleLabel.setText("Selectionnez le produit dont vous voulez trouver le(s) fournisseur(s).");
 
                 formPanel.removeAll();
                 formPanel.add(foundProductScrollPane, BorderLayout.CENTER);
@@ -160,15 +165,15 @@ public class ProductOutOfStockSearchPanel extends JPanel {
                 this.repaint();
             }
         } catch (GetDatasException exception) {
-            showErrorMessageAndPanel("<html><p>la recherche des produits n'a pas été possible," +
-                            "<br>veuillez réessayer ultérieurment" +
-                            "<br>erreur : " + exception.getMessage() + "</p></html>",
+            showErrorMessageAndPanel("<html><p>La recherche des produits n'a pas été possible," +
+                            "<br>veuillez réessayer ultérieurment." +
+                            "<br>Message d'erreur : " + exception.getMessage() + "</p></html>",
                     "erreur : " + exception.getMessage());
 
         } catch (CreateConnectionException exception) {
-            showErrorMessageAndPanel("<html><p>la connection aux données n'a pas pu être établie" +
-                            "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
-                            "<br>erreur : " + exception.getMessage()+ "</p></html>",
+            showErrorMessageAndPanel("<html><p>La connection aux données n'a pas pu être établie" +
+                            "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application." +
+                            "<br>Message d'erreur : " + exception.getMessage()+ "</p></html>",
                     "erreur : " + exception.getMessage());
         }
     }
@@ -182,8 +187,8 @@ public class ProductOutOfStockSearchPanel extends JPanel {
             this.repaint();
         } else {
             JOptionPane.showMessageDialog(null,
-                    "selectionnez un produit pour chercher son/ses fournisseure(s)",
-                    "selectionnez un produit", JOptionPane.WARNING_MESSAGE);
+                    "Veuillez selectionner un produit pour chercher son/ses fournisseure(s).",
+                    "Selectionnez un produit", JOptionPane.WARNING_MESSAGE);
         }
 
     }
@@ -198,7 +203,7 @@ public class ProductOutOfStockSearchPanel extends JPanel {
         JLabel errorLabel = new JLabel(message);
         this.add(errorLabel, BorderLayout.CENTER);
         JOptionPane.showMessageDialog(null, optionPaneMessage,
-                "problème pour la recherche", JOptionPane.ERROR_MESSAGE);
+                "Problème pour la recherche", JOptionPane.ERROR_MESSAGE);
     }
 
     private class CheckBoxListener implements ItemListener {

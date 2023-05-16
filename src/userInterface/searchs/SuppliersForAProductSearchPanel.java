@@ -50,26 +50,27 @@ public class SuppliersForAProductSearchPanel extends JPanel {
         SliderListener sliderListener = new SliderListener();
 
         // panles
-        titlePanel = new JPanel(new BorderLayout());
+        titlePanel = new JPanel(new FlowLayout());
 
         formPanel = new JPanel(new GridLayout(4,2, 10, 10));
 
         buttonsPanel = new JPanel(new BorderLayout());
 
         // modules
-        titleLabel = new JLabel("<html><p>recherche de fournisseur(s) pour " + selectedProduct.getName() +
-                                    "<br>il manque actuelement au moins " + getMissingProductsAmount() + "produtis</p></html>");
+        titleLabel = new JLabel("<html><p>Recherche de fournisseur(s) pour " + selectedProduct.getName() +
+                                    "<br>Il manque actuelement au moins " + getMissingProductsAmount() + "produtis en stock." +
+                                    "<br>Remplissez le formulaire puis cliquez sur le bouton pour faire la recherche</p></html>");
         titlePanel.add(titleLabel);
 
 
-        maximumPriceCheckBoxLabel = new JLabel("chercher avec un prix maximum : ");
+        maximumPriceCheckBoxLabel = new JLabel("Chercher avec un prix maximum : ");
         maximumPriceCheckBoxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        maximumPriceCheckBox = new JCheckBox("oui");
+        maximumPriceCheckBox = new JCheckBox("Oui");
         maximumPriceCheckBox.addItemListener(checboxListener);
         formPanel.add(maximumPriceCheckBoxLabel);
         formPanel.add(maximumPriceCheckBox);
 
-        maximumPriceSliderLabel = new JLabel("prix maximum du fournisseur pour ce produit : ");
+        maximumPriceSliderLabel = new JLabel("Prix maximum du fournisseur pour ce produit : ");
         maximumPriceSliderLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         maximumPriceSlider = new JSlider(0,100, 10);
         // slider : visual options
@@ -82,14 +83,14 @@ public class SuppliersForAProductSearchPanel extends JPanel {
         formPanel.add(maximumPriceSliderLabel);
         formPanel.add(maximumPriceSlider);
 
-        maximumDeliveryDaysCheckBoxLabel = new JLabel("chercher avec un délai de livraison maximum : ");
+        maximumDeliveryDaysCheckBoxLabel = new JLabel("Chercher avec un délai de livraison maximum : ");
         maximumDeliveryDaysCheckBoxLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        maximumDeliveryDaysCheckBox = new JCheckBox("oui");
+        maximumDeliveryDaysCheckBox = new JCheckBox("Oui");
         maximumDeliveryDaysCheckBox.addItemListener(checboxListener);
         formPanel.add(maximumDeliveryDaysCheckBoxLabel);
         formPanel.add(maximumDeliveryDaysCheckBox);
 
-        maximumDeliveryDaysSpinnerLabel = new JLabel("nombre de jour maximum pour être livré : ");
+        maximumDeliveryDaysSpinnerLabel = new JLabel("Nombre de jour maximum pour être livré : ");
         maximumDeliveryDaysSpinnerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         maximumDeliveryDaysSpinner = new JSpinner();
         maximumDeliveryDaysSpinner.setEnabled(false);
@@ -97,12 +98,12 @@ public class SuppliersForAProductSearchPanel extends JPanel {
         formPanel.add(maximumDeliveryDaysSpinner);
 
 
-        searchSupplierButton = new JButton("chercher le(s) fournisseur(s) : ");
+        searchSupplierButton = new JButton("Chercher le(s) fournisseur(s) : ");
         searchSupplierButton.addActionListener(buttonListener);
         buttonsPanel.add(searchSupplierButton);
 
         // add the panels
-        this.add(titleLabel, BorderLayout.NORTH);
+        this.add(titlePanel, BorderLayout.NORTH);
         this.add(formPanel, BorderLayout.CENTER);
         this.add(buttonsPanel, BorderLayout.SOUTH);
 
@@ -129,8 +130,8 @@ public class SuppliersForAProductSearchPanel extends JPanel {
     public boolean isFormValid() {
         if (maximumDeliveryDaysCheckBox.isSelected() && (int) maximumDeliveryDaysSpinner.getValue() <= 0) {
             JOptionPane.showMessageDialog(null,
-                    "si vous sélectionnez un délai maximum pour la livraison, il doit être supérieur à 0",
-                    "erreur de nombres de jours pour livraison", JOptionPane.WARNING_MESSAGE);
+                    "Si vous sélectionnez un délai maximum pour la livraison, il doit être supérieur à 0.",
+                    "Erreur de nombres de jours pour livraison", JOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
@@ -145,15 +146,16 @@ public class SuppliersForAProductSearchPanel extends JPanel {
                     (maximumPriceCheckBox.isSelected()?Double.valueOf(maximumPriceSlider.getValue()):null));
 
             if (foundSuppliers.size() == 0) {
-                JOptionPane.showMessageDialog(null, "aucun fournisseur qui vend ce produit n'a été trouvé",
-                        "aucun fournisseur", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Aucun fournisseur qui vend ce produit n'a été trouvé. Aucun fournisseur enregistré ne correspond.",
+                        "Aucun fournisseur", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 formPanel.removeAll();
                 buttonsPanel.removeAll();
 
                 double avergePrices = getAveragePriceForMissingPorducts(foundSuppliers);
                 int missingProductsAmount = getMissingProductsAmount();
-                titleLabel.setText("la moyenne des prix est de : " + avergePrices + "€ pour " + missingProductsAmount + " produits manquants, " +
+                titleLabel.setText("La moyenne des prix est de : " + avergePrices + "€ pour " + missingProductsAmount + " produits manquants, " +
                                     "celà fait une moyenne de " + avergePrices*missingProductsAmount + "€ pour touts les produits.");
 
                 AllSuppliersForAProductModel allSuppliersForAProductModel = new AllSuppliersForAProductModel(foundSuppliers);
@@ -167,12 +169,14 @@ public class SuppliersForAProductSearchPanel extends JPanel {
                 this.revalidate();
             }
         } catch (GetDatasException exception) {
-            JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
-                    "erreur de recherche", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "Une érreur est survenue lors de la recherche des données sur les fournisseur du produit sélectionné.",
+                    "Erreur de recherche", JOptionPane.ERROR_MESSAGE);
 
         } catch (CreateConnectionException exception) {
-            JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
-                    "erreur de connexion aux données", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "Une érreur est survenue lors de la création d'une connection aux données.",
+                    "Erreur de connexion aux données", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -206,7 +210,8 @@ public class SuppliersForAProductSearchPanel extends JPanel {
         @Override
         public void stateChanged(ChangeEvent event) {
             SuppliersForAProductSearchPanel thisPanel = SuppliersForAProductSearchPanel.this;
-            thisPanel.maximumPriceSliderLabel.setText("prix maximum du fournisseur pour ce produit : " + thisPanel.maximumPriceSlider.getValue() + "€");
+            thisPanel.maximumPriceSliderLabel.setText("Prix maximum du fournisseur pour ce produit : " +
+                    thisPanel.maximumPriceSlider.getValue() + "€ : ");
 
         }
     }

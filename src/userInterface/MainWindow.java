@@ -3,8 +3,11 @@ package userInterface;
 import controller.ShopController;
 import model.Exeptions.CloseConnectionException;
 import model.Exeptions.CreateConnectionException;
+import model.Exeptions.GetDatasException;
+import userInterface.searchs.BusinessEntityAdressSearchPanel;
 import userInterface.searchs.ProductOutOfStockSearchPanel;
 import userInterface.searchs.ProductSoldOnDelaySearchPanel;
+import userInterface.searchs.ProductSupplementDueToEventSearchPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,15 +46,14 @@ public class MainWindow extends JFrame {
                 try {
                     ShopController shopController = new ShopController();
                     shopController.closeConnection();
-                } catch (CreateConnectionException  exception) {
-                    JOptionPane.showMessageDialog(null,
-                            "erreur" + exception.getMessage(),
-                            "erreur de l'ouverture de la conexion", JOptionPane.ERROR_MESSAGE);
+                } catch (CreateConnectionException exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage(),
+                            "Erreur de conexion aux données", JOptionPane.ERROR_MESSAGE);
                 } catch (CloseConnectionException exception) {
-                    JOptionPane.showMessageDialog(null,
-                            "erreur" + exception.getMessage(),
-                            "erreur de la fermeture de la conexion", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, exception.getMessage(),
+                            "Erreur de la fermeture de la conexion", JOptionPane.ERROR_MESSAGE);
                 }
+
                 System.exit(0);
             }
         });

@@ -10,9 +10,11 @@ public class WelcomePanel extends JPanel {
 
 
     public WelcomePanel() {
-        welcomeMessage = new JLabel("<html><p style=\"text-align: center;\"><image src=\"https://pngimg.com/d/welcome_PNG81.png\" alt=\"l'image n'a put charger\" width=\"220\" height=\"100\"><br>Bienvenue sur le gestionnaire" +
-                "<br>Le manuel d'utilisation se trouve dans le menu aide/Manuel d'utilisation" +
-                "<br>Vous pouvez y accéder en haut à gauche</p></html>");
+        welcomeMessage = new JLabel("<html><p style=\"text-align: center;\">" +
+                "<image src=\"https://pngimg.com/d/welcome_PNG81.png\" alt=\"l'image n'a put charger\" width=\"220\" height=\"100\">" +
+                "<br>Bienvenue sur le gestionnaire." +
+                "<br>Le manuel d'utilisation se trouve dans le menu aide/Manuel d'utilisation, " +
+                "<br>vous pouvez y accéder en haut à gauche.</p></html>");
         add(welcomeMessage);
 
         iImage = 0;
@@ -29,7 +31,8 @@ public class WelcomePanel extends JPanel {
         super.paint(g);
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Image currentImage = toolkit.getImage(System.getProperty("user.dir") + "\\src\\userInterface\\images\\bottles-" + iImage + ".png");
+        Image currentImage = toolkit.getImage(System.getProperty("user.dir") +
+                "\\src\\userInterface\\images\\bottles-" + iImage + ".png");
         g.drawImage(currentImage, 375, 200, 250, 200, this);
     }
 

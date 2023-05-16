@@ -16,7 +16,7 @@ public class ExitTheAppPopUp extends PopUp {
     JButton cancelButton, exitButton;
 
     public ExitTheAppPopUp() {
-        super("Quiter l'application ?", 360, 100);
+        super("Quiter l'application", 360, 100);
     }
 
     @Override
@@ -59,11 +59,11 @@ public class ExitTheAppPopUp extends PopUp {
                     shopController.closeConnection();
                     System.exit(0);
                 } catch (CreateConnectionException  exceptionEvent) {
-                    JOptionPane.showMessageDialog(null, "erreur" + exceptionEvent.getMessage(),
-                            "erreur de l'ouverture de la conexion", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Erreur" + exceptionEvent.getMessage(),
+                            "Erreur de l'ouverture de la conexion", JOptionPane.ERROR_MESSAGE);
                 } catch (CloseConnectionException exceptionEvent) {
-                    JOptionPane.showMessageDialog(null, "erreur" + exceptionEvent.getMessage(),
-                            "erreur de la fermeture de la conexion", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Erreur" + exceptionEvent.getMessage(),
+                            "Erreur de la fermeture de la conexion", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

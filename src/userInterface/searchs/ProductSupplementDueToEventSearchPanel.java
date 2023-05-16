@@ -1,4 +1,4 @@
-package userInterface;
+package userInterface.searchs;
 
 import controller.ShopController;
 import model.Exeptions.CreateConnectionException;
@@ -51,13 +51,14 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
         ButtonListener buttonListener = new ButtonListener();
 
         // modules
-        titleLabel = new JLabel("<html><p>Recherche des produits avec une demande <br>" +
-                                    "de réassort supplémentaire suite aux évènements<br>" +
-                                    "dans un délai donné</p></html>");
+        titleLabel = new JLabel("<html><p>Recherche des produits avec une demande de réassort supplémentaire" +
+                                    "<br>suite aux évènements dans un délai donné." +
+                                    "<br>Remplissez le formulaire pour cliquer sur le bouton et effectuer la recherche." +
+                                    "</p></html>");
         titlePanel.add(titleLabel);
 
 
-        delayBeginingLabel = new JLabel("date de début de la recherche : ");
+        delayBeginingLabel = new JLabel("Date de début de la recherche : ");
         delayBeginingLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         delayBeginingDateSelected = new Date();
         delayBeginingSpinner = new JSpinner(new SpinnerDateModel(delayBeginingDateSelected, null,null, Calendar.YEAR));
@@ -66,7 +67,7 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
         formPanel.add(delayBeginingLabel);
         formPanel.add(delayBeginingSpinner);
 
-        delayEndLabel = new JLabel("date de fin de la recherche : ");
+        delayEndLabel = new JLabel("Date de fin de la recherche : ");
         delayEndLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         delayEndSpinner = new JSpinner();
         delayEndDateSelected = new Date();
@@ -77,7 +78,7 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
         formPanel.add(delayEndSpinner);
 
 
-        searchButton = new JButton("chercher");
+        searchButton = new JButton("Chercher");
         searchButton.addActionListener(buttonListener);
         buttonsPanel.add(searchButton);
 
@@ -103,15 +104,15 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
 
         if (delaybeginingDate.equals(endingDate)) {
             JOptionPane.showMessageDialog(null,
-                    "les deux dates (début et fin) ne peuvent être identique",
-                    "erreur de dates", JOptionPane.WARNING_MESSAGE);
+                    "Les deux dates (début et fin) ne peuvent être identiques.",
+                    "Erreur de dates", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
         if (delaybeginingDate.isAfter(endingDate)) {
             JOptionPane.showMessageDialog(null,
-                    "la date de début doit être avant la date de fin",
-                    "erreur de dates", JOptionPane.WARNING_MESSAGE);
+                    "La date de début doit être avant la date de fin.",
+                    "Erreur de dates", JOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
@@ -126,7 +127,8 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
                 if (!foundProductSupplementDueToEventList.isEmpty()) {
                     this.removeAll();
 
-                    AllProductSupplementsDueToEventModel allProductSupplementDueToEvent = new AllProductSupplementsDueToEventModel(foundProductSupplementDueToEventList);
+                    AllProductSupplementsDueToEventModel allProductSupplementDueToEvent =
+                            new AllProductSupplementsDueToEventModel(foundProductSupplementDueToEventList);
                     JTable productsTable = new JTable(allProductSupplementDueToEvent);
                     productsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -139,16 +141,18 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
                     this.revalidate();
                 } else {
                     JOptionPane.showMessageDialog(null,
-                            "aucuns produit lié à un évènement dans ce délai n'a été trouvé",
-                            "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
+                            "Aucuns produit lié à un évènement dans ce délai n'a été trouvé.",
+                            "Aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (GetDatasException exception) {
-                JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
-                        "erreur de recherche", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Une érreur est survenue lors de la recherche des données sur les suppléments sûts à un évènement.",
+                        "Erreur de recherche", JOptionPane.ERROR_MESSAGE);
 
             } catch (CreateConnectionException exception) {
-                JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
-                        "erreur de connexion aux données", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Une érreur est survenue lors de la création d'une connection aux données.",
+                        "Erreur de connexion aux données", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

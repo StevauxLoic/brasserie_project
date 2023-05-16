@@ -82,8 +82,10 @@ public class FindProductPanel extends JPanel {
                 buttonsPanel.add(modifyButton);
 
                 // labels
-                titleLabel = new JLabel("<html><p>Table des poduits à sélectionner" +
-                                        "<br>attention la supression suprime égalment d'autres données relative au produit)");
+                titleLabel = new JLabel("<html><p>Table des poduits à sélectionner." +
+                                        "<br>Attention la supression suprime égalment d'autres données relative au produit." +
+                                        "<br>Selectionnez un produit pour pouvoir le modifier." +
+                                        "<br>Selectionnez un ou plusieurs produit pour le(s) suprimer.</p></html>");
                 titlePanel.add(titleLabel);
 
                 // Panels filling
@@ -92,21 +94,21 @@ public class FindProductPanel extends JPanel {
                 this.add(tablePanel, BorderLayout.CENTER);
 
             } else {    // no products found
-                showErrorMessageAndPanel("<html><p>aucun produit enregistré n'a été trouvé<br>" +
-                                                "créez des produits si vous vouler qu'ils s'affichent ici</p></html>",
-                        "aucun produit n'a été trouvé");
+                showErrorMessageAndPanel("<html><p>Aucun produit enregistré n'a été trouvé." +
+                                                "<br>Créez des produits si vous voulez qu'ils s'affichent ici.</p></html>",
+                        "Aucun produit n'a été trouvé.");
             }
 
         } catch (CreateConnectionException exception) {
-            showErrorMessageAndPanel("<html><p>la connection aux données n'a pas pu être établie" +
-                                "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
-                                "<br>erreur : " + exception.getMessage()+ "</p></html>",
-                    "erreur : " + exception.getMessage());
+            showErrorMessageAndPanel("<html><p>La conexion aux données n'a pas pu être établie." +
+                                            "<br>Veuillez réessayer en recliquant sur le menu ou redémarrant l'application." +
+                                            "<br>Message d'erreur : " + exception.getMessage()+ "</p></html>",
+                    "Erreur : " + exception.getMessage());
         } catch (GetDatasException exception) {
-            showErrorMessageAndPanel("<html><p>la recherche d'un produit n'a pas été possible," +
-                                "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
-                                "<br>erreur : " + exception.getMessage() + "</p></html>",
-                    "erreur : " + exception.getMessage());
+            showErrorMessageAndPanel("<html><p>La recherche des produits n'a pas été possible." +
+                                            "<br>Veuillez réessayer en recliquant sur le menus ou redémarrant l'application." +
+                                            "<br>Message d'erreur : " + exception.getMessage() + "</p></html>",
+                    "Erreur : " + exception.getMessage());
         }
 
         this.setVisible(true);
@@ -122,7 +124,7 @@ public class FindProductPanel extends JPanel {
         JLabel errorLabel = new JLabel(message);
         this.add(errorLabel, BorderLayout.CENTER);
         JOptionPane.showMessageDialog(null, optionPaneMessage,
-                "problème pour la recherche", JOptionPane.WARNING_MESSAGE);
+                "Problème pour la recherche", JOptionPane.WARNING_MESSAGE);
     }
 
     private Product getSelectedAProduct(){
@@ -140,36 +142,39 @@ public class FindProductPanel extends JPanel {
             if (shopController.productHasLinksWithOthersDatas(productToDelete)) {
                 int answer = JOptionPane.showConfirmDialog(null,
                         "La supression du produit " + productToDelete.getName() + " suprime également" +
-                                "d'autres infos (ligne de détails et/ou détails du produit avec le fournisseur)\n" +
-                                "si vous cliquez 'ok', elles seront également suprimées sinon, cliquez 'cancel' pour annuler",
-                            "supression", JOptionPane.OK_CANCEL_OPTION);
+                                "d'autres infos (ligne de détails et/ou détails du produit avec le fournisseur).\n" +
+                                "Si vous cliquez 'ok', elles seront également suprimées sinon, cliquez 'cancel' pour annuler.",
+                            "Supression", JOptionPane.OK_CANCEL_OPTION);
 
                 if (answer == JOptionPane.YES_OPTION) {
                     shopController.deleteProduct(productToDelete);
-                    JOptionPane.showMessageDialog(null, "le produit a bien été supprimé",
-                            "succès de la supression", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "Le produit et les autres données liées ont bien été supprimées.",
+                            "Succès de la supression", JOptionPane.INFORMATION_MESSAGE);
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "la supression a été annulée",
-                            "annulation de la supression", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "La supression du produit a été annulée.",
+                            "Annulation de la supression", JOptionPane.INFORMATION_MESSAGE);
 
                 }
 
             } else {
                 shopController.deleteProduct(productToDelete);
-                JOptionPane.showMessageDialog(null, "le produit a bien été supprimé",
-                        "succès de la supression", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Le produit a bien été supprimé.",
+                        "Succès de la supression", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (DeleteDatasException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(),
-                    "erreur de supression d'un produit", JOptionPane.ERROR_MESSAGE);
+                    "Erreur de supression d'un produit", JOptionPane.ERROR_MESSAGE);
 
         } catch (CreateConnectionException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(),
-                    "erreur de conexion aux données", JOptionPane.ERROR_MESSAGE);
+                    "Erreur de conexion aux données", JOptionPane.ERROR_MESSAGE);
         } catch (GetDatasException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(),
-                    "erreur de réqupération des infos du produit", JOptionPane.ERROR_MESSAGE);
+                    "Erreur de réqupération des infos du produit", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -195,15 +200,15 @@ public class FindProductPanel extends JPanel {
             productsList = shopController.getAllProduct();
             allProductModel.setContents(productsList);
         } catch (CreateConnectionException exception) {
-            showErrorMessageAndPanel("<html><p>la connection aux données n'a pas pu être établie" +
-                            "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
-                            "<br>erreur : " + exception.getMessage()+ "</p></html>",
-                    "erreur : " + exception.getMessage());
+            showErrorMessageAndPanel("<html><p>La conexion aux données n'a pas pu être établie." +
+                            "<br>Veuillez réessayer en recliquant sur le menus ou redémarrant l'application." +
+                            "<br>Message d'erreur : " + exception.getMessage()+ "</p></html>",
+                    "Erreur : " + exception.getMessage());
         } catch (GetDatasException exception) {
-            showErrorMessageAndPanel("<html><p>la recherche d'un produit n'a pas été possible," +
-                            "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
-                            "<br>erreur : " + exception.getMessage() + "</p></html>",
-                    "erreur : " + exception.getMessage());
+            showErrorMessageAndPanel("<html><p>La recherche des produits n'a pas été possible." +
+                            "<br>Veuillez réessayer en recliquant sur le menus ou redémarrant l'application." +
+                            "<br>Message d'erreur : " + exception.getMessage() + "</p></html>",
+                    "Erreur : " + exception.getMessage());
         }
         this.repaint();
         this.revalidate();
@@ -217,8 +222,8 @@ public class FindProductPanel extends JPanel {
 
             if (firstSelectedRow == -1) {
                 JOptionPane.showMessageDialog(null,
-                        "Veuillez d'abord séléctionner un/des produit(s) (un seul pour 'modifier')",
-                        "erreur de sélection", JOptionPane.WARNING_MESSAGE);
+                        "Veuillez d'abord séléctionner un/des produit(s) (un seul pour 'modifier').",
+                        "Erreur de sélection", JOptionPane.WARNING_MESSAGE);
 
             } else {
                 Object source = event.getSource();
@@ -229,8 +234,8 @@ public class FindProductPanel extends JPanel {
                     int lastSelected = thisPanel.listSelect.getMaxSelectionIndex();
                     if (lastSelected != firstSelectedRow) {
                         JOptionPane.showMessageDialog(null,
-                                "Un seul élément doit être séléctionné pour être modifié",
-                                "erreur de sélection", JOptionPane.WARNING_MESSAGE);
+                                "Un seul produit doit être séléctionné pour être modifié.",
+                                "Erreur de sélection", JOptionPane.WARNING_MESSAGE);
 
                     } else {
                         thisPanel.displayModifyForm();

@@ -17,7 +17,7 @@ public class ProductCreationPanel extends ProductCreatingAndModifingFormTemplate
 
     @Override
     public void fillButtonsPanel(JPanel buttonsPanel) {
-        JButton createButton = new JButton("créer");
+        JButton createButton = new JButton("Créer");
         createButton.addActionListener(new ButtonListener());
         buttonsPanel.add(createButton);
     }
@@ -26,19 +26,16 @@ public class ProductCreationPanel extends ProductCreatingAndModifingFormTemplate
         try {
             getShopController().createProduct(productToCreate);
             JOptionPane.showMessageDialog(null,
-                    "l'objet a été créé",
-                    "création effectuée", JOptionPane.INFORMATION_MESSAGE);
+                    "L'objet a été créé et enregistré.",
+                    "Création effectuée", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (CreateConnectionException exception) {
-            JOptionPane.showMessageDialog(null,
-                    "erreur : " + exception.getMessage(),
-                    "erreur de creation de la connexion au données", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, exception.getMessage(),
+                    "Erreur de conexion aux données", JOptionPane.ERROR_MESSAGE);
 
         } catch (CreateDatasException exception) {
-            JOptionPane.showMessageDialog(null,
-                    "erreur : " + exception.getMessage(),
-                    "erreur de creation du produit", JOptionPane.ERROR_MESSAGE);
-
+            JOptionPane.showMessageDialog(null, exception.getMessage(),
+                    "Erreur de creation du produit", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -47,20 +44,21 @@ public class ProductCreationPanel extends ProductCreatingAndModifingFormTemplate
         if(super.isFormValid()) {
             try {
                 if (getShopController().productIdAlreayExist(getReferenceTextField().getText())) {
-                    showTextFieldInputError("la référence est déjà utilisée par un autre produit", getReferenceTextField());
+                    showTextFieldInputError("La référence est déjà utilisée par un autre produit." +
+                            "\nVeuillez en choisir une autre.", getReferenceTextField());
                     return false;
                 } else {
                     // every inputs are ok
                     return true;
                 }
 
-            }  catch (GetDatasException exception) {
-                JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
-                        "erreur de recherche", JOptionPane.ERROR_MESSAGE);
-
             } catch (CreateConnectionException exception) {
-                JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
-                        "erreur de connexion aux données", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, exception.getMessage(),
+                        "Erreur de conexion aux données", JOptionPane.ERROR_MESSAGE);
+
+            } catch (GetDatasException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(),
+                        "Erreur de récupération des données de produits", JOptionPane.ERROR_MESSAGE);
             }
         }
 

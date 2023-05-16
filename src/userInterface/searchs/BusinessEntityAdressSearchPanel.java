@@ -1,4 +1,4 @@
-package userInterface;
+package userInterface.searchs;
 
 import controller.ShopController;
 import model.BusinessEntity;
@@ -54,7 +54,7 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
             titlePanel.add(titleLabel);
 
 
-            businessEntityLabel = new JLabel("personne/entreprise : ");
+            businessEntityLabel = new JLabel("Personne/entreprise : ");
             businessEntityLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             businessEntitiesList = shopController.getAllBusinessEntities();
             // create an array that contains the names and reference (in a String) for the JComboBox
@@ -71,7 +71,7 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
             formPanel.add(businessEntityComboBox);
 
 
-            searchButton = new JButton("chercher");
+            searchButton = new JButton("Chercher");
             searchButton.addActionListener(buttonListener);
             buttonsPanel.add(searchButton);
 
@@ -80,15 +80,15 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
             this.add(formPanel, BorderLayout.CENTER);
             this.add(buttonsPanel, BorderLayout.SOUTH);
         } catch (GetDatasException exception) {
-            showErrorMessageAndPanel("<html><p>la recherche des types de produits n'a pas été possible," +
-                            "<br>les types de produits sont nécéssaire pour modifier ou créer un produit" +
-                            "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
-                            "<br>erreur : " + exception.getMessage() + "</p></html>",
+            showErrorMessageAndPanel("<html><p>La recherche des types de produits n'a pas été possible," +
+                            "<br>les types de produits sont nécéssaire pour modifier ou créer un produit." +
+                            "<br>Veuillez réessayer en recliquant sur le menus ou redémarrant l'application." +
+                            "<br>Message d'erreur : " + exception.getMessage() + "</p></html>",
                     "erreur : " + exception.getMessage());
         } catch (CreateConnectionException exception) {
-            showErrorMessageAndPanel("<html><p>la connection aux données n'a pas pu être établie" +
-                            "<br>veuillez réessayer en recliquant sur le menus ou redémarrant l'application" +
-                            "<br>erreur : " + exception.getMessage()+ "</p></html>",
+            showErrorMessageAndPanel("<html><p>La connection aux données n'a pas pu être établie." +
+                            "<br>Veuillez réessayer en recliquant sur le menus ou redémarrant l'application." +
+                            "<br>Message d'erreur : " + exception.getMessage() + "</p></html>",
                     "erreur : " + exception.getMessage());
         }
 
@@ -105,12 +105,14 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
     private void showErrorMessageAndPanel(String message, String optionPaneMessage) {
         JLabel errorLabel = new JLabel(message);
         this.add(errorLabel, BorderLayout.CENTER);
-        JOptionPane.showMessageDialog(null, optionPaneMessage, "problème pour la recherche", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, optionPaneMessage, "Problème pour la recherche", JOptionPane.WARNING_MESSAGE);
     }
 
     public boolean isFormValid() {
         if (businessEntityComboBox.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "une personne/entreprise doit être sélectinée", "erreur de type de produit", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Une personne/entreprise doit être sélectinée " +
+                            "pour pouvoir rechercher ses adresses.",
+                    "Erreur de type de produit", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -137,18 +139,21 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
                     this.repaint();
                     this.revalidate();
                 } else {
-                    JOptionPane.showMessageDialog(null, "aucunes adresse n'a été trouvée",
-                            "aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Aucune adresse n'a été trouvée. " +
+                                    "Aucune n'a été enregistrée pour cette personne/entrepriseL",
+                            "Aucune donnée trouvée", JOptionPane.INFORMATION_MESSAGE);
 
                 }
 
             } catch (GetDatasException exception) {
-                JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
-                        "erreur de recherche", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Une érreur est survenue lors de la recherche des données sur les adresses.",
+                        "Erreur de recherche", JOptionPane.ERROR_MESSAGE);
 
             } catch (CreateConnectionException exception) {
-                JOptionPane.showMessageDialog(null, "erreur : " + exception.getMessage(),
-                        "erreur de connexion aux données", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Une érreur est survenue lors de la création d'une connection aux données.",
+                        "Erreur de connexion aux données", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
