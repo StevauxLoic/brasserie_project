@@ -10,6 +10,7 @@ public class BusinessEntityAdress {
         setStreet(street);
         setZipCode(zipCode);
         setHouseNumber(houseNumber);
+        setTypeName(typeName);
     }
 
     public void setCountry(String country) {

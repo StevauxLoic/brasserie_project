@@ -23,7 +23,7 @@ VALUES ('be', 'Belgique'),
        ('fr', 'France'),
        ('de', 'Allemagne'),
        ('us', 'États-Unis'),
-       ('it', 'italie'),
+       ('it', 'Italie'),
        ('es', 'Espagne'),
        ('uk', 'Royaume-Uni');
 

@@ -84,7 +84,7 @@ public class SearchData implements ISearchData{
                                 "INNER JOIN city cit ON adre.city_id = cit.id " +
                                 "INNER JOIN country coun ON cit.country_id = coun.id " +
                                 "WHERE busi.id = ? " +
-                                "ORDER BY coun.tag, cit.tag";
+                                "ORDER BY coun.tag, cit.tag;";
         try{
             PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstruction);
             statement.setString(1, businessEntity.getReference());
