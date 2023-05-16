@@ -38,7 +38,7 @@ public class ProductData implements  IProductData{
             }
             statement.executeUpdate();
         } catch (SQLException exception){
-            throw new CreateDatasException(exception.getMessage());
+            throw new CreateDatasException("Erreur lors de la création d'un produit.");
         }
 
     }
@@ -65,7 +65,7 @@ public class ProductData implements  IProductData{
             }
 
         }catch (SQLException exception) {
-            throw new GetDatasException(exception.getMessage(), "la liste de tout les produits");
+            throw new GetDatasException("Erreur lors de la récupération de tout les produits enregistrés.");
         }
 
         return products;
@@ -96,7 +96,7 @@ public class ProductData implements  IProductData{
             statement.setString(12, productToUpdate.getReference());
             statement.executeUpdate();
         } catch (SQLException exception) {
-            throw new ModifyDatasException(exception.getMessage());
+            throw new ModifyDatasException("Erreur lors de la modification d'un produit.");
         }
     }
 
@@ -128,7 +128,7 @@ public class ProductData implements  IProductData{
             return data.next();
         }
         catch (SQLException exception){
-            throw new GetDatasException("", "");
+            throw new GetDatasException("Erreur lors de la vérification que la référence n'existe pas déjà.");
         }
     }
 
@@ -152,7 +152,7 @@ public class ProductData implements  IProductData{
             }
             return false;
         } catch (SQLException exception){
-            throw new GetDatasException("", "");
+            throw new GetDatasException("Erreur lors de la vérification des liens d'un produit avec d'autres données.");
         }
 
     }

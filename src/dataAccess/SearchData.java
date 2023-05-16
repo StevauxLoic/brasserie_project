@@ -5,6 +5,7 @@ import model.Exeptions.CreateConnectionException;
 import model.Exeptions.GetDatasException;
 import model.Exeptions.SupplierForAProductException;
 
+import java.net.ConnectException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,11 +37,13 @@ public class SearchData implements ISearchData{
             statement.setInt(3, productType.getReference());
             ResultSet data = statement.executeQuery();
             while (data.next()) {
-                allProductsSoldInADelay.add(new ProductSoldInADelay(data.getString("tag"), data.getDouble("cost_price"), data.getInt("quantities")));
+                allProductsSoldInADelay.add(new ProductSoldInADelay(data.getString("tag"),
+                        data.getDouble("cost_price"), data.getInt("quantities")));
             }
         }
         catch (SQLException exception){
-            throw new GetDatasException(exception.getMessage(), "infos d'un produit vendu \n" + "de la date : " + startingDate.toString() + " a la date " + endingDate.toString());
+            throw new GetDatasException("Erreur lors de la récupération des produits vendu dans un interval " +
+                    "de la date : " + startingDate.toString() + " à la date " + endingDate.toString() + '.');
         }
         return allProductsSoldInADelay;
         }
@@ -54,20 +57,21 @@ public class SearchData implements ISearchData{
                                 "INNER JOIN product prod ON addi.product_id = prod.id " +
                                 "INNER JOIN product_type prod_ty ON prod_ty.id = prod.type_id " +
                                 "WHERE (fest.date_of_the_event > ? AND fest.date_of_the_event < ?) " +
-                                "ORDER BY fest.tag, prod_ty.id";
+                                "ORDER BY fest.tag, prod_ty.id;";
         try{
             PreparedStatement statement = SingletonConnection.getUniqueConnection().prepareStatement(sqlInstruction);
             statement.setDate(1, java.sql.Date.valueOf(startingDate));
             statement.setDate(2, java.sql.Date.valueOf(endingDate));
             ResultSet data = statement.executeQuery();
             while (data.next()) {
-                allProductSupplementDueToEvent.add(new ProductSupplementDueToEvent(data.getString("fest"), data.getString("prod_type"), data.getString("prod"),
+                allProductSupplementDueToEvent.add(new ProductSupplementDueToEvent(data.getString("fest"),
+                        data.getString("prod_type"), data.getString("prod"),
                         data.getString("pro_id"), data.getInt("qtt"), data.getInt("amount")));
             }
         }
         catch (SQLException exception){
-            throw new GetDatasException(exception.getMessage(), "la liste des restocks supplémentaire lors de certains evements\n" + "de la date : " + startingDate.toString() + "\n" +
-                    "à la date : " + endingDate.toString());
+            throw new GetDatasException("Erreur lors de la récupération des besoins de stocks supplémentaire dûts aux " +
+                    "evements se déroulant de la date : " + startingDate.toString() + " à la date : " + endingDate.toString() + '.');
         }
         return allProductSupplementDueToEvent;
     }
@@ -90,12 +94,13 @@ public class SearchData implements ISearchData{
             statement.setString(1, businessEntity.getReference());
             ResultSet data = statement.executeQuery();
             while (data.next()) {
-                allAdressesOfABusinessEntity.add(new BusinessEntityAdress(data.getString("country_name"), data.getString("city_name"), data.getString("adress_street"),
+                allAdressesOfABusinessEntity.add(new BusinessEntityAdress(data.getString("country_name"),
+                        data.getString("city_name"), data.getString("adress_street"),
                         data.getInt("zip_code"), data.getInt("adress_number"), data.getString("adress_type_name")));
             }
         }
         catch (SQLException exception){
-            throw new GetDatasException(exception.getMessage(), "la liste des adresse de l'entité business");
+            throw new GetDatasException("Erreur lors de la récupération des adresse d'une personne/entrerpsie données.");
         }
         return allAdressesOfABusinessEntity;
     }
@@ -122,9 +127,12 @@ public class SearchData implements ISearchData{
             }
             ResultSet data = statement.executeQuery();
             while (data.next()) {
-                product = new Product(data.getString("id"), data.getInt("type_id"), data.getString("tag"), data.getDouble("vat"), data.getInt("minimum_quantity_in_stock"),
-                        data.getBoolean("is_sparkling"), data.getDate("launching_date").toLocalDate(), data.getDouble("price"), data.getDouble("alcohol_level"),
+                product = new Product(data.getString("id"), data.getInt("type_id"),
+                        data.getString("tag"), data.getDouble("vat"), data.getInt("minimum_quantity_in_stock"),
+                        data.getBoolean("is_sparkling"), data.getDate("launching_date").toLocalDate(),
+                        data.getDouble("price"), data.getDouble("alcohol_level"),
                         data.getInt("quantity_in_stock"));
+
                 String description = data.getString("description_of_the_product");
                 if(!data.wasNull()){
                     product.setDescription(description);
@@ -133,17 +141,17 @@ public class SearchData implements ISearchData{
             }
         }
         catch (SQLException exception){
-            throw new GetDatasException(exception.getMessage(), "produits ayant une quantité inférieur a la quantité minmum a avoir ");
+            throw new GetDatasException("Erreur lors de la recherche des produits en rupture de stock.");
         }
         return allProductOutOfMinimuStock;
     }
 
     public ArrayList<Product> getAllProductOutOfMinimumStock () throws GetDatasException, CreateConnectionException {
-        return getAllProductOutOfMinimumStock((ProductType) null);
+        return getAllProductOutOfMinimumStock(null);
     }
 
     /// this methods return a list of supplier that respect the conditions proposed by the form
-    public ArrayList<SupplierForAProduct> getAllSupplierForAProduct(Product product, Integer maxDelayDelivery, Double maxPrice) throws GetDatasException, CreateConnectionException{
+    public ArrayList<SupplierForAProduct> getAllSupplierForAProduct(Product product, Integer maxDelayDelivery, Double maxPrice) throws GetDatasException, CreateConnectionException {
         ArrayList<SupplierForAProduct> allSupplierForAProduct = new ArrayList<>();
         String sqlInstruction = "SELECT busi.denomination AS busi_name, busi.id AS busi_id, supp.price AS price, supp.delivery_time AS delivery_time, statut.denomination AS statut_name FROM supplier_product_details supp " +
                                 "INNER JOIN business_entity busi ON supp.business_entity_ref = busi.id " +
@@ -178,9 +186,11 @@ public class SearchData implements ISearchData{
             }
         }
         catch (SQLException exception){
-            throw new GetDatasException(exception.getMessage(), "fournisseurs pour le produit : " + product.getName());
+            throw new GetDatasException("Erreur lors de la récupération des fournisseurs pour un produit donné.");
         } catch (SupplierForAProductException exception) {
-            throw new GetDatasException(exception.getMessage(), "fournisseurs pour le produit : " + product.getName());
+            throw new GetDatasException("Erreur lors de la manipulation des données (données sur les fournisseurs qui vnedent un produit donné).");
+        } catch (CreateConnectionException e) {
+            throw new CreateConnectionException("Erreur lors de la création de la connexion aux données");
         }
         return allSupplierForAProduct;
     }

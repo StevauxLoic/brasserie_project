@@ -28,7 +28,7 @@ public class BusinessEntityData implements IBusinessEntityData{
                 businessEntities.add(businessEntity);
             }
         }catch (SQLException exception){
-            throw new GetDatasException(exception.getMessage(), "la liste des business entity");
+            throw new GetDatasException("Erreur lors de la récupération des données sur les personnes/entreprises enregistrées.");
         }
         return businessEntities;
     }

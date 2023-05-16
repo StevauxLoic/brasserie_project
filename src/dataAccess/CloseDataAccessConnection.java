@@ -14,7 +14,7 @@ public class CloseDataAccessConnection implements ICloseDataConnection {
         try {
             SingletonConnection.closeConnection();
         } catch (SQLException exception) {
-            throw new CloseConnectionException();
+            throw new CloseConnectionException("Erreur lors de la fermeture de la connexion aux données.");
         }
     }
 }

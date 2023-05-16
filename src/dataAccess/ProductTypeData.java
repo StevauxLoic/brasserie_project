@@ -29,7 +29,7 @@ public class ProductTypeData implements IProductTypeData {
             }
 
         }catch (SQLException exception) {
-            throw new GetDatasException(exception.getMessage(), "la liste des types de produits");
+            throw new GetDatasException("Erreur lors de la récupération de tout les types de produits enregistrés.");
         }
 
         return productTypes;
