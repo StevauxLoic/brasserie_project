@@ -65,8 +65,10 @@ public class ProductOutOfStockSearchPanel extends JPanel {
             CheckBoxListener checboxListener = new CheckBoxListener();
 
             // modules for the first search
-            titleLabel = new JLabel("<html><p>Recherche des produits en ruptures dans le stock et leurs fournisseurs" +
-                                    "<br>Remplissez le formulaire et cliquez sur le bouton</p><html>");
+            titleLabel = new JLabel("<html><p style=\"text-align: center;\">" +
+                                        "Recherche des produits en ruptures dans le stock et leurs fournisseurs." +
+                                        "<br>Remplissez le formulaire et cliquez sur le bouton." +
+                                        "</p><html>");
             titlePanel.add(titleLabel);
 
 

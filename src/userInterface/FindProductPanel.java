@@ -82,7 +82,7 @@ public class FindProductPanel extends JPanel {
                 buttonsPanel.add(modifyButton);
 
                 // labels
-                titleLabel = new JLabel("<html><p>Table des poduits à sélectionner." +
+                titleLabel = new JLabel("<html><p style=\"text-align: center;\">Table des poduits à sélectionner." +
                                         "<br>Attention la supression suprime égalment d'autres données relative au produit." +
                                         "<br>Selectionnez un produit pour pouvoir le modifier." +
                                         "<br>Selectionnez un ou plusieurs produit pour le(s) suprimer.</p></html>");

@@ -57,9 +57,11 @@ public class SuppliersForAProductSearchPanel extends JPanel {
         buttonsPanel = new JPanel(new BorderLayout());
 
         // modules
-        titleLabel = new JLabel("<html><p>Recherche de fournisseur(s) pour " + selectedProduct.getName() +
+        titleLabel = new JLabel("<html><p style=\"text-align: center;\">" +
+                                    "Recherche de fournisseur(s) pour " + selectedProduct.getName() +
                                     "<br>Il manque actuelement au moins " + getMissingProductsAmount() + "produtis en stock." +
-                                    "<br>Remplissez le formulaire puis cliquez sur le bouton pour faire la recherche</p></html>");
+                                    "<br>Remplissez le formulaire puis cliquez sur le bouton pour faire la recherche" +
+                                    "</p></html>");
         titlePanel.add(titleLabel);
 
 

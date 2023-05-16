@@ -13,6 +13,7 @@ public class ProductCreationPanel extends ProductCreatingAndModifingFormTemplate
 
     public ProductCreationPanel() {
         super();
+        getTitleLabel().setText("Vous pouvez remplir le formulaire pour créer le produit ici.");
     }
 
     @Override

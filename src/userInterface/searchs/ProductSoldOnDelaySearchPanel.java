@@ -57,8 +57,10 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
             ButtonListener buttonListener = new ButtonListener();
 
             // modules
-            titleLabel = new JLabel("<html><p>Recherche de produit vendu dans un intervale donné." +
-                    "<br>Remplissez le formulaire puis cliquez sur le bouton pour faire la recherche.</p></html>");
+            titleLabel = new JLabel("<html><p style=\"text-align: center;\">" +
+                                        "Recherche de produit vendu dans un intervale donné." +
+                                        "<br>Remplissez le formulaire puis cliquez sur le bouton pour faire la recherche." +
+                                        "</p></html>");
             titlePanel.add(titleLabel);
 
             productTypeLabel = new JLabel("Type de produit : ");
@@ -157,20 +159,25 @@ public class ProductSoldOnDelaySearchPanel extends JPanel {
     private void search() {
         if (isFormValid()) {
             try {
+                ProductType selectedProductType = productTypesList.get(productTypeComboBox.getSelectedIndex());
                 ArrayList<ProductSoldInADelay> productTypesSoldList = shopController.getAllProductSoldInADelay(
-                                                    getDelayBeginingDate(), getDelayEndDate(),
-                                                    productTypesList.get(productTypeComboBox.getSelectedIndex()));
+                                                    getDelayBeginingDate(), getDelayEndDate(), selectedProductType);
 
                 if (!productTypesSoldList.isEmpty()) {
-                    this.removeAll();
+                    formPanel.removeAll();
+                    buttonsPanel.removeAll();
 
                     AllProductsSoldInADelayModel allProductSoldInADelayModel = new AllProductsSoldInADelayModel(productTypesSoldList);
                     JTable productsTable = new JTable(allProductSoldInADelayModel);
                     productsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-                    JScrollPane productTypesScrollPane = new JScrollPane(productsTable);
+                    JScrollPane productTypesSoldInTheDelayScrollPane = new JScrollPane(productsTable);
 
-                    this.add(productTypesScrollPane, BorderLayout.CENTER);
+                    formPanel.add(productTypesSoldInTheDelayScrollPane, BorderLayout.CENTER);
+
+                    titleLabel.setText("Voici les ventes (de produit de type " + selectedProductType.getLabel() +
+                            ") réalisées du " + getDelayBeginingDate().toString() +
+                            " au " + getDelayEndDate().toString() + '.');
 
                     // refresh panel
                     this.repaint();

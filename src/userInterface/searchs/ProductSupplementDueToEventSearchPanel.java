@@ -51,7 +51,8 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
         ButtonListener buttonListener = new ButtonListener();
 
         // modules
-        titleLabel = new JLabel("<html><p>Recherche des produits avec une demande de réassort supplémentaire" +
+        titleLabel = new JLabel("<html><p style=\"text-align: center;\">" +
+                                    "Recherche des produits avec une demande de réassort supplémentaire" +
                                     "<br>suite aux évènements dans un délai donné." +
                                     "<br>Remplissez le formulaire pour cliquer sur le bouton et effectuer la recherche." +
                                     "</p></html>");
@@ -125,7 +126,8 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
                                     .getAllProductSupplementDueToEvent(getDelayBeginingDate(), getDelayEndDate());
 
                 if (!foundProductSupplementDueToEventList.isEmpty()) {
-                    this.removeAll();
+                    formPanel.removeAll();
+                    buttonsPanel.removeAll();
 
                     AllProductSupplementsDueToEventModel allProductSupplementDueToEvent =
                             new AllProductSupplementsDueToEventModel(foundProductSupplementDueToEventList);
@@ -134,7 +136,10 @@ public class ProductSupplementDueToEventSearchPanel extends JPanel {
 
                     JScrollPane productsScrollPane = new JScrollPane(productsTable);
 
-                    this.add(productsScrollPane, BorderLayout.CENTER);
+                    formPanel.add(productsScrollPane, BorderLayout.CENTER);
+
+                    titleLabel.setText("Voici les réassorts suplémentaires pour des évênements se déroulant du " +
+                            getDelayBeginingDate().toString() + " au " + getDelayEndDate().toString() + '.');
 
                     // refresh panel
                     this.repaint();

@@ -123,10 +123,11 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
         if (isFormValid()) {
             ArrayList<BusinessEntityAdress> adressesLsit = null;
             try {
-                adressesLsit = shopController.getAllAdressesOfABusinessEntity(businessEntitiesList
-                                                .get(businessEntityComboBox.getSelectedIndex()));
+                BusinessEntity selectedBusinessEntity = businessEntitiesList.get(businessEntityComboBox.getSelectedIndex());
+                adressesLsit = shopController.getAllAdressesOfABusinessEntity(selectedBusinessEntity);
                 if (!adressesLsit.isEmpty()) {
-                    this.removeAll();
+                    formPanel.removeAll();
+                    buttonsPanel.removeAll();
 
                     AllBusinessesEntityAdressModel allBusinessEntityAdressModel = new AllBusinessesEntityAdressModel(adressesLsit);
                     JTable adressesTable = new JTable(allBusinessEntityAdressModel);
@@ -134,7 +135,9 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
 
                     JScrollPane adressesScrollPane = new JScrollPane(adressesTable);
 
-                    this.add(adressesScrollPane, BorderLayout.CENTER);
+                    formPanel.add(adressesScrollPane, BorderLayout.CENTER);
+
+                    titleLabel.setText("Voici toutes les adresses enregistrées de " + selectedBusinessEntity.getName() + '.');
 
                     this.repaint();
                     this.revalidate();

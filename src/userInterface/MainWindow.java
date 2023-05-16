@@ -3,7 +3,6 @@ package userInterface;
 import controller.ShopController;
 import model.Exeptions.CloseConnectionException;
 import model.Exeptions.CreateConnectionException;
-import model.Exeptions.GetDatasException;
 import userInterface.searchs.BusinessEntityAdressSearchPanel;
 import userInterface.searchs.ProductOutOfStockSearchPanel;
 import userInterface.searchs.ProductSoldOnDelaySearchPanel;

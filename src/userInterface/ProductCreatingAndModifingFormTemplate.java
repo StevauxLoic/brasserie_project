@@ -38,9 +38,10 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
                     alcoholLevelLabel,
                     priceLabel,
                     launchingDateLabel,
-                    descriptionLabel;
+                    descriptionLabel,
+                    titleLabel;
 
-    private JPanel formPanel, buttonsPanel;
+    private JPanel formPanel, buttonsPanel, titlePanel;
     private JCheckBox isSparklingCheckBox, hasAlcoholCheckBox;
     private JComboBox productTypeComboBox;
     private JTextField nameTextField, 
@@ -67,6 +68,9 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
 
         try {
             // panels
+            titlePanel = new JPanel();
+            titlePanel.setLayout(new FlowLayout());
+
             formPanel = new JPanel();
             formPanel.setLayout(new GridLayout(12,2, 10, 10));
 
@@ -79,6 +83,10 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
             SpinnerListener spinnerListener = new SpinnerListener();
 
             // modules
+            titleLabel = new JLabel();
+            titlePanel.add(titleLabel);
+
+
             nameLabel = new JLabel("Nom : ");
             nameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             nameTextField = new JTextField();
@@ -176,6 +184,7 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
             // fill the panel and display it
             fillButtonsPanel(buttonsPanel);
 
+            this.add(titlePanel, BorderLayout.NORTH);
             this.add(formPanel, BorderLayout.CENTER);
             this.add(buttonsPanel, BorderLayout.SOUTH);
         } catch (GetDatasException exception) {
@@ -250,6 +259,10 @@ public abstract class ProductCreatingAndModifingFormTemplate extends JPanel {
 
     public ShopController getShopController() {
         return shopController;
+    }
+
+    public JLabel getTitleLabel() {
+        return titleLabel;
     }
 
     // other methods

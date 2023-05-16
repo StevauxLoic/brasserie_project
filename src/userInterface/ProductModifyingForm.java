@@ -30,6 +30,8 @@ public class ProductModifyingForm extends ProductCreatingAndModifingFormTemplate
 
     public ProductModifyingForm(Product productToModify) {
         super();
+        getTitleLabel().setText("Vous pouvez ici modifier les informations du produit ici.");
+
         this.productToModify = productToModify;
 
         // get and fill the different input and field with the productToModify informations
