@@ -16,9 +16,9 @@ public class ShopManager {
 
 
     public ShopManager() {
-        this.productDataManager = new ProductData();
-        this.businessEntityDataManager = new BusinessEntityData();
-        this.searchDataManager = new SearchData();
+        productDataManager = new ProductData();
+        businessEntityDataManager = new BusinessEntityData();
+        searchDataManager = new SearchData();
         productTypeDataManager = new ProductTypeData();
         closeDataAccessConnectionManager = new CloseDataAccessConnection();
     }
@@ -32,11 +32,19 @@ public class ShopManager {
     }
 
     public void updateProduct(Product productToUpdate) throws ModifyDatasException, CreateConnectionException {
-        productDataManager.updateProduct(productToUpdate);
+        if(productToUpdate != null) {
+            productDataManager.updateProduct(productToUpdate);
+        } else {
+            throw new ModifyDatasException("Erreur lors de la récupération des données du produit à modifier");
+        }
     }
 
     public void deleteProduct(Product productToDelete) throws DeleteDatasException, CreateConnectionException {
-        productDataManager.deleteProduct(productToDelete);
+        if(productToDelete != null) {
+            productDataManager.deleteProduct(productToDelete);
+        } else {
+            throw new DeleteDatasException("Erreur lors de la récupération des données du produit à suprimer");
+        }
     }
 
     public ArrayList<ProductType> getAllProductType() throws CreateConnectionException, GetDatasException {
@@ -44,7 +52,11 @@ public class ShopManager {
     }
 
     public void createProduct(Product productToCreate) throws CreateDatasException, CreateConnectionException{
-        productDataManager.createProduct(productToCreate);
+        if (productToCreate != null) {
+            productDataManager.createProduct(productToCreate);
+        } else {
+            throw new CreateDatasException("Erreur lors de la récupération des données du produit à créer");
+        }
     }
 
     public ArrayList<BusinessEntity> getAllBusinessEntities() throws GetDatasException, CreateConnectionException{

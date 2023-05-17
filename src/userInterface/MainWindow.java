@@ -66,7 +66,7 @@ public class MainWindow extends JFrame {
 
         // Menus
 
-        fileMenu = new JMenu("Fichier");
+        fileMenu = new JMenu("Application");
         menuBar.add(fileMenu);
 
         helpMenu = new JMenu("Aide");
