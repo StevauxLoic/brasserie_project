@@ -12,7 +12,7 @@ public class UserManuelPopUp extends PopUp {
             helpInfosLabel,
             softwareInfoLabel,
             menusLabel,
-            fileMenuLabe,
+            softwareMenuLabel,
             helpMenuLabe,
             searchMenuLabe,
             productMenuLabe,
@@ -31,7 +31,7 @@ public class UserManuelPopUp extends PopUp {
     private static String[] infosTopics = {
             "Infos sur l'application",
             "Menus",
-            "Menu fichier",
+            "Menu application",
             "Menu aide",
             "menu recherche",
             "Menu produit",
@@ -98,8 +98,8 @@ public class UserManuelPopUp extends PopUp {
                                     "<br>à une fonctionnalité de l'application" +
                                     "</p></html>");
 
-        fileMenuLabe = new JLabel("<html><p>" +
-                                        "Le menu fichier contient uniquement le sous-menu 'Quitter'" +
+        softwareMenuLabel = new JLabel("<html><p>" +
+                                        "Le menu application contient uniquement le sous-menu 'Quitter'" +
                                         "<br>Ce sous menu sert à fermer l'application" +
                                         "</p></html>");
 
@@ -250,7 +250,7 @@ public class UserManuelPopUp extends PopUp {
         labelsArray = new JLabel[13];
         labelsArray[0] = softwareInfoLabel;
         labelsArray[1] = menusLabel;
-        labelsArray[2] = fileMenuLabe;
+        labelsArray[2] = softwareMenuLabel;
         labelsArray[3] = helpMenuLabe;
         labelsArray[4] = searchMenuLabe;
         labelsArray[5] = productMenuLabe;
