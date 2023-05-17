@@ -1,4 +1,5 @@
 USE shop_db;
+
 CREATE TABLE festivity
 (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -40,6 +41,11 @@ CREATE TABLE product
 	alcohol_level DECIMAL(5,2) NOT NULL,
 	launching_date DATE NOT NULL,
 	price decimal (6,2) NOT NULL,
+    CHECK (price >= 0),
+    CHECK (vat >= 0),
+    CHECK (quantity_in_stock >= 0),
+    CHECK (minimum_quantity_in_stock >= 0),
+    CHECK (alcohol_level >= 0),
 	description_of_the_product VARCHAR(100),
 	CONSTRAINT product_pk PRIMARY KEY (id),
 	CONSTRAINT type_fk FOREIGN KEY (type_id) REFERENCES product_type(id)
