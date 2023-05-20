@@ -29,7 +29,7 @@ public class MainWindow extends JFrame {
     private JPanel activePanel;
     private WelcomePanel welcomePanel;
 
-    public MainWindow() throws HeadlessException {
+    public MainWindow()  {
 
         // window
 
@@ -161,7 +161,7 @@ public class MainWindow extends JFrame {
             } else {
                 MainWindow thisMainWindow = MainWindow.this;
                 JPanel panelToDisplay = null;
-                if(source == searchProductMenuItem || source == findProductMenuItem) { // les deux mènenet au même endroit (une recherche de produit)
+                if(source == searchProductMenuItem || source == findProductMenuItem) { // les deux mènent au même endroit (une recherche de produit)
                     panelToDisplay = new FindProductPanel();
                 } else if(source == searchProductTypeOnDelayAMenuItem) {
                     panelToDisplay = new ProductSoldOnDelaySearchPanel();
