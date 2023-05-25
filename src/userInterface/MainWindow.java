@@ -161,7 +161,7 @@ public class MainWindow extends JFrame {
             } else {
                 MainWindow thisMainWindow = MainWindow.this;
                 JPanel panelToDisplay = null;
-                if(source == searchProductMenuItem || source == findProductMenuItem) { // les deux mènent au même endroit (une recherche de produit)
+                if(source == searchProductMenuItem || source == findProductMenuItem) {
                     panelToDisplay = new FindProductPanel();
                 } else if(source == searchProductTypeOnDelayAMenuItem) {
                     panelToDisplay = new ProductSoldOnDelaySearchPanel();

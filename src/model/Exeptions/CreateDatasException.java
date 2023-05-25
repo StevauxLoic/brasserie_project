@@ -1,6 +1,6 @@
 package model.Exeptions;
 
-public class CreateDatasException extends Exception{
+public class CreateDatasException extends Exception {
     public CreateDatasException(String message){
         super(message);
     }

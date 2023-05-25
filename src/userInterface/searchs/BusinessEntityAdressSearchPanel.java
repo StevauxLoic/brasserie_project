@@ -95,7 +95,6 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
         this.setVisible(true);
     }
 
-
     /**
      * do a JOptionPane.showMessageDialog() to show the error or problem
      * and add an error JLabel on the panel
@@ -121,15 +120,15 @@ public class BusinessEntityAdressSearchPanel extends JPanel {
 
     private void search() {
         if (isFormValid()) {
-            ArrayList<BusinessEntityAdress> adressesLsit = null;
+            ArrayList<BusinessEntityAdress> adresseslist;
             try {
                 BusinessEntity selectedBusinessEntity = businessEntitiesList.get(businessEntityComboBox.getSelectedIndex());
-                adressesLsit = shopController.getAllAdressesOfABusinessEntity(selectedBusinessEntity);
-                if (!adressesLsit.isEmpty()) {
+                adresseslist = shopController.getAllAdressesOfABusinessEntity(selectedBusinessEntity);
+                if (!adresseslist.isEmpty()) {
                     formPanel.removeAll();
                     buttonsPanel.removeAll();
 
-                    AllBusinessesEntityAdressModel allBusinessEntityAdressModel = new AllBusinessesEntityAdressModel(adressesLsit);
+                    AllBusinessesEntityAdressModel allBusinessEntityAdressModel = new AllBusinessesEntityAdressModel(adresseslist);
                     JTable adressesTable = new JTable(allBusinessEntityAdressModel);
                     adressesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
