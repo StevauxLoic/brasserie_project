@@ -13,9 +13,9 @@ public class SingletonConnection {
         if(uniqueConnection == null){
             try {
                 // insert the good user and password to be able to connect to the data base
-                uniqueConnection = DriverManager.getConnection( "jdbc:mysql://localhost:3306/shop_db", "root", "admin");
+                uniqueConnection = DriverManager.getConnection( "jdbc:mysql://localhost:3306/shop_db", "root", "Space#1209");
             } catch (SQLException exception) {
-                throw new CreateConnectionException("Erreur lors de la création de la conexion aux données");
+                throw new CreateConnectionException("Erreur lors de la connexion aux données");
             }
         }
         return uniqueConnection;
