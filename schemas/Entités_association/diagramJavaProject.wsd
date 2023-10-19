@@ -1,0 +1,154 @@
+@startuml
+class Event {
+    {static}reference
+    label
+}
+
+class AdditionalRestocking {
+    amount
+}
+
+class Product {
+    {static}reference
+    name
+    VAT
+    minmumQuantityInStock
+    quantitiyInStock
+    minimumRestockingQuantities
+    isSparkling
+    depositedAmount[0..1]
+    alcoholLevel[0..1]
+    lauchingDate
+    price
+}
+
+entity BusinessEntity{
+    {static}reference
+    name
+    tvaNumber[0..1]
+}
+
+class Document {
+    {static}reference
+    date
+    discount[0..1]
+    deadline[0..1]
+    validityDate[0..1]
+    isPaid[0..1]
+    isDelivered[0..1]
+    deliveryDate[0..1]
+    advancePaiment[0..1]
+    additionnalFees[0..1]
+}
+
+class DocumentType {
+    {static}reference
+    label
+}
+
+class ProductType {
+    {static}reference
+    label
+}
+
+class BankAccount {
+    {static}accountNumber
+    bankName
+    codeBIC
+}
+
+entity Statut{
+    {static}reference
+    label
+    mustPayDeposit[0..1]
+    creditLimitation[0..1]
+    discount[0..1]
+}
+
+entity Contact{
+    {static}reference
+    lastname
+    firstName
+    isPrincipal
+}
+
+entity CommunicationInformation{
+    {static}value
+}
+
+entity CommunicationType{
+    {static}reference
+    label
+}
+
+entity Adress{
+    {static}reference 
+    road
+    houseNumber
+}
+
+class AdressType {
+    {static}reference
+    label
+}
+
+entity ContactType{
+    {static}reference
+    label
+}
+
+entity City{
+    {static}reference
+    label
+    postCode
+}
+
+entity Country{
+    {static}reference
+    label
+}
+
+
+class DetailsLine {
+    price
+    quantity
+    anomaliesQuantity [0..1]
+    label
+}
+
+class SupplierProductDetails {
+    price
+    deliveryTime
+}
+
+Document}o-|{BusinessEntity : participation
+Document}o-o|Adress : delivery
+SupplierProductDetails}o--||BusinessEntity : purchase
+
+Document}o--||DocumentType : type
+BusinessEntity||--o{BankAccount : account
+BusinessEntity}o--||Statut : grade
+BusinessEntity||--o{Contact : communication
+BusinessEntity|o--|{Adress : housing
+
+Product||-o{AdditionalRestocking : addings
+Product||-down-o{SupplierProductDetails : information
+DetailsLine}o-||Product : composition
+AdditionalRestocking}o--||Event : needs
+
+DetailsLine}o--||Document : detail
+Product }o-up-||ProductType : type
+Adress}o--||AdressType : type
+
+Contact ||--o{ CommunicationInformation : way
+Contact }o--|| ContactType : type
+CommunicationInformation }o--|| CommunicationType : support
+
+Adress}o--|| City : location
+City }o-down-|| Country : position
+
+note "id(AdditionalRestocking) = Event + Product\nid(SupplierProductDetails) = BusinessEntity + Product\nid(DetailsLine) = Product + Document" as idNote
+
+hide circle
+hide methods
+@enduml
